@@ -17,10 +17,12 @@ In your web page:
 
 ```html
 <script src="jquery.js"></script>
-<script src="dist/flexicarousel.min.js"></script>
+<script src="flexicarousel.min.js"></script>
 <script>
 jQuery(function($) {
-
+	$('.carousel').carousel({
+		// options
+	});
 });
 </script>
 ```
@@ -28,8 +30,12 @@ jQuery(function($) {
 ## Documentation
 _(Coming soon)_
 
+## Known Issues
+There's a memory leak at the moment. Each prev/next click triggers a CSS transition, but something's not getting cleaned up afterwards. 
+
 ## Examples
 _(Coming soon)_
 
 ## Release History
-_(Nothing yet)_
+### 0.1.1
+Updated CSS so that only animating relevant properties. Gives much needed performance gain and no stutter-y z-index issues.

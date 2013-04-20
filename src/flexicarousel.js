@@ -20,7 +20,6 @@
 		afterClass = 'after',
 		slide = 'li',
 		slides,
-		nav,
 		speed = 400,
 		cssTransitionsSupport = (function(){
 			var prefixes = 'webkit Moz O Ms'.split( ' ' ),
@@ -39,7 +38,7 @@
 		}()),
 
 		methods = {
-			init: function(){
+			init: function( opts ){
 				// opts = $.extend({}, $.fn.pullQuote.options, opts);		// TODO better option handling
 
 				slides = $(this).find(slide);
@@ -104,9 +103,10 @@
 				$to.one('transitionend webkitTransitionEnd OTransitionEnd', function() {
 					$self[ pluginName ]( 'transitionEnd', $from, $to );
 				});
+
 // setTimeout(function(){
 // $self[ pluginName ]( 'transitionEnd', $from, $to );
-// }, 500);
+// }, 1000);
 
 				$from.addClass( outClass );
 				$to.addClass( transClass );
@@ -118,30 +118,32 @@
 
 				$to.addClass( activeClass );
 
-				// $from.removeClass( [ activeClass, outClass ].join( ' ' ) );
-				$from.removeClass( activeClass );
+				$from.removeClass( [ activeClass, outClass ].join( ' ' ) );
 				$from.removeClass( outClass );
 			},
 
-			bindEventListeners: function(){
-				var $self = $( this )
-					.bind( 'click', function( e ){
-						var target = $( e.target ).closest( 'a[href="#next"], a[href="#prev"]' );
-						if( target.length ){
-							$self[ pluginName ]( target.is( '[href="#next"]' ) ? 'next' : 'prev' );
-							e.preventDefault();
-						}
-					});
+			addNav: function(){
+				var $self = $( this ),
+					nav = $('<nav></nav>'),
+					prev = $('<a href="#prev" class="prev" aria-hidden="true">Prev</a>'),
+					next = $('<a href="#next" class="next" aria-hidden="true">Next</a>');
 
+				prev.bind('click', function(e){
+					e.preventDefault();
+					$self[ pluginName ]('prev');
+				});
+				next.bind('click', function(e){
+					e.preventDefault();
+					$self[ pluginName ]('next');
+				});
+
+				return $self.append(
+					nav.append(prev).append(next)
+				);
+
+				// no need; everything is infinitely scrolling
 				// $((curr - scroll < 0 && prev) || (curr + scroll > items - visible && next) || []).addClass('disabled');
 
-				return this;
-			},
-
-			addNav: function(){
-				return $( this )
-					.append( '<nav><a href="#prev" class="prev" aria-hidden="true">Prev</a><a href="#next" class="next" aria-hidden="true">Next</a></nav>' )
-					[ pluginName ]( 'bindEventListeners' );
 			},
 
 			destroy: function(){

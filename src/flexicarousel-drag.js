@@ -68,6 +68,11 @@ function slideEnd(event) {
 
  */
 
+
+/*
+
+ https://github.com/filamentgroup/responsive-carousel
+
 (function($) {
 	
 	var pluginName = "carousel",
@@ -125,4 +130,8 @@ function slideEnd(event) {
 			}
 		} );
 		
+
 }(jQuery));
+		
+*/
+
