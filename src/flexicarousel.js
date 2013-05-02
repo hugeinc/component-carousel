@@ -9,99 +9,113 @@
  * https://github.com/filamentgroup/responsive-carousel
  */
 
+/*jslint debug: true, evil: false, devel: true*/
+
 (function($) {
 
-	var pluginName = 'carousel',
-		transitionAttr = 'data-transition',
-		transClass = 'trans',
+	// TODO: optionify:
+	var transClass = 'trans',
 		outClass = 'out',
 		activeClass = 'active',
 		beforeClass = 'before',
 		afterClass = 'after',
-		slide = 'li',
-		slides,
 		speed = 400,
-		cssTransitionsSupport = (function(){
-			var prefixes = 'webkit Moz O Ms'.split( ' ' ),
-				supported = false,
-				property;
+		slide = 'li';
+// ---------------------
 
-			while( prefixes.length ){
-				property = prefixes.shift() + 'Transition';
 
-				if ( property in document.documentElement.style !== undefined && property in document.documentElement.style !== false ) {
-					supported = true;
-					break;
+	var current = 0,
+		slides,
+		cssTransitionsSupport,
+		transitionEnd = (function(){
+			var t,
+				el = document.createElement('fakeelement'),
+				transitions = {
+				'transition': 'transitionend',
+				'OTransition': 'oTransitionEnd',
+				'MozTransition': 'transitionend',
+				'WebkitTransition': 'webkitTransitionEnd'
+			};
+
+			for(t in transitions){
+				if( el.style[t] !== undefined ){
+					cssTransitionsSupport = true;
+					return transitions[t];
 				}
 			}
-			return supported;
 		}()),
-
 		methods = {
 			init: function( opts ){
-				// opts = $.extend({}, $.fn.pullQuote.options, opts);		// TODO better option handling
+				this.options = $.extend( {}, $.fn.carousel.options, opts );			// we can override options both globally and on a per-call level
 
 				slides = $(this).find(slide);
-
-				$( this ).trigger( pluginName + '.beforecreate' );
-				$( this )[ pluginName ]( 'addNav' );
-
+				if (!slides.length) { console.log('Carousel: no slides found'); return; }
 				slides.eq(0).addClass( activeClass );
 
 				// only care about transitions if there is one defined to use
-				var trans = $( this ).attr( transitionAttr );
+				var trans = $( this ).attr( 'data-transition' );
 				// var trans = trans.split(',');		// TODO multiple transitions possible
-
 				if( !trans ){ cssTransitionsSupport = false; }
 
-				$( this ).addClass( pluginName + ' ' + ( trans ? pluginName + '-' + trans : '' ) + ' ' );
+				$(this).carousel( 'addNav' );
+				$(this).addClass( 'carousel ' + ( trans ? 'carousel-' + trans : '' ) );
 
-				return $( this );
+				$(this).trigger( 'init.carousel', this );		// useful for binding additional functionality
+																// we attach the event to the body so that 
+
+				return $(this);
 
 			},
 
 			next: function(){
-				$( this )[ pluginName ]( 'go', 1 );
+				$( this ).carousel( 'go', 1); // ++current );
 			},
 
 			prev: function(){
-				$( this )[ pluginName ]( 'go', -1 );
+				$( this ).carousel( 'go', -1); // --current );
 			},
 
 			go: function( offset ){
 
-				if ( $( this ).find( '.' + transClass ).length ) { return; }	// you wait. TODO
+				if ( $(this).find( '.' + transClass ).length ) { return; }	// you wait. TODO
 
-				var $from = $( this ).find( '.' + activeClass ),
+				// offset %= slides.length;			// keep within bounds for infinite scrolling
+
+				var $from = $(this).find( '.' + activeClass ),
 					$to = slides.eq( $from.index() + offset );
+					// $to = slides.eq(offset);
 
 				if ( !$to.length ){
-					$to = slides.eq(0);
+					$to = slides.eq(0);				// because slides.eq(-1) will automatically grab last one
 				}
 
 				// position the slide we're going to
 				$to.addClass( ( offset < 0 ? beforeClass : afterClass ) );
+													/*jsl:ignore*/
 				$to[0].offsetHeight;				// force a redraw to position this element. *Important*
-
+													/*jsl:end*/
 				if( cssTransitionsSupport ){
-					$(this)[ pluginName ]( 'transitionStart', $from, $to );
+					$(this).carousel( 'transitionStart', $from, $to );
 				} else {
-					$(this)[ pluginName ]( 'transitionEnd', $from, $to );
+					$(this).carousel( 'transitionEnd', $from, $to );
 				}
 
 				// added to allow pagination to track
-				$(this).trigger( pluginName + '.go', $from, $to );
+				$(this).trigger( 'go.carousel', $to );
+				// $(this).trigger( 'go.carousel', $from.index()+offset );
 			},
 
 			update: function(){
-				return $(this).trigger( pluginName + '.update' );
+				return $(this).trigger( 'update.carousel' );
 			},
 
 			transitionStart: function( $from, $to ){
 				var $self = $(this);
 
-				$to.one('transitionend webkitTransitionEnd OTransitionEnd', function() {
-					$self[ pluginName ]( 'transitionEnd', $from, $to );
+
+				// $to.one('transitionend_ webkitTransitionEnd OTransitionEnd', function() {
+				$to.one( transitionEnd, function() {
+					$self.carousel( 'transitionEnd', $from, $to );
 				});
 
 // setTimeout(function(){
@@ -123,27 +137,32 @@
 			},
 
 			addNav: function(){
-				var $self = $( this ),
-					nav = $('<nav></nav>'),
-					prev = $('<a href="#prev" class="prev" aria-hidden="true">Prev</a>'),
+				var $self = $(this),
+					nav,
+					prev,
+					next;
+
+				if (!this.options.nav){
+					nav = $('<nav></nav>');
+					prev = $('<a href="#prev" class="prev" aria-hidden="true">Prev</a>');
 					next = $('<a href="#next" class="next" aria-hidden="true">Next</a>');
+					$(this).append(nav.append(prev).append(next));
+				} else {
+					nav = this.options.nav;
+					next = nav.find('.next');
+					prev = nav.find('.prev');
+				}
 
 				prev.bind('click', function(e){
 					e.preventDefault();
-					$self[ pluginName ]('prev');
+					$self.carousel('prev');
 				});
 				next.bind('click', function(e){
 					e.preventDefault();
-					$self[ pluginName ]('next');
+					$self.carousel('next');
 				});
 
-				return $self.append(
-					nav.append(prev).append(next)
-				);
-
-				// no need; everything is infinitely scrolling
-				// $((curr - scroll < 0 && prev) || (curr + scroll > items - visible && next) || []).addClass('disabled');
-
+				return $(this);
 			},
 
 			destroy: function(){
@@ -153,29 +172,55 @@
 
 
 	$.fn.carousel = function( method ) {
-		if ( methods[method] ) {
-			// return methods[method].apply( this, Array.prototype.slice.call( arguments, 1 ));
-			return $.fn[ pluginName ].prototype[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
-		}
+		var args = arguments,
+			fn = this;
 
-		// don't re-init
-		if( $(this).data('init') ){
-			return $(this);
-		}
+		return this.each(function() {
 
-		// otherwise, engage thrusters
-		if ( typeof method === 'object' || ! method ) {
-			$(this).data('init', true);
-			// return methods.init.apply( this, arguments );
-			return $.fn[ pluginName ].prototype.init.apply( this, arguments );
-		}
-		
-		$.error( 'Method "' +  method + '" does not exist on ye olde carousel' );
+			// check if method exists
+			if (method in $.fn.carousel.prototype) {		// if ( typeof $.fn.carousel.prototype[ method ] == 'function' ) {
+				console.log( method, args );
+				return $.fn.carousel.prototype[ method ].apply( this, Array.prototype.slice.call( args, 1 ));
+			}
+
+			// if no method found and already init'd
+			if( $(this).data('init') ){
+				$.error( 'Method "' +  method + '" does not exist on ye olde carousel' );
+				return $(this);
+			}
+
+			// otherwise, engage thrusters
+			if ( typeof method === 'object' || ! method ) {
+				$(this).data('init', true);
+
+				// store a reference to each carousel
+				// $.fn.carousel.instances.push(this);
+
+				// return methods.init.apply( this, args );
+				return $.fn.carousel.prototype.init.apply( this, args );
+			}
+
+		});
 	};
 
+	// options  // TODO use these
+	$.fn.carousel.options = {
+		transClass: 'trans',
+		outClass: 'out',
+		activeClass: 'active',
+		beforeClass: 'before',
+		afterClass: 'after',
+		speed: 400,
+		slide: 'li',
+		nav: false
+	};
+
+	// store a reference to all carousels on the plugin itself
+	// $.fn.carousel.instances = [];
+
 	// add methods
-	// .... why? methods are already accessible from within closure
-	// ==> if we want to extend the plugin with additional funcitonality, we need to make the element accessible
-	$.extend( $.fn[ pluginName ].prototype, methods ); 
+	// Q.  Why? methods are already accessible from within this closure
+	// A.  if we want to extend the plugin with additional functionality, we need to make the element accessible
+	$.extend( $.fn.carousel.prototype, methods ); 
 
 }(jQuery));
