@@ -17,7 +17,7 @@ module.exports = function(grunt) {
 			'<banner:meta.banner>', 
 			'src/flexicarousel.js', 
 			'src/flexicarousel-paginate.js', 
-			'src/flexicarousel-keyboard.js', 
+			'src/flexicarousel-keyboard.js'
 		],
         dest: 'dist/<%= pkg.name %>.js'
       }

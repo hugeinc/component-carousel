@@ -15,23 +15,26 @@
        -o-transform: translate3d(0, 0, 0);
           transform: translate3d(0, 0, 0);
 }
-.carousel ul { position:relative; overflow:hidden; }
-.carousel li {
-  display:none; position:absolute; top:0; width:100%; height:100%; z-index:1; 
+.carousel nav { -webkit-backface-visibility:hidden; }
+.carousel ul { position:relative; overflow:hidden; -webkit-backface-visibility:hidden; }
+.carousel ul li { position:absolute; top:0; left:0; width:100%; height:100%; z-index:1; }
+.carousel .active { left:0; 			/* -webkit-transform:translateX(0);*/ opacity:1; z-index:2; }
+.carousel .in     { 
+  left:0 !important; /* -webkit-transform:translateX(0);*/ opacity:1 !important; z-index:3; -webkit-backface-visibility: hidden;
   /* Don't animate all properties as it slows down everything: */
-  -webkit-transition: left 0.5s ease, opacity 0.5s ease;
-     -moz-transition: left 0.5s ease, opacity 0.5s ease;
-      -ms-transition: left 0.5s ease, opacity 0.5s ease;
-       -o-transition: left 0.5s ease, opacity 0.5s ease;
-          transition: left 0.5s ease, opacity 0.5s ease;
+  -webkit-transition: left 1s ease, opacity 0.5s ease;
+     -moz-transition: left 1s ease, opacity 0.5s ease;
+      -ms-transition: left 1s ease, opacity 0.5s ease;
+       -o-transition: left 1s ease, opacity 0.5s ease;
+          transition: left 1s ease, opacity 0.5s ease;
 }
-.carousel .active { display:block; left:0;            opacity:1;            z-index:2; }
-.carousel .trans  { display:block; left:0 !important; opacity:1 !important; z-index:3; }
 
-.carousel-slide .before { left:-100%; display:block; }
-.carousel-slide .after { left:100%; display:block; }
+.carousel-slide .before { left:-100%; /*-webkit-transform:translateX(-100%);*/ }
+.carousel-slide .after  { left:100%; /* -webkit-transform:translateX(100%); */ }
 
-.carousel-fade .out { opacity:0; }
-.carousel-fade .before,
-.carousel-fade .after { opacity:0; display:block; }
+.carousel-fade ul li { opacity:0; }
 
+.carousel .indicators { /*display:inline-block;*/ position:absolute; bottom:10px; left:0; margin:0; padding:0; width:100%; text-align:center; z-index:10; }
+.carousel .indicators li { display:inline-block; width:10px; height:10px; margin:5px; border-radius:5px; background:#999; cursor:pointer }
+.carousel .indicators li:hover { background:#ccc; }
+.carousel .indicators li.active { background:#fff; }

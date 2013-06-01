@@ -35,7 +35,7 @@
 		$('body').on( 'init.carousel', function(e, carousel) {
 			console.log('adding pagination listener to', carousel);
 
-			numSlides = $(carousel.options.slide).length;
+			numSlides = $(carousel).find(carousel.options.slide).length;
 			paging = $(carousel).find('.paging');
 			if (!paging.length) {
 				paging = $('<span class="paging"></span>').prependTo( $(carousel).find('nav') );
@@ -44,6 +44,9 @@
 
 			// $(carousel).on( 'go.carousel', $(carousel).carousel('paginate') );	// carousel carousels carouse carousellily
 			$(carousel).on( 'go.carousel', function(to) {
+
+				// clearTimeout();
+
 				// $(this).carousel('paginate', Array.prototype.slice.call(arguments, 1) );	// slice off the event, which is 1st in the arguments
 				$(this).carousel('paginate', arguments[1]);			// update: only pass the current index
 			});

@@ -1,4 +1,343 @@
-/*! Flexicarousel - v0.1.0 - 2013-05-02
+/*! Flexicarousel - v0.1.0 - 2013-05-03
 * https://github.com/apathetic/flexicarousel
 * Copyright (c) 2013 Wes Hatch; Licensed MIT */
-(function(a){var b="trans",c="out",d="active",e="before",f="after",g=400,h="li",i=0,j,k,l=function(){var a,b=document.createElement("fakeelement"),c={transition:"transitionend",OTransition:"oTransitionEnd",MozTransition:"transitionend",WebkitTransition:"webkitTransitionEnd"};for(a in c)if(b.style[a]!==undefined)return k=!0,c[a]}(),m={init:function(b){this.options=a.extend({},a.fn.carousel.options,b),j=a(this).find(h);if(!j.length){console.log("Carousel: no slides found");return}j.eq(0).addClass(d);var c=a(this).attr("data-transition");return c||(k=!1),a(this).carousel("addNav"),a(this).addClass("carousel "+(c?"carousel-"+c:"")),a(this).trigger("init.carousel",this),a(this)},next:function(){a(this).carousel("go",1)},prev:function(){a(this).carousel("go",-1)},go:function(c){if(a(this).find("."+b).length)return;var g=a(this).find("."+d),h=j.eq(g.index()+c);h.length||(h=j.eq(0)),h.addClass(c<0?e:f),h[0].offsetHeight,k?a(this).carousel("transitionStart",g,h):a(this).carousel("transitionEnd",g,h),a(this).trigger("go.carousel",h)},update:function(){return a(this).trigger("update.carousel")},transitionStart:function(d,e){var f=a(this);e.one(l,function(){f.carousel("transitionEnd",d,e)}),d.addClass(c),e.addClass(b)},transitionEnd:function(a,g){j.removeClass([e,f,b].join(" ")),g.addClass(d),a.removeClass([d,c].join(" ")),a.removeClass(c)},addNav:function(){var b=a(this),c,d,e;return this.options.nav?(c=this.options.nav,e=c.find(".next"),d=c.find(".prev")):(c=a("<nav></nav>"),d=a('<a href="#prev" class="prev" aria-hidden="true">Prev</a>'),e=a('<a href="#next" class="next" aria-hidden="true">Next</a>'),a(this).append(c.append(d).append(e))),d.bind("click",function(a){a.preventDefault(),b.carousel("prev")}),e.bind("click",function(a){a.preventDefault(),b.carousel("next")}),a(this)},destroy:function(){}};a.fn.carousel=function(b){var c=arguments,d=this;return this.each(function(){if(b in a.fn.carousel.prototype)return console.log(b,c),a.fn.carousel.prototype[b].apply(this,Array.prototype.slice.call(c,1));if(a(this).data("init"))return a.error('Method "'+b+'" does not exist on ye olde carousel'),a(this);if(typeof b=="object"||!b)return a(this).data("init",!0),a.fn.carousel.prototype.init.apply(this,c)})},a.fn.carousel.options={transClass:"trans",outClass:"out",activeClass:"active",beforeClass:"before",afterClass:"after",speed:400,slide:"li",nav:!1},a.extend(a.fn.carousel.prototype,m)})(jQuery),function(a){var b,c,d={paginate:function(d){var e=a(d).index()+1;c.html(e+" / "+b)},jump:function(a){}};a.extend(a.fn.carousel.prototype,d),a(function(){a("body").on("init.carousel",function(d,e){console.log("adding pagination listener to",e),b=a(e.options.slide).length,c=a(e).find(".paging"),c.length||(c=a('<span class="paging"></span>').prependTo(a(e).find("nav"))),c.html("1 / "+b),a(e).on("go.carousel",function(b){a(this).carousel("paginate",arguments[1])})})})}(jQuery),function(a){var b={addKeys:function(){var b=a(this);a(document).on("keydown",function(a){if(a.keyCode===37||a.keyCode===38||a.keyCode===190)a.preventDefault(),b.carousel("prev");if(a.keyCode===39||a.keyCode===40||a.keyCode===188)a.preventDefault(),b.carousel("next")})}};a.extend(a.fn.carousel.prototype,b),a(function(){a("body").on("init.carousel",function(b,c){a(c).carousel("addKeys")})})}(jQuery);
+
+/*
+ * flexicarousel
+ * https://github.com/apathetic/flexicarousel
+ *
+ * Copyright (c) 2013 Wes Hatch
+ * Licensed under the MIT license.
+ *
+ * Inspired in part by: responsive-carousel, (c) 2012 Filament Group, Inc.
+ * https://github.com/filamentgroup/responsive-carousel
+ */
+
+/*jslint debug: true, evil: false, devel: true*/
+
+(function($) {
+
+	// TODO: optionify:
+	var transClass = 'trans',
+		outClass = 'out',
+		activeClass = 'active',
+		beforeClass = 'before',
+		afterClass = 'after',
+		speed = 400,
+		slide = 'li';
+// ---------------------
+
+
+	var current = 0,
+		slides,
+		cssTransitionsSupport,
+		transitionEnd = (function(){
+			var t,
+				el = document.createElement('fakeelement'),
+				transitions = {
+				'transition': 'transitionend',
+				'OTransition': 'oTransitionEnd',
+				'MozTransition': 'transitionend',
+				'WebkitTransition': 'webkitTransitionEnd'
+			};
+
+			for(t in transitions){
+				if( el.style[t] !== undefined ){
+					cssTransitionsSupport = true;
+					return transitions[t];
+				}
+			}
+		}()),
+		methods = {
+			init: function( opts ){
+				var optsAttr = $(this).attr('data-options');
+				eval('var data='+optsAttr);
+
+				this.options = $.extend( 
+					{}, 
+					$.fn.carousel.options, 
+					data,
+					opts
+				);
+
+				slides = $(this).find(slide);
+				if (!slides.length) { console.log('Carousel: no slides found'); return; }
+				slides.eq(0).addClass( activeClass );
+
+				// only care about transitions if there is one defined to use
+				var trans = $( this ).attr( 'data-transition' );
+				// var trans = trans.split(',');				// TODO multiple transitions possible
+				if( !trans ){ cssTransitionsSupport = false; }
+
+				$(this).carousel( 'addNav' );
+				$(this).carousel( 'autoRotate', this.options.autoRotate );
+				$(this).addClass( 'carousel ' + ( trans ? 'carousel-' + trans : '' ) );
+
+				$(this).trigger( 'init.carousel', this );		// useful for binding additional functionality
+																// we attach the event to the body so that 
+
+				return $(this);
+
+			},
+
+			next: function(){
+				$( this ).carousel( 'go', 1); // current + 1 );
+			},
+
+			prev: function(){
+				$( this ).carousel( 'go', -1); // current - 1 );
+			},
+
+			go: function( offset ){
+
+				if ( $(this).find( '.' + transClass ).length ) { return; }	// you wait. TODO
+
+				// offset %= slides.length;			// keep within bounds for infinite scrolling
+
+				var $from = $(this).find( '.' + activeClass ),
+					$to = slides.eq( $from.index() + offset );
+					// $to = slides.eq(offset);
+
+				if ( !$to.length ){
+					$to = slides.eq(0);				// because slides.eq(-1) will automatically grab last one
+				}
+
+				// position the slide we're going to
+				$to.addClass( ( offset < 0 ? beforeClass : afterClass ) );
+													/*jsl:ignore*/
+				$to[0].offsetHeight;				// force a redraw to position this element. *Important*
+													/*jsl:end*/
+				if( cssTransitionsSupport ){
+					$(this).carousel( 'transitionStart', $from, $to );
+				} else {
+					$(this).carousel( 'transitionEnd', $from, $to );
+				}
+
+				// added to allow pagination to track
+				$(this).trigger( 'go.carousel', $to );
+				// $(this).trigger( 'go.carousel', $from.index()+offset );
+			},
+
+			autoRotate: function( rotate ) {
+				if (rotate) {
+					var self = this;
+					this.timer = setInterval(function(){
+						$(self).carousel('next');
+					}, 5000);
+				} else {
+					clearTimeout(this.timer);
+				}
+			},
+
+			update: function(){
+				return $(this).trigger( 'update.carousel' );
+			},
+
+			transitionStart: function( $from, $to ){
+				var $self = $(this);
+
+				$to.one( transitionEnd, function() {
+					$self.carousel( 'transitionEnd', $from, $to );
+				});
+
+				$from.addClass( outClass );
+				$to.addClass( transClass );
+			},
+
+			transitionEnd: function( $from, $to ){
+				// clean up children
+				slides.removeClass( [ beforeClass, afterClass, transClass ].join( ' ' ) );
+
+				$to.addClass( activeClass );
+
+				$from.removeClass( [ activeClass, outClass ].join( ' ' ) );
+				$from.removeClass( outClass );
+			},
+
+			addNav: function(){
+				var $self = $(this),
+					nav,
+					prev,
+					next;
+
+				if ( this.options.nav || $(this).find('nav').length ){
+					nav = this.options.nav || $(this).find('nav');
+					next = nav.find('.next');
+					prev = nav.find('.prev');
+				} else {
+					nav = $('<nav></nav>');
+					prev = $('<a href="#prev" class="prev" aria-hidden="true">Prev</a>');
+					next = $('<a href="#next" class="next" aria-hidden="true">Next</a>');
+					$(this).append(
+						nav.append(prev).append(next)
+					);
+				}
+
+
+				prev.bind('click', function(e){
+					e.preventDefault();
+					$self.carousel('prev');
+				});
+				next.bind('click', function(e){
+					e.preventDefault();
+					$self.carousel('next');
+				});
+
+				return $(this);
+			},
+
+			destroy: function(){
+				// TODO
+			}
+		};
+
+
+	$.fn.carousel = function( method ) {
+		var args = arguments,
+			fn = this;
+
+		return this.each(function() {
+
+			// check if method exists
+			if (method in $.fn.carousel.prototype) {		// if ( typeof $.fn.carousel.prototype[ method ] == 'function' ) {
+				console.log( method, args );
+				return $.fn.carousel.prototype[ method ].apply( this, Array.prototype.slice.call( args, 1 ));
+			}
+
+			// if no method found and already init'd
+			if( $(this).data('init') ){
+				$.error( 'Method "' +  method + '" does not exist on ye olde carousel' );
+				return $(this);
+			}
+
+			// otherwise, engage thrusters
+			if ( typeof method === 'object' || ! method ) {
+				$(this).data('init', true);
+
+				// store a reference to each carousel
+				// $.fn.carousel.instances.push(this);
+
+				// return methods.init.apply( this, args );
+				return $.fn.carousel.prototype.init.apply( this, args );
+			}
+
+		});
+	};
+
+	// options  // TODO use these
+	$.fn.carousel.options = {
+		transClass: 'trans',
+		outClass: 'out',
+		activeClass: 'active',
+		beforeClass: 'before',
+		afterClass: 'after',
+		speed: 400,
+		slide: 'li',
+		autoRotate: false,
+		nav: false
+	};
+
+	// store a reference to all carousels on the plugin itself
+	// $.fn.carousel.instances = [];
+
+	// add methods
+	// Q.  Why? methods are already accessible from within this closure
+	// A.  if we want to extend the plugin with additional functionality, we need to make the element accessible
+	$.extend( $.fn.carousel.prototype, methods ); 
+
+}(jQuery));
+
+/*
+ * flexicarousel: Adds pagination
+ * https://github.com/apathetic/flexicarousel
+ *
+ * Copyright (c) 2013 Wes Hatch
+ * Licensed under the MIT license.
+ */
+
+/*jslint debug: true, evil: false, devel: true*/
+
+(function($) {
+	
+	var numSlides,
+		paging,
+		methods = {
+			paginate: function(to) {						// ???? I'm passing a jquery obj here, but comes through as HTMLElement ????
+				var index = $(to).index() + 1;
+				paging.html( index +' / '+ numSlides );
+			},
+			// paginate: function(index){
+			//	paging.html( (index+1) +' / '+ numSlides );
+			// },
+			jump: function(to) {
+				
+			}
+		};
+
+	$.extend( $.fn.carousel.prototype, methods ); 
+
+	// wait for the DOM to be assembled before we attach our event listener to it
+	$(function(){
+
+		// we listen to the body since we don't necessarily know where the event 
+		// was attached. It will bubble up.
+		$('body').on( 'init.carousel', function(e, carousel) {
+			console.log('adding pagination listener to', carousel);
+
+			numSlides = $(carousel).find(carousel.options.slide).length;
+			paging = $(carousel).find('.paging');
+			if (!paging.length) {
+				paging = $('<span class="paging"></span>').prependTo( $(carousel).find('nav') );
+			}
+			paging.html( '1 / ' + numSlides);
+
+			// $(carousel).on( 'go.carousel', $(carousel).carousel('paginate') );	// carousel carousels carouse carousellily
+			$(carousel).on( 'go.carousel', function(to) {
+
+				// clearInterval();
+
+				$(this).carousel('paginate', arguments[1]);			// update: only pass the current index
+			});
+		});
+	
+	});
+
+
+}(jQuery));
+
+/*
+ * flexicarousel: Adds keyboard commands to control nav
+ * https://github.com/apathetic/flexicarousel
+ *
+ * Copyright (c) 2013 Wes Hatch
+ * Licensed under the MIT license.
+ */
+
+(function($) {
+	
+	var methods = {
+			addKeys: function(){
+				var carousel = $(this);
+				$(document).on('keydown', function(e) {					// TODO this will trigger all carousels....
+					if( e.keyCode === 37 || e.keyCode === 38 || e.keyCode === 190 ){
+						e.preventDefault();
+						carousel.carousel('prev');
+					}
+					if( e.keyCode === 39 || e.keyCode === 40 || e.keyCode === 188 ){ 
+						e.preventDefault();
+						carousel.carousel('next');
+					}
+				});
+
+			}
+		};
+
+	$.extend( $.fn.carousel.prototype, methods ); 
+
+	$(function(){
+		$('body').on( 'init.carousel', function(e, carousel) {
+			$(carousel).carousel('addKeys');
+		});
+	});
+
+}(jQuery));
