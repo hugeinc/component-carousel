@@ -10,33 +10,61 @@
 		ul, li { margin:0; padding:0; list-style:none; }
 
 		.carousel { width:500px; margin:0 auto; position:relative; }
-		.carousel ul { width:500px; height:300px; }
+		.carousel ul { width:100%; height:300px; }
 		.carousel span { position:absolute; top:20px; left:20px; color:#fff; font-size:16px; }
+		.carousel img { width:100%; height:auto; }
+
 		.carousel nav { position:absolute; top:125px; left:0; width:100%; }
-		.carousel nav .next, 
+		.carousel nav .next,
 		.carousel nav .prev { position:absolute; top:0; height:24px; width:48px; font-size:18px; z-index:10; }
 		.carousel nav .prev { left:-54px; }
 		.carousel nav .next { right:-54px; }
 
+		/* sample breakpoint */
+		@media(min-width:1000px) {
+			.carousel { width:800px; }
+			.carousel ul { height:480px; }
+		}
+
 	</style>
 
-	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+</head>
+<body>
+	<div class="carousel" data-options="{'transition':'slide'}">
+		<ul>
+			<li><span>1</span><img src="http://lorempixel.com/800/480/nature/1" alt="" /></li>
+			<li><span>2</span><img src="http://lorempixel.com/800/480/nature/2" alt="" /></li>
+			<li><span>3</span><img src="http://lorempixel.com/800/480/nature/3" alt="" /></li>
+			<li><span>4</span><img src="http://lorempixel.com/800/480/nature/4" alt="" /></li>
+		</ul>
+		<nav>
+			<a href="#prev" class="prev" aria-hidden="true">Prev</a>
+			<a href="#next" class="next" aria-hidden="true">Next</a>
+		</nav>
+	</div>
+
+	<script src="../../libs/jquery-2.0.0.min.js"></script>
 	<script src="../../src/flexicarousel.js"></script>
 	<script>
 		$(function(){
-			$('.carousel').carousel();
+
+			// set up carousel
+			var $el = $('.carousel').carousel();
+
+			// bind some navigation
+			$('nav .prev').click(function(e){
+				e.preventDefault();
+				$el.carousel('prev');
+			});
+			$('nav .next').click(function(e){
+				e.preventDefault();
+				$el.carousel('next');
+			});
+
 		});
 	</script>
-</head>
-<body>
-	<div class="carousel" data-transition="slide">
-		<ul>
-			<li><span>1</span><img src="http://lorempixel.com/500/300/nature/1" alt="" /></li>
-			<li><span>2</span><img src="http://lorempixel.com/500/300/nature/2" alt="" /></li>
-			<li><span>3</span><img src="http://lorempixel.com/500/300/nature/3" alt="" /></li>
-			<li><span>4</span><img src="http://lorempixel.com/500/300/nature/4" alt="" /></li>
-		</ul>
-	</div>	
+
+
 </body>
 </html>
 

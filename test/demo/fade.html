@@ -13,30 +13,49 @@
 		.carousel ul { width:500px; height:300px; }
 		.carousel span { position:absolute; top:20px; left:20px; color:#fff; font-size:16px; }
 		.carousel nav { position:absolute; top:125px; left:0; width:100%; }
-		.carousel nav .next, 
+		.carousel nav .next,
 		.carousel nav .prev { position:absolute; top:0; height:24px; width:48px; font-size:18px; z-index:10; }
 		.carousel nav .prev { left:-54px; }
 		.carousel nav .next { right:-54px; }
 
 	</style>
 
-	<script src="../../libs/jquery/jquery.js"></script>
-	<script src="../../src/flexicarousel.js"></script>
-	<script>
-		$(function(){
-			$('.carousel').carousel();
-		});
-	</script>
 </head>
 <body>
-	<div class="carousel" data-transition="fade">
+	<div class="carousel" data-transition="fade" data-options="{transition:'fade'}">
 		<ul>
 			<li><span>1</span><img src="http://lorempixel.com/500/300/nature/1" alt="" /></li>
 			<li><span>2</span><img src="http://lorempixel.com/500/300/nature/2" alt="" /></li>
 			<li><span>3</span><img src="http://lorempixel.com/500/300/nature/3" alt="" /></li>
 			<li><span>4</span><img src="http://lorempixel.com/500/300/nature/4" alt="" /></li>
 		</ul>
-	</div>	
+		<nav>
+			<a href="#prev" class="prev" aria-hidden="true">Prev</a>
+			<a href="#next" class="next" aria-hidden="true">Next</a>
+		</nav>
+	</div>
+
+	<script src="../../libs/jquery-2.0.0.min.js"></script>
+	<script src="../../src/flexicarousel.js"></script>
+	<script>
+		$(function(){
+
+			// set up carousel
+			var $el = $('.carousel').carousel();
+
+			// bind some navigation
+			$('nav .prev').click(function(e){
+				e.preventDefault();
+				$el.carousel('prev');
+			});
+			$('nav .next').click(function(e){
+				e.preventDefault();
+				$el.carousel('next');
+			});
+
+		});
+	</script>
+
 </body>
 </html>
 
