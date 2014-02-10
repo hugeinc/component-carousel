@@ -17,31 +17,6 @@
 (function($) {
 
 
-
-
-	// TODO: optionify:
-// 	var inClass = 'in',
-// 			outClass = 'out',
-// 			activeClass = 'active',
-// 			beforeClass = 'before',
-// 			afterClass = 'after',
-// 			// speed = 400,		// set in css
-// 			slide = 'li',
-// 			continuous = true;
-// // ---------------------
-
-  // var browser = {
-  //   addEventListener: !!window.addEventListener,
-  //   touch: ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch,
-  //   transitions: (function(temp) {
-  //     var props = ['transitionProperty', 'WebkitTransition', 'MozTransition', 'OTransition', 'msTransition'];
-  //     for ( var i in props ) if (temp.style[ props[i] ] !== undefined) return true;
-  //     return false;
-  //   })(document.createElement('swipe'))
-  // };
-
-
-
 	// from: http://www.modernizr.com
 	var transitions = (function(){
 		var transitionEnd = (function(){
@@ -68,7 +43,7 @@
 	var current = 0,
 			slides,
 			sliding = false,
-			inClass, activeClass, beforeClass, afterClass,
+			inClass, outClass, activeClass, beforeClass, afterClass,
 			registrationCallbacks = [];
 
 
@@ -88,6 +63,7 @@
 
 			// put these into closure to simplify our lives
 			inClass = this.options.inClass;
+			outClass = this.options.outClass;
 			activeClass = this.options.activeClass;
 			beforeClass = this.options.beforeClass;
 			afterClass = this.options.afterClass;
@@ -181,7 +157,7 @@
 			$to[0].offsetHeight;				// force a repaint to position this element. *Important*
 			/*jsl:end*/
 
-			$to.one( transitionEnd, function() {
+			$to.one( transitions.end, function() {
 				$self.carousel( 'transitionEnd', $from, $to );
 			});
 

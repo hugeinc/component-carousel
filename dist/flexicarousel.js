@@ -181,7 +181,7 @@
 			$to[0].offsetHeight;				// force a repaint to position this element. *Important*
 			/*jsl:end*/
 
-			$to.one( transitionEnd, function() {
+			$to.one( transitions.end, function() {
 				$self.carousel( 'transitionEnd', $from, $to );
 			});
 
