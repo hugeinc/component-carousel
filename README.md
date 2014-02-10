@@ -31,7 +31,6 @@ jQuery(function($) {
 _(Coming soon)_
 
 ## Known Issues
-There's a memory leak at the moment. Each prev/next click triggers a CSS transition, but something's not getting cleaned up afterwards. 
 
 ## Examples
 _(Coming soon)_

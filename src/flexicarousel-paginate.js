@@ -11,12 +11,12 @@
 (function($) {
 
 	var numSlides,
-		paging,
-		methods = {
+			paging,
+			methods = {
 
-			paginate: function(index){
-				paging.html( (index+1) +' / '+ numSlides );
-			},
+				paginate: function(index){
+					paging.html( (index+1) +' / '+ numSlides );
+				},
 
 
 			// addNav: function(){
@@ -29,11 +29,6 @@
 			// 		nav = this.options.nav || $(this).find('nav');
 			// 		next = nav.find('.next');
 			// 		prev = nav.find('.prev');
-			// 	} else {
-			// 		nav = $('<nav></nav>');
-			// 		prev = $('<a href="#prev" class="prev" aria-hidden="true">Prev</a>');
-			// 		next = $('<a href="#next" class="next" aria-hidden="true">Next</a>');
-			// 		$(this).append(nav.append(prev).append(next));
 			// 	}
 
 			// 	prev.bind('click', function(e){
@@ -49,6 +44,25 @@
 			// },
 
 
+			setupNavigation: function(){
+				var $self = $(this),
+						nav = $(this).find(this.options.nav),
+						indicators = $(this).find(this.options.indicators);
+
+				if ( nav ) {
+					nav.find('.prev').bind('click', function(e){
+						e.preventDefault();
+						$self.carousel('prev');
+					});
+					nav.find('.next').bind('click', function(e){
+						e.preventDefault();
+						$self.carousel('next');
+					});
+				}
+				return $(this);
+			},
+
+
 			jump: function(to) {
 
 			}
@@ -57,17 +71,15 @@
 	$.extend( $.fn.carousel.prototype, methods );
 
 	$.fn.carousel.prototype.register(function(){
-			// console.log('adding pagination listener to', this);
-
-			// $(this).carousel( 'addNav' );
 
 			// slightly redundant; this already calculated in core
 			numSlides = $(this).find(this.options.slide).length;
-
 			paging = $(this).find('.paging');
-			if (!paging.length) {
-				paging = $('<span class="paging"></span>').prependTo( $(this).find('nav') );
-			}
+
+			// $(this).carousel( 'addNav' );
+			// if (!paging.length) {
+			// 	paging = $('<span class="paging"></span>').prependTo( $(this).find('nav') );
+			// }
 			paging.html( '1 / ' + numSlides);
 
 			$(this).on( 'go.carousel', function(e, to) {

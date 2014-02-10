@@ -11,25 +11,39 @@
 
 		.carousel { width:500px; margin:0 auto; position:relative; }
 		.carousel ul { width:500px; height:300px; }
-		.carousel nav { position:absolute; top:0; left:0; width:100%; height:100%; }
+
+		.carousel ul li:nth-child(1) { background:#ddd; }
+		.carousel ul li:nth-child(2) { background:#ccc; }
+		.carousel ul li:nth-child(3) { background:#aaa; }
+		.carousel ul li:nth-child(4) { background:#999; }
+
+		.carousel nav { position:absolute; top:0; left:0; width:100%; height:100%; z-index:9 }
 		.carousel nav .next,
-		.carousel nav .prev { position:absolute; top:120px; height:24px; width:48px; font-size:18px; z-index:10; }
+		.carousel nav .prev { position:absolute; top:120px; height:24px; width:48px; font-size:18px; }
 		.carousel nav .prev { left:-54px; }
 		.carousel nav .next { right:-54px; }
 
-		.carousel nav .paging { position:absolute; bottom:-20px; }
+		.carousel nav .paging { position:absolute; bottom:-20px; background: rgba(255, 255, 255, 0.5); }
+
 	</style>
 
 </head>
 <body>
-	<div class="carousel" data-transition="slide">
-		<ul>
+	<div class="carousel" data-options="{'transition':'fade', 'autoRotate':'false', 'nav':'nav'}">
+		<ol class="indicators">
+			<li data-slide-to="0" class="active"></li>
+			<li data-slide-to="1"></li>
+			<li data-slide-to="2"></li>
+			<li data-slide-to="3"></li>
+		</ol>
+		<ul class="items">
 			<li><img src="http://lorempixel.com/500/300/nature/1" alt="" /></li>
 			<li><img src="http://lorempixel.com/500/300/nature/2" alt="" /></li>
 			<li><img src="http://lorempixel.com/500/300/nature/3" alt="" /></li>
 			<li><img src="http://lorempixel.com/500/300/nature/4" alt="" /></li>
 		</ul>
 		<nav>
+			<h3 class="paging">1 / 9</h3>
 			<a href="#prev" class="prev" aria-hidden="true">Prev</a>
 			<a href="#next" class="next" aria-hidden="true">Next</a>
 		</nav>

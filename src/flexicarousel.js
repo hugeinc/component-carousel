@@ -20,15 +20,15 @@
 
 
 	// TODO: optionify:
-	var inClass = 'in',
-			outClass = 'out',
-			activeClass = 'active',
-			beforeClass = 'before',
-			afterClass = 'after',
-			// speed = 400,		// set in css
-			slide = 'li',
-			continuous = true;
-// ---------------------
+// 	var inClass = 'in',
+// 			outClass = 'out',
+// 			activeClass = 'active',
+// 			beforeClass = 'before',
+// 			afterClass = 'after',
+// 			// speed = 400,		// set in css
+// 			slide = 'li',
+// 			continuous = true;
+// // ---------------------
 
   // var browser = {
   //   addEventListener: !!window.addEventListener,
@@ -42,141 +42,174 @@
 
 
 
+	// from: http://www.modernizr.com
+	var transitions = (function(){
+		var transitionEnd = (function(){
+			var t,
+				el = document.createElement('fake'),
+				transitions = {
+				'transition': 'transitionend',
+				'OTransition': 'oTransitionEnd otransitionend',
+				'MozTransition': 'transitionend',
+				'WebkitTransition': 'webkitTransitionEnd'
+			};
+
+			for(t in transitions){
+				if( el.style[t] !== undefined ){
+					return transitions[t];
+				}
+			}
+		}());
+
+		return transitionEnd && {end: transitionEnd}
+	})();
+
 
 	var current = 0,
 			slides,
 			sliding = false,
-			registrationCallbacks = [],
-			transitionSupport,
-			transitionEnd = (function(){
-				var t,
-					el = document.createElement('fakeelement'),
-					transitions = {
-					'transition': 'transitionend',
-					'OTransition': 'oTransitionEnd',
-					'MozTransition': 'transitionend',
-					'WebkitTransition': 'webkitTransitionEnd'
-				};
-
-				for(t in transitions){
-					if( el.style[t] !== undefined ){
-						transitionSupport = true;
-						return transitions[t];
-					}
-				}
-			}()),
-
-		methods = {
-			init: function( opts ){
-
-				var trans;
-				// var data;
-
-				eval('var data=' + $(this).attr('data-options') );				// one accepted use of eval
-				this.options = $.extend( {}, $.fn.carousel.options, data, opts );
-
-				trans = this.options.transition;
-				slides = $(this).find(slide);
-				// if (!slides.length) { console.log('flexicarousel: no slides found'); return; }
-
-				slides.eq(0).addClass( activeClass );
-
-				// only care about transitions if there is one defined to use
-				// var trans = trans.split(',');		// TODO make multiple transitions possible
-				if( !trans ){ transitionSupport = false; }
-
-				$(this).addClass( 'carousel ' + ( trans ? 'carousel-' + trans : '' ) );
-				$(this).trigger( 'init.carousel', this );		// useful for binding additional functionality
-
-				for (var i = 0; i < registrationCallbacks.length; i++) {
-					registrationCallbacks[i].call(this);
-				}
-
-				return $(this);
-			},
-
-			next: function(){
-				$( this ).carousel( 'go', current + 1);
-			},
-
-			prev: function(){
-				$( this ).carousel( 'go', current - 1);
-			},
-
-			go: function( to ){
-
-				var direction,
-						$from,
-						$to;
+			inClass, activeClass, beforeClass, afterClass,
+			registrationCallbacks = [];
 
 
-	      // determine direction:  1: backward, -1: forward
-	      direction = Math.abs(current - to) / (current - to);
+	var methods = {
+		init: function( opts ){
 
-	      // check bounds
-	      if (continuous) {
-					to = (slides.length + (to % slides.length)) % slides.length;
-				} else {
-					to = Math.max( Math.min(slides.length-1, to), 0);
-				}
+			var trans;
+					optsAttr = $(this).attr('data-options');
+			// var data;
 
-	      if (to == current || sliding) { return; }
+			eval('var data='+optsAttr);
+			this.options = $.extend( {}, $.fn.carousel.defaults, data, opts );
 
-				$from = slides.eq(current),
-				$to = slides.eq(to);
+			trans = this.options.transition;
+			slides = $(this).find(this.options.slide);
+			if (!slides.length) { console.log('flexicarousel: no slides found'); return; }
 
-				$to.addClass( ( direction > 0 ? beforeClass : afterClass ) );
-				/*jsl:ignore*/
-				$to[0].offsetHeight;				// force a repaint to position this element. *Important*
-				/*jsl:end*/
+			// put these into closure to simplify our lives
+			inClass = this.options.inClass;
+			activeClass = this.options.activeClass;
+			beforeClass = this.options.beforeClass;
+			afterClass = this.options.afterClass;
 
-				if( transitionSupport ){
-					$(this).carousel( 'transitionStart', $from, $to );
-				} else {
-					$(this).carousel( 'transitionEnd', $from, $to );
-				}
+			slides.eq(0).addClass( activeClass );
 
-				$(this).trigger( 'go.carousel', to );
-				current = to;
-			},
+			// var trans = trans.split(',');		// TODO make multiple transitions possible
+			if( !trans ){ transitions = false; }
 
-			transitionStart: function( $from, $to ){
-				var $self = $(this);
+			$(this).addClass( 'carousel ' + ( trans ? 'carousel-' + trans : '' ) );
+			$(this).trigger( 'init.carousel', this );		// useful for binding additional functionality
 
-				sliding  = true;
-
-				$to.one( transitionEnd, function() {
-					$self.carousel( 'transitionEnd', $from, $to );
-				});
-
-				$from.addClass( outClass );
-				$to.addClass( inClass );
-
-
-				// $to[0].offsetHeight;				// force a repaint to position this element. *Important*
-
-			},
-
-			transitionEnd: function( $from, $to ){
-				$from.removeClass( [ activeClass, outClass ].join( ' ' ) );
-				$to.removeClass( [ beforeClass, afterClass, inClass ].join( ' ' ) );
-				$to.addClass( activeClass );
-				sliding  = false;
-			},
-
-			update: function(){
-				return $(this).trigger( 'update.carousel' );
-			},
-
-			destroy: function(){
-				// TODO
-			},
-
-			register: function( callback ){
-				registrationCallbacks.push(callback);
+			for (var i = 0; i < registrationCallbacks.length; i++) {
+				registrationCallbacks[i].call(this);
 			}
 
-		};
+			return $(this);
+		},
+
+/*
+		autoRotate: function( rotate ) {
+			if (rotate) {
+				var self = this;
+				this.timer = setInterval(function(){
+					$(self).carousel('next');
+				}, 5000);
+			} else {
+				clearTimeout(this.timer);
+			}
+		},
+
+		pause: function (e) {
+			if (!e) this.paused = true
+			if (this.$element.find('.next, .prev').length && transitions) {
+				this.$element.trigger(transitions.end)
+				this.cycle(true)
+			}
+			clearInterval(this.interval)
+			this.interval = null
+			return this
+		},
+*/
+		next: function(){
+			$( this ).carousel( 'go', current + 1);
+		},
+
+		prev: function(){
+			$( this ).carousel( 'go', current - 1);
+		},
+
+		go: function( to ){
+
+			var direction,
+					$from,
+					$to;
+
+
+      // determine direction:  1: backward, -1: forward
+      direction = Math.abs(current - to) / (current - to);
+
+      // check bounds
+      if (this.options.infinite) {
+				to = (slides.length + (to % slides.length)) % slides.length;
+			} else {
+				to = Math.max( Math.min(slides.length-1, to), 0);
+			}
+
+      if (to == current || sliding) { return; }
+
+			$from = slides.eq(current),
+			$to = slides.eq(to);
+
+			$to.addClass( ( direction > 0 ? beforeClass : afterClass ) );
+
+			if( transitions ){
+				$(this).carousel( 'transitionStart', $from, $to );
+			} else {
+				$(this).carousel( 'transitionEnd', $from, $to );
+			}
+
+			$(this).trigger( 'go.carousel', to );
+			current = to;
+		},
+
+		transitionStart: function( $from, $to ){
+			var $self = $(this);
+
+			sliding  = true;
+
+			/*jsl:ignore*/
+			$to[0].offsetHeight;				// force a repaint to position this element. *Important*
+			/*jsl:end*/
+
+			$to.one( transitionEnd, function() {
+				$self.carousel( 'transitionEnd', $from, $to );
+			});
+
+			$from.addClass( outClass );
+			$to.addClass( inClass );
+
+
+			// $to[0].offsetHeight;				// force a repaint to position this element. *Important*
+
+		},
+
+		transitionEnd: function( $from, $to ){
+			$from.removeClass( [ activeClass, outClass ].join( ' ' ) );
+			$to.removeClass( [ beforeClass, afterClass, inClass ].join( ' ' ) );
+			$to.addClass( activeClass );
+			sliding  = false;
+			$(this).trigger('slid');
+		},
+
+		destroy: function(){
+			// TODO
+		},
+
+		register: function( callback ){
+			registrationCallbacks.push(callback);
+		}
+
+	};
 
 
 	$.fn.carousel = function( method ) {
@@ -209,15 +242,17 @@
 	};
 
 	// options  // TODO use these
-	$.fn.carousel.options = {
+	$.fn.carousel.defaults = {
 		inClass: 'in',
 		outClass: 'out',
 		activeClass: 'active',
 		beforeClass: 'before',
 		afterClass: 'after',
-		// speed: 600,	// set in css
-		slide: 'li',
-		continuous: true
+		// indicators: 'indicators',
+		// speed: 400,
+		slide: 'ul li',
+		infinite: true,
+		autoRotate: false,
 	};
 
 
