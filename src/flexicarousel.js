@@ -5,8 +5,6 @@
  * Copyright (c) 2013 Wes Hatch
  * Licensed under the MIT license.
  *
- * Inspired in part by: responsive-carousel, (c) 2012 Filament Group, Inc.
- * https://github.com/filamentgroup/responsive-carousel
  */
 
 /*jslint debug: true, evil: false, devel: true*/
@@ -15,6 +13,21 @@
 // TODO make jquery agnostic
 
 (function($) {
+
+
+
+  // var browser = {
+  //   addEventListener: !!window.addEventListener,
+  //   touch: ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch,
+  //   transitions: (function(temp) {
+  //     var props = ['transitionProperty', 'WebkitTransition', 'MozTransition', 'OTransition', 'msTransition'];
+  //     for ( var i in props ) if (temp.style[ props[i] ] !== undefined) return true;
+  //     return false;
+  //   })(document.createElement('swipe'))
+  // };
+
+
+
 
 
 	// from: http://www.modernizr.com
@@ -106,6 +119,7 @@
 			return this
 		},
 */
+
 		next: function(){
 			$( this ).carousel( 'go', current + 1);
 		},
@@ -163,10 +177,6 @@
 
 			$from.addClass( outClass );
 			$to.addClass( inClass );
-
-
-			// $to[0].offsetHeight;				// force a repaint to position this element. *Important*
-
 		},
 
 		transitionEnd: function( $from, $to ){
