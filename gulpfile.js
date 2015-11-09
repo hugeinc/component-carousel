@@ -65,7 +65,7 @@ gulp.task('clean', function() {
 
 gulp.task('connect', function() {
 	connect.server({
-		port: 8001
+		port: 8003
 	});
 });
 
