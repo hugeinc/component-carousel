@@ -1,4 +1,4 @@
-_oldish/
+.gitignore
 .DS_Store
-test/demo/enmasse.html
-
+/node_modules
+npm-debug.log

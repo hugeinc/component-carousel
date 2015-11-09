@@ -1,39 +1,32 @@
 {
-  "name": "simplecarousel",
-  "title": "Simple Carousel",
-  "version": "0.2.0",
-  "description": "A carousel that'll dynamically adapt its width: it will grow or shrink alongside a site that’s resizing via css media queries. Uses CSS3 transforms for its transitions and is touch-enabled",
-  "author": {
-    "name": "Wes Hatch",
-    "email": "whatch@hugeinc.com"
+  "name": "flexicarousel",
+  "version": "0.1.0",
+  "description": "A carousel that'll use CSS to dynamically adapt its width. Uses transforms for its transitions and is touch-enabled",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/apathetic/xxx.git"
+    "url": "https://github.com/apathetic/flexicarousel.git"
   },
-  "bugs": {
-    "url": "https://github.com/apathetic/xxx/issues"
-  },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/apathetic/xxx/blob/master/LICENSE-MIT"
-    }
+  "keywords": [
+    "carousel"
   ],
-  "engines": {
-    "node": ">= 0.6.0"
-  },
-  "devDependencies": {
-    "grunt": "~0.4.2",
-    "grunt-contrib-clean": "~0.5.0",
-    "grunt-contrib-compress": "^0.12.0",
-    "grunt-contrib-connect": "~0.6.0",
-    "grunt-contrib-jshint": "~0.8.0",
-    "grunt-contrib-uglify": "^0.4.0",
-    "grunt-contrib-watch": "~0.5.3",
-    "grunt-karma": "^0.8.3",
-    "karma": "^0.12.16",
-    "karma-jasmine": "^0.1.5",
-    "karma-phantomjs-launcher": "^0.1.4"
+  "author": "wes hatch",
+  "license": "MIT",
+  "dependencies": {
+    "del": "^2.0.2",
+    "gulp": "^3.9.0",
+    "gulp-connect": "^2.2.0",
+    "gulp-jshint": "^1.12.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.4.2",
+    "jasmine-core": "^2.3.4",
+    "karma": "^0.13.15",
+    "karma-chrome-launcher": "^0.2.1",
+    "karma-jasmine": "^0.3.6"
   }
 }
