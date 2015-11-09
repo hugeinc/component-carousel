@@ -1,13 +1,39 @@
 {
-  "name": "jquery-plugin",
-  "version": "0.0.0-ignored",
+  "name": "simplecarousel",
+  "title": "Simple Carousel",
+  "version": "0.2.0",
+  "description": "A carousel that'll dynamically adapt its width: it will grow or shrink alongside a site that’s resizing via css media queries. Uses CSS3 transforms for its transitions and is touch-enabled",
+  "author": {
+    "name": "Wes Hatch",
+    "email": "whatch@hugeinc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/apathetic/xxx.git"
+  },
+  "bugs": {
+    "url": "https://github.com/apathetic/xxx/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/apathetic/xxx/blob/master/LICENSE-MIT"
+    }
+  ],
   "engines": {
     "node": ">= 0.6.0"
   },
-  "scripts": {
-    "test": "grunt qunit"
-  },
   "devDependencies": {
-    "grunt": "~0.3.17"
+    "grunt": "~0.4.2",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-compress": "^0.12.0",
+    "grunt-contrib-connect": "~0.6.0",
+    "grunt-contrib-jshint": "~0.8.0",
+    "grunt-contrib-uglify": "^0.4.0",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-karma": "^0.8.3",
+    "karma": "^0.12.16",
+    "karma-jasmine": "^0.1.5",
+    "karma-phantomjs-launcher": "^0.1.4"
   }
 }

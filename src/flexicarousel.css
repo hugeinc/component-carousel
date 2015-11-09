@@ -1,53 +1,102 @@
 /*
  * flexicarousel
- * https://github.com/apathetic/flexicarousel
+ * https://github.com/apathetic/flexicarousel-2
  *
- * Copyright (c) 2013 Wes Hatch
+ * Copyright (c) 2014 Wes Hatch
  * Licensed under the MIT license.
  */
+		/* -------------------------------------
+			CAROUSEL STYLES
+		------------------------------------- */
 
-.carousel {
-  /* width:xxx; height:yyy; */
-  /* force hardware acceleration */
-  -webkit-transform: translate3d(0, 0, 0);
-     -moz-transform: translate3d(0, 0, 0);
-      -ms-transform: translate3d(0, 0, 0);
-       -o-transform: translate3d(0, 0, 0);
-          transform: translate3d(0, 0, 0);
-}
-.carousel nav { -webkit-backface-visibility:hidden; }
-.carousel ul { position:relative; overflow:hidden; -webkit-backface-visibility:hidden; }
-.carousel ul li { position:absolute; top:0; left:0; width:100%; height:100%; z-index:1; }
-.carousel .active { left:0; 			/* -webkit-transform:translateX(0);*/ opacity:1; z-index:2; }
-.carousel .in {
-  left:0 !important; /* -webkit-transform:translateX(0);*/ opacity:1 !important; z-index:3; -webkit-backface-visibility: hidden;
-  /* Don't animate all properties as it slows down everything: */
-  -webkit-transition: left 1s ease, opacity 0.5s ease;
-     -moz-transition: left 1s ease, opacity 0.5s ease;
-      -ms-transition: left 1s ease, opacity 0.5s ease;
-       -o-transition: left 1s ease, opacity 0.5s ease;
-          transition: left 1s ease, opacity 0.5s ease;
-}
+		.carousel ul {
+			white-space: nowrap;
+			width: 100%;
+			/*font-size: 0;*/
+			/*position: relative;*/
+		}
 
-.carousel-slide .before { left:-100%; /*-webkit-transform:translateX(-100%);*/ }
-.carousel-slide .after  { left:100%; /* -webkit-transform:translateX(100%); */ }
+		.carousel .animate {
+		  -webkit-transition: all 0.4s ease;
+		     -moz-transition: all 0.4s ease;
+		       -o-transition: all 0.4s ease;
+		          transition: all 0.4s ease;
+		}
 
-.carousel-fade li { opacity:0; }
+		.carousel .wrap {
+			display: -webkit-box;
+			display: -webkit-flex;
+			display: -moz-box;
+			display: -ms-flexbox;
+			display: flex;
+
+			-webkit-box-wrap: nowrap;
+			-ms-flexbox-wrap: nowrap;
+			   -moz-box-wrap: nowrap;
+			       flex-wrap: nowrap;
+		}
+
+		.carousel .wrap > li {
+			display:inline-block;	/* fallback */
+			vertical-align: top;	/* fallback */
+			position:relative;		/* fallback */
+			width:100%;				/* fallback */
+
+			cursor: move;
+			/*flex: 1 0 100%;*/
+
+			-webkit-box-flex: 1 0 100%;
+			    -webkit-flex: 1 0 100%;
+			        -ms-flex: 1 0 100%;
+			            flex: 1 0 100%;
+
+		}
 
 
 
 
-/*.carousel-slide .in  { left:0 !important; z-index:3; }
-.carousel-slide .before { left:-100%; }
-.carousel-slide .after { left:100%; }
+		/* -------------------------------------
+			SAMPLE NAVIGATION STYLES
+		------------------------------------- */
+		.carousel nav {
+			width: 100%;
+			text-align: center;
+			font-size: 16px;
+			margin: 1em;
+		}
+		.carousel nav .prev,
+		.carousel nav .next {
+			display:block;
+			position:absolute;
+			top: 50%;
+			margin-top: -1em;
+			width: 2em;
+			height: 2em;
+			line-height: 2em;
+			font-size: 2em;
+			border-radius: 50%;
+			text-decoration: none;
+			color: white;
+			background-color: purple;
+		}
+		.carousel nav .next { right: -1em; }
+		.carousel nav .prev { left:	-1em; }
 
-.carousel-fade .in { opacity:1; }
-.carousel-fade .out { opacity:0; }
-.carousel-fade li { opacity:0; }*/
+		.carousel nav .next.disabled,
+		.carousel nav .prev.disabled {
+			opacity: 0.2;
+		}
 
-
-
-.carousel .indicators { /*display:inline-block;*/ position:absolute; bottom:10px; left:0; margin:0; padding:0; width:100%; text-align:center; z-index:10; }
-.carousel .indicators li { display:inline-block; width:10px; height:10px; margin:5px; border-radius:5px; background:#999; cursor:pointer }
-.carousel .indicators li:hover { background:#ccc; }
-.carousel .indicators li.active { background:#fff; }
+		.carousel nav li {
+			display: inline-block;
+			cursor: pointer;
+			width: 	12px;
+			height: 12px;
+			margin: 0.5em;
+			border-radius: 50%;
+			border: 2px solid #999;
+		}
+		.carousel nav li.active {
+			border-color: #aaa;
+			background: #aaa;
+		}

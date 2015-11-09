@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+
+	<title>Flexicarousel Slide</title>
+
+	<link rel="stylesheet" href="../../src/simplecarousel.css" type="text/css">
+	<style type="text/css" media="screen">
+
+		* { box-sizing: border-box; }
+		body, html { height:100%; margin:0; padding:0; overflow-x:hidden; }
+		header, footer { background-color: #ddd; padding: 20px 0; }
+		h1 { text-align: center; }
+		ul, li { margin:0; padding:0; list-style:none; }
+		hr { margin: 5em 0; }
+		button { display: inline-block; }
+		h2 { text-align: center; }
+		h3 { position:absolute; font-size:3em; color:#fff; padding:2%; margin:0; z-index:1; }
+
+		.container {
+			margin:	0 auto;
+			padding: 0 6%;
+			max-width:1600px;
+			min-width:320px;
+		}
+		.carousel {
+			width: 100%;
+			margin:	0 auto;
+			position:relative;
+		}
+		.carousel li {
+			padding: 2px;
+			max-height: 600px;
+			overflow: hidden;
+		}
+		.carousel img {
+			width:100%;
+			height:auto;
+			/*max-width: 400px;*/
+			/*margin: 0 auto;*/
+			/*display: block;*/
+		}
+
+		.clip {
+			overflow: hidden;
+		}
+
+		/* TEN */
+		@media(min-width:480px) {
+			#ten .wrap > li {
+				-webkit-flex-basis: 100%;
+				   -moz-flex-basis: 100%;
+				          -ms-flex: 1 0 100%;
+				        flex-basis: 100%;
+			}
+		}
+		@media(min-width:800px) {
+			#ten .wrap > li {
+				flex-basis: 50%;
+			}
+			#ten li.active img,
+			#ten li.active + li img
+			{
+				-webkit-filter: brightness(100%);
+				opacity: 1;
+			}
+		}
+		@media(min-width:1120px) {
+			#ten .wrap li {
+				flex-basis: 33.3333%;
+			}
+			#ten li img {
+				-webkit-filter: brightness(30%);
+			}
+
+			#ten li.active img,
+			#ten li.active + li img,
+			#ten li.active + li + li img
+			{
+				-webkit-filter: brightness(100%);
+				opacity: 1;
+			}
+		}
+
+
+
+		/* BILLION */
+		#billion {
+			width: 50%;
+			min-width: 400px;
+			margin: 0 auto;
+  			padding: 0 100px;
+  		}
+
+		#billion li {
+			flex-basis: 100%;
+		}
+
+		#billion nav .prev { left: 1em; }
+		#billion nav .next { right: 1em; }
+
+
+
+
+		/* SEVEN */
+		#seven .wrap > li {
+			background-color: #bbb;
+			padding: 2%;
+			text-align: center;
+			/*flex-basis: 33.3333%;*/
+
+			/* margin: 10px;	*/
+			/* NOTE: these slides are flex: 1 0 100%, while margin will add to the calculated width. So... */
+
+			border: 10px solid transparent;
+	        background-clip: padding-box;
+		}
+		@media screen and (min-width:480px) {
+			#seven .wrap > li {
+				flex-basis: 33.3333%;
+			}
+		}
+		@media screen and (min-width:800px) {
+			#seven .wrap > li {
+				flex-basis: 25%;
+			}
+		}
+		@media screen and (min-width:1120px) {
+			#seven .wrap > li {
+				flex-basis: 20%;
+			}
+		}
+
+
+
+	</style>
+
+</head>
+<body>
+
+
+	<header>
+		<h1>CAROUSEL TEN BILLION</h1>
+	</header>
+
+
+	<div class="container">
+
+
+		<h2>Infinite, overflowing</h2>
+		<div class="carousel" id="ten">
+			<ul class="wrap">
+				<li>
+					<h3>1</h3>
+					<img src="/demo/images/face1.jpg">
+				</li>
+				<li>
+					<h3>2</h3>
+					<img src="/demo/images/face2.jpg">
+				</li>
+				<li>
+					<h3>3</h3>
+					<img src="/demo/images/face3.jpg">
+				</li>
+				<li>
+					<h3>4</h3>
+					<img src="/demo/images/face4.jpg">
+				</li>
+				<li>
+					<h3>5</h3>
+					<img src="/demo/images/face1.jpg">
+				</li>
+				<li>
+					<h3>6</h3>
+					<img src="/demo/images/face2.jpg">
+				</li>
+				<li>
+					<h3>7</h3>
+					<img src="/demo/images/face3.jpg">
+				</li>
+			</ul>
+
+			<nav>
+				<a href="" class="prev"> ‹ </a>
+				<ul class="bullets">
+					<li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+				</ul>
+				<a href="" class="next"> › </a>
+			</nav>
+		</div>
+
+
+		<hr />
+
+
+		<h2>Bounded, clipped</h2>
+		<div class="carousel clip" id="billion">
+			<ul class="wrap">
+				<li>
+					<h3>1</h3>
+					<img src="/demo/images/face1.jpg">
+				</li>
+				<li>
+					<h3>2</h3>
+					<img src="/demo/images/face2.jpg">
+				</li>
+				<li>
+					<h3>3</h3>
+					<img src="/demo/images/face3.jpg">
+				</li>
+			</ul>
+
+			<nav>
+				<a href="" class="prev"> ‹ </a>
+				<a href="" class="next"> › </a>
+			</nav>
+		</div>
+
+
+		<hr />
+
+
+		<h2>Infinite, scroll by 3</h2>
+		<div class="carousel" id="seven">
+			<div class="clip">
+				<ul class="wrap">
+					<li>
+						<h3>1</h3>
+						<img src="/demo/images/face1.jpg">
+					</li>
+					<li>
+						<h3>2</h3>
+						<img src="/demo/images/face2.jpg">
+					</li>
+					<li>
+						<h3>3</h3>
+						<img src="/demo/images/face3.jpg">
+					</li>
+					<li>
+						<h3>4</h3>
+						<img src="/demo/images/face2.jpg">
+					</li>
+					<li>
+						<h3>5</h3>
+						<img src="/demo/images/face1.jpg">
+					</li>
+					<li>
+						<h3>6</h3>
+						<img src="/demo/images/face2.jpg">
+					</li>
+					<li>
+						<h3>7</h3>
+						<img src="/demo/images/face3.jpg">
+					</li>
+				</ul>
+			</div>
+
+			<nav>
+				<a href="" class="prev"> ‹ </a>
+				<a href="" class="next"> › </a>
+			</nav>
+		</div>
+
+	</div>
+
+
+	<footer>
+		...
+	</footer>
+
+
+	<script src="../../src/simplecarousel.js"></script>
+	<script>
+
+        /**
+         * Removes whitespace nodes. Useful to normalize inline-block layouts (IE)
+         * @param  {DOMElement} handle the element to remove whitespace nodes from
+         * @return {void}
+         */
+        function removeEmptyNodes (handle) {
+            var spaces = _.filter(handle.childNodes,
+                function(el) {
+                    return (el.nodeType === 3 && !/\S/.test(el.nodeValue));
+                });
+
+            _.each(spaces, function(space) {
+                handle.removeChild(space);
+            });
+        }
+
+
+		function updateNav(i) {
+			var bullets = this.handle.querySelectorAll('.bullets li');
+			var next = this.handle.querySelector('.next');
+			var prev = this.handle.querySelector('.prev');
+
+			if (!this.options.infinite) {
+				if (prev) {
+					prev.classList.toggle('disabled', i === 0);
+				}
+				if (next) {
+					next.classList.toggle('disabled', i + 1 >= this.numSlides);
+				}
+			}
+
+			if (bullets && bullets.length > 0) {
+				Array.prototype.forEach.call(bullets, function(bullet){
+					bullet.classList.remove('active');
+				});
+				bullets[i].classList.add('active');
+			}
+		}
+
+
+		// ===================================================================
+
+
+		var container = document.querySelector('#ten');
+		var bullets = container.querySelectorAll('.bullets li');
+		var carousel = new Carousel(container, {
+			'onSlide': updateNav,
+			'display': 4,
+			'offscreen': 2
+		});
+
+		container.querySelector('.prev').addEventListener('click', function(e){
+			e.preventDefault();
+			carousel.prev();
+		});
+
+		container.querySelector('.next').addEventListener('click', function(e){
+			e.preventDefault();
+			carousel.next();
+		});
+
+		Array.prototype.forEach.call(bullets, function(bullet, index){
+			bullet.addEventListener('click', function(e) {
+				e.preventDefault();
+				carousel.go(index);
+			});
+		});
+
+
+
+		// ===================================================================
+
+		var container2 = document.querySelector('#billion');
+		var carousel2 = new Carousel(container2, {
+			'infinite': false,
+			'onSlide': updateNav
+		});
+
+		container2.querySelector('.prev').addEventListener('click', function(e){
+			e.preventDefault();
+			carousel2.prev();
+		});
+
+		container2.querySelector('.next').addEventListener('click', function(e){
+			e.preventDefault();
+			carousel2.next();
+		});
+
+
+
+		// ===================================================================
+
+		var skip = 3;
+		var container3 = document.querySelector('#seven');
+		var carousel3 = new Carousel(container3, {
+			infinite: true,
+			display: 5,
+			offscreen: skip
+		});
+
+		container3.querySelector('.prev').addEventListener('click', function(e){
+			e.preventDefault();
+			carousel3.go(carousel3.current + skip);
+		});
+
+		container3.querySelector('.next').addEventListener('click', function(e){
+			e.preventDefault();
+			carousel3.go(carousel3.current - skip);
+		});
+
+
+
+
+
+
+	</script>
+
+</body>
+</html>
+
