@@ -1,294 +1,315 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, user-scalable=no">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>Navigator</title>
+	<meta name="viewport" content="width=device-width">
 
-	<title>Flexicarousel Slide</title>
+	<link rel="stylesheet" href="styles.css">
+	<script src="../dist/flexicarousel.min.js"></script>
 
-	<link rel="stylesheet" href="../../src/simplecarousel.css" type="text/css">
-	<style type="text/css" media="screen">
-
-		* { box-sizing: border-box; }
-		body, html { height:100%; margin:0; padding:0; overflow-x:hidden; }
-		header, footer { background-color: #ddd; padding: 20px 0; }
-		h1 { text-align: center; }
-		ul, li { margin:0; padding:0; list-style:none; }
-		hr { margin: 5em 0; }
-		button { display: inline-block; }
-		h2 { text-align: center; }
-		h3 { position:absolute; font-size:3em; color:#fff; padding:2%; margin:0; z-index:1; }
-
-		.container {
-			margin:	0 auto;
-			padding: 0 6%;
-			max-width:1600px;
-			min-width:320px;
-		}
-		.carousel {
-			width: 100%;
-			margin:	0 auto;
-			position:relative;
-		}
-		.carousel li {
-			padding: 2px;
-			max-height: 600px;
-			overflow: hidden;
-		}
-		.carousel img {
-			width:100%;
-			height:auto;
-			/*max-width: 400px;*/
-			/*margin: 0 auto;*/
-			/*display: block;*/
-		}
-
-		.clip {
-			overflow: hidden;
-		}
-
-		/* TEN */
-		@media(min-width:480px) {
-			#ten .wrap > li {
-				-webkit-flex-basis: 100%;
-				   -moz-flex-basis: 100%;
-				          -ms-flex: 1 0 100%;
-				        flex-basis: 100%;
-			}
-		}
-		@media(min-width:800px) {
-			#ten .wrap > li {
-				flex-basis: 50%;
-			}
-			#ten li.active img,
-			#ten li.active + li img
-			{
-				-webkit-filter: brightness(100%);
-				opacity: 1;
-			}
-		}
-		@media(min-width:1120px) {
-			#ten .wrap li {
-				flex-basis: 33.3333%;
-			}
-			#ten li img {
-				-webkit-filter: brightness(30%);
-			}
-
-			#ten li.active img,
-			#ten li.active + li img,
-			#ten li.active + li + li img
-			{
-				-webkit-filter: brightness(100%);
-				opacity: 1;
-			}
-		}
-
-
-
-		/* BILLION */
-		#billion {
-			width: 50%;
-			min-width: 400px;
-			margin: 0 auto;
-  			padding: 0 100px;
-  		}
-
-		#billion li {
-			flex-basis: 100%;
-		}
-
-		#billion nav .prev { left: 1em; }
-		#billion nav .next { right: 1em; }
-
-
-
-
-		/* SEVEN */
-		#seven .wrap > li {
-			background-color: #bbb;
-			padding: 2%;
-			text-align: center;
-			/*flex-basis: 33.3333%;*/
-
-			/* margin: 10px;	*/
-			/* NOTE: these slides are flex: 1 0 100%, while margin will add to the calculated width. So... */
-
-			border: 10px solid transparent;
-	        background-clip: padding-box;
-		}
-		@media screen and (min-width:480px) {
-			#seven .wrap > li {
-				flex-basis: 33.3333%;
-			}
-		}
-		@media screen and (min-width:800px) {
-			#seven .wrap > li {
-				flex-basis: 25%;
-			}
-		}
-		@media screen and (min-width:1120px) {
-			#seven .wrap > li {
-				flex-basis: 20%;
-			}
-		}
-
-
-
-	</style>
+	<!-- demo stuffs -->
+	<link rel="stylesheet" href="showcase-styles.css">
+	<script src="https://cdn.rawgit.com/apathetic/stickynav/master/dist/stickynav.min.js"></script>
+	<script>
+		window.addEventListener('DOMContentLoaded', function() {
+			stickyNav.init({ nav: '#sticky' });
+		});
+	</script>
+	<!-- end demo stuffs -->
 
 </head>
 <body>
 
 
 	<header>
-		<h1>CAROUSEL TEN BILLION</h1>
+		<h1>Flexicarousel.</h1>
 	</header>
 
-
-	<div class="container">
-
-
-		<h2>Infinite, overflowing</h2>
-		<div class="carousel" id="ten">
-			<ul class="wrap">
-				<li>
-					<h3>1</h3>
-					<img src="/demo/images/face1.jpg">
-				</li>
-				<li>
-					<h3>2</h3>
-					<img src="/demo/images/face2.jpg">
-				</li>
-				<li>
-					<h3>3</h3>
-					<img src="/demo/images/face3.jpg">
-				</li>
-				<li>
-					<h3>4</h3>
-					<img src="/demo/images/face4.jpg">
-				</li>
-				<li>
-					<h3>5</h3>
-					<img src="/demo/images/face1.jpg">
-				</li>
-				<li>
-					<h3>6</h3>
-					<img src="/demo/images/face2.jpg">
-				</li>
-				<li>
-					<h3>7</h3>
-					<img src="/demo/images/face3.jpg">
-				</li>
-			</ul>
-
-			<nav>
-				<a href="" class="prev"> ‹ </a>
-				<ul class="bullets">
-					<li></li><li></li><li></li><li></li><li></li><li></li><li></li>
-				</ul>
-				<a href="" class="next"> › </a>
-			</nav>
+	<nav>
+		<div id="sticky">
+			<div class="container">
+				<nav data-autogenerate="true">
+					<ul></ul>
+				</nav>
+			</div>
 		</div>
+	</nav>
+
+	<main class="site left-rail">
+		<section data-nav="About" id="about">
+			<div class="container">
+				<h2>About</h2>
+				<p>A flexible carousel that works on both desktop and mobile devices, and is compleletely responsive. Additionally, there is a strict separation
+				of state and style. That is to say, javascript maintains the state of the carousel, while the CSS is responsible for the presentation and display
+				of this state</p>
+
+				<h3>Implementation</h3>
+				<p>Flexicarousel enables a touch-based interface (ie. sliding slides via dragging) while also respecting the separation of state and behaviour.
+				You can swipe to drag a slide yet still use CSS to control how the slide transitions will behave. You can also choose to change slides by
+				using the exposed API. The carousel works on both desktop and mobile, using only CSS to control the look and feel. The result is a basic yet
+				robust carousel, weighing in at under 2KB</p>
+			</div>
+		</section>
+
+		<section data-nav="Download" id="download">
+			<div class="container">
+				<h2>Download</h2>
+				<h3>Github</h3>
+				<p><a href="https://github.com/apathetic/flexicarousel">Get it from the Github repo</a></p>
+			</div>
+		</section>
+
+		<section data-nav="Example" id="example">
+			<div class="container">
+				<h2>Example</h2>
+
+				<h3>Infinite, overflowing</h3>
+				<div class="carousel" id="ten">
+					<ul class="wrap">
+						<li>
+							<h3>1</h3>
+							<img src="/demo/images/face1.jpg">
+						</li>
+						<li>
+							<h3>2</h3>
+							<img src="/demo/images/face2.jpg">
+						</li>
+						<li>
+							<h3>3</h3>
+							<img src="/demo/images/face3.jpg">
+						</li>
+						<li>
+							<h3>4</h3>
+							<img src="/demo/images/face4.jpg">
+						</li>
+						<li>
+							<h3>5</h3>
+							<img src="/demo/images/face1.jpg">
+						</li>
+						<li>
+							<h3>6</h3>
+							<img src="/demo/images/face2.jpg">
+						</li>
+						<li>
+							<h3>7</h3>
+							<img src="/demo/images/face3.jpg">
+						</li>
+					</ul>
+
+					<nav>
+						<a href="" class="prev"> ‹ </a>
+						<ul class="bullets">
+							<li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+						</ul>
+						<a href="" class="next"> › </a>
+					</nav>
+				</div>
 
 
-		<hr />
+				<hr />
 
 
-		<h2>Bounded, clipped</h2>
-		<div class="carousel clip" id="billion">
-			<ul class="wrap">
-				<li>
-					<h3>1</h3>
-					<img src="/demo/images/face1.jpg">
-				</li>
-				<li>
-					<h3>2</h3>
-					<img src="/demo/images/face2.jpg">
-				</li>
-				<li>
-					<h3>3</h3>
-					<img src="/demo/images/face3.jpg">
-				</li>
-			</ul>
+				<h3>Bounded, clipped</h3>
+				<div class="carousel clip" id="billion">
+					<ul class="wrap">
+						<li>
+							<h3>1</h3>
+							<img src="/demo/images/face1.jpg">
+						</li>
+						<li>
+							<h3>2</h3>
+							<img src="/demo/images/face2.jpg">
+						</li>
+						<li>
+							<h3>3</h3>
+							<img src="/demo/images/face3.jpg">
+						</li>
+					</ul>
 
-			<nav>
-				<a href="" class="prev"> ‹ </a>
-				<a href="" class="next"> › </a>
-			</nav>
-		</div>
-
-
-		<hr />
+					<nav>
+						<a href="" class="prev"> ‹ </a>
+						<a href="" class="next"> › </a>
+					</nav>
+				</div>
 
 
-		<h2>Infinite, scroll by 3</h2>
-		<div class="carousel" id="seven">
-			<div class="clip">
-				<ul class="wrap">
-					<li>
-						<h3>1</h3>
-						<img src="/demo/images/face1.jpg">
-					</li>
-					<li>
-						<h3>2</h3>
-						<img src="/demo/images/face2.jpg">
-					</li>
-					<li>
-						<h3>3</h3>
-						<img src="/demo/images/face3.jpg">
-					</li>
-					<li>
-						<h3>4</h3>
-						<img src="/demo/images/face2.jpg">
-					</li>
-					<li>
-						<h3>5</h3>
-						<img src="/demo/images/face1.jpg">
-					</li>
-					<li>
-						<h3>6</h3>
-						<img src="/demo/images/face2.jpg">
-					</li>
-					<li>
-						<h3>7</h3>
-						<img src="/demo/images/face3.jpg">
-					</li>
+				<hr />
+
+
+				<h3>Infinite, scroll by 3</h3>
+				<div class="carousel" id="seven">
+					<div class="clip">
+						<ul class="wrap">
+							<li>
+								<h3>1</h3>
+								<img src="/demo/images/face1.jpg">
+							</li>
+							<li>
+								<h3>2</h3>
+								<img src="/demo/images/face2.jpg">
+							</li>
+							<li>
+								<h3>3</h3>
+								<img src="/demo/images/face3.jpg">
+							</li>
+							<li>
+								<h3>4</h3>
+								<img src="/demo/images/face2.jpg">
+							</li>
+							<li>
+								<h3>5</h3>
+								<img src="/demo/images/face1.jpg">
+							</li>
+							<li>
+								<h3>6</h3>
+								<img src="/demo/images/face2.jpg">
+							</li>
+							<li>
+								<h3>7</h3>
+								<img src="/demo/images/face3.jpg">
+							</li>
+						</ul>
+					</div>
+
+					<nav>
+						<a href="" class="prev"> ‹ </a>
+						<a href="" class="next"> › </a>
+					</nav>
+				</div>
+
+			</div>
+		</section>
+
+		<section data-nav="Prereqs" id="prereqs">
+			<div class="container">
+				<h2>Prereqs</h2>
+				<p>none</p>
+			</div>
+		</section>
+
+		<section data-nav="Compatibility" id="compatibility">
+			<div class="container">
+				<h2>Compatibility</h2>
+				<ul>
+					<li>IE8+</li>
+					<li>Firefox, Chrome, Opera</li>
+					<li>iOS, Android</li>
 				</ul>
 			</div>
+		</section>
 
-			<nav>
-				<a href="" class="prev"> ‹ </a>
-				<a href="" class="next"> › </a>
-			</nav>
-		</div>
+		<section data-nav="code" id="code">
+			<div class="container">
+				<h2>Code</h2>
 
-	</div>
+				{% highlight javascript %}
 
+				var container = document.querySelector('#carousel');
+				var carousel = new Carousel(container, {
+					infinite: true,
+					onSlide: function() { ... }
+				});
 
-	<footer>
-		...
-	</footer>
+				container.querySelector('.prev').addEventListener('click', carousel.prev);
+				container.querySelector('.next').addEventListener('click', carousel.next);
 
+				{% endhighlight %}
+			</div>
+		</section>
 
-	<script src="../../src/simplecarousel.js"></script>
+		<section data-nav="API" id="api">
+			<div class="container">
+				<h2>API</h2>
+
+				<h3>Options</h3>
+
+				<div class="table-responsive">
+					<table class="table table-bordered table-striped">
+						<thead>
+							<tr>
+								<th style="width:100px;">Name</th>
+								<th style="width:50px;">type</th>
+								<th style="width:50px;">default</th>
+								<th>description</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>activeClass</td>
+								<td>string</td>
+								<td>active</td>
+								<td>Class to use on the active slide.</td>
+							</tr>
+							<tr>
+								<td>slideWrap</td>
+								<td>string</td>
+								<td>.wrap</td>
+								<td>The selector to use when searching for the slides' container. This is used only to bind touch events to, on mobile.</td>
+							</tr>
+							<tr>
+								<td>slides</td>
+								<td>string</td>
+								<td>li</td>
+								<td>The selector to use when searching for slides within the <code>slideWrap</code> container.</td>
+							</tr>
+							<tr>
+								<td>infinite</td>
+								<td>boolean</td>
+								<td>true</td>
+								<td>Enable infinite scrolling or not</td>
+							</tr>
+							<tr>
+								<td>onSlide</td>
+								<td>function</td>
+								<td>undefined</td>
+								<td>A function to execute on slide. It is passed <code>to</code> and <code>from</code> indices.</td>
+							</tr>
+							<tr>
+								<td>disableDragging</td>
+								<td>boolean</td>
+								<td>false</td>
+								<td>if you'd like to disable the touch UI for whatever reason</td>
+							</tr>
+
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<h3>Methods</h3>
+
+				<h5>Next Slide</h5>
+				{% highlight javascript %}carousel.next(){% endhighlight %}
+
+				<h5>Previous Slide</h5>
+				{% highlight javascript %}carousel.prev(){% endhighlight %}
+
+				<h5>Go To Slide</h5>
+				{% highlight javascript %}carousel.to(i){% endhighlight %}
+			</div>
+		</section>
+	</main>
+
 	<script>
 
-        /**
-         * Removes whitespace nodes. Useful to normalize inline-block layouts (IE)
-         * @param  {DOMElement} handle the element to remove whitespace nodes from
-         * @return {void}
-         */
-        function removeEmptyNodes (handle) {
-            var spaces = _.filter(handle.childNodes,
-                function(el) {
-                    return (el.nodeType === 3 && !/\S/.test(el.nodeValue));
-                });
+		/**
+		 * Removes whitespace nodes. Useful to normalize inline-block layouts (IE)
+		 * @param  {DOMElement} handle the element to remove whitespace nodes from
+		 * @return {void}
+		 */
+		function removeEmptyNodes (handle) {
+			var spaces = _.filter(handle.childNodes,
+				function(el) {
+					return (el.nodeType === 3 && !/\S/.test(el.nodeValue));
+				});
 
-            _.each(spaces, function(space) {
-                handle.removeChild(space);
-            });
-        }
+			_.each(spaces, function(space) {
+				handle.removeChild(space);
+			});
+		}
 
 
 		function updateNav(i) {
@@ -393,4 +414,3 @@
 
 </body>
 </html>
-
