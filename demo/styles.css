@@ -19,6 +19,13 @@
 		flex: 1 0 100%;
 	}
 
+	.carousel h3 {
+		position: absolute;
+		color: #fff;
+		padding: 0.5em;
+		z-index: 1;
+	}
+
 	.carousel img {
 		width:100%;
 		height:auto;
@@ -44,7 +51,7 @@
 		#ten li.active img,
 		#ten li.active + li img
 		{
-			-webkit-filter: brightness(100%);
+			/*-webkit-filter: brightness(100%);*/
 			opacity: 1;
 		}
 	}
@@ -53,7 +60,8 @@
 			flex-basis: 33.3333%;
 		}
 		#ten li img {
-			-webkit-filter: brightness(30%);
+			/*-webkit-filter: brightness(30%);*/
+			opacity: 0.1;
 		}
 
 		#ten li.active img,
@@ -69,10 +77,9 @@
 
 	/* BILLION */
 	#billion {
-		width: 50%;
+		/*width: 50%;
+		padding: 0 100px;*/
 		min-width: 400px;
-		margin: 0 auto;
-		padding: 0 100px;
 	}
 
 	#billion li {
@@ -87,20 +94,23 @@
 
 	/* SEVEN */
 	#seven .wrap > li {
-		background-color: #bbb;
-		padding: 2%;
+		/*background-color: #bbb;*/
+		/*padding: 10px;*/
 		text-align: center;
 		/*flex-basis: 33.3333%;*/
 
 		/* margin: 10px;	*/
 		/* NOTE: these slides are flex: 1 0 100%, while margin will add to the calculated width. So... */
 
-		border: 10px solid transparent;
-		background-clip: padding-box;
+		/*border: 10px solid transparent;*/
+		/*background-clip: padding-box;*/
+
+		padding: 10px;
+
 	}
 	@media screen and (min-width:480px) {
 		#seven .wrap > li {
-			flex-basis: 33.3333%;
+			flex-basis: calc(1/3 * 100%);		/* 33.3333%; */
 		}
 	}
 	@media screen and (min-width:800px) {
