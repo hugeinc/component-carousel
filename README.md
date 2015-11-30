@@ -4,7 +4,7 @@ A carousel that'll use CSS to dynamically adapt its width. Uses transforms for i
 
 ##Introduction
 
-The general idea is that this component should maintain a separation of state and style. That is to say, the Javascript should maintain the state of the carousel (which slide, etc), while the CSS should take care of the presentation of this state (ie. transitions between slides, responsive, etc).
+The general idea is that this component should maintain a separation of state and style. That is to say, the Javascript maintains the state of the carousel (which slide, etc), while the CSS should take care of the presentation of this state (ie. transitions between slides, responsive, etc).
 
 ##Overview
 
