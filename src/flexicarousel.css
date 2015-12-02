@@ -9,21 +9,17 @@
 			CAROUSEL STYLES
 		------------------------------------- */
 
-		.carousel ul {
-			white-space: nowrap;
-			width: 100%;
-			/*font-size: 0;*/
-			/*position: relative;*/
-		}
-
 		.carousel .animate {
 		  -webkit-transition: all 0.4s ease;
 		     -moz-transition: all 0.4s ease;
 		       -o-transition: all 0.4s ease;
-		          transition: all 0.4s ease;
+		          transition: all 0.4s ease !important;
 		}
 
 		.carousel .wrap {
+			white-space: nowrap;	/* fallback */
+			width: 100%;
+
 			display: -webkit-box;
 			display: -webkit-flex;
 			display: -moz-box;
@@ -43,7 +39,6 @@
 			width:100%;				/* fallback */
 
 			cursor: move;
-			/*flex: 1 0 100%;*/
 
 			-webkit-box-flex: 1 0 100%;
 			    -webkit-flex: 1 0 100%;
@@ -57,7 +52,7 @@
 
 		/* -------------------------------------
 			SAMPLE NAVIGATION STYLES
-		------------------------------------- */
+		------------------------------------- * /
 		.carousel nav {
 			width: 100%;
 			text-align: center;
@@ -100,3 +95,4 @@
 			border-color: #aaa;
 			background: #aaa;
 		}
+		/* */

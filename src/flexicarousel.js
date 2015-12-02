@@ -136,6 +136,9 @@ Carousel.prototype = {
 	 * @return {void}
 	 */
 	go: function(to) {
+		// var options = this.options,
+		// 	slides = this.slides;
+
 		if ( this.sliding ) { return; }
 
 		this.width = this.slides[0].offsetWidth;								// check every time
@@ -263,15 +266,15 @@ Carousel.prototype = {
 	_slide: function(offset, animate) {
 		offset -= this.offset;
 
-		if ( animate ) {
+		if (animate) {
 			this.sliding = true;
-			this._addClass( this.slideWrap, 'animate' );
+			this._addClass(this.slideWrap, 'animate');
 
 			var delay = 400;
 			var self = this;
 			setTimeout(function(){
 				self.sliding = false;
-				self._removeClass( self.slideWrap, 'animate' );
+				self._removeClass(self.slideWrap, 'animate');
 			}, delay);
 
 		}
@@ -384,4 +387,3 @@ Carousel.prototype = {
 	}
 
 };
-

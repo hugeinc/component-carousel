@@ -1,22 +1,15 @@
-	hr { margin: 5em 0; }
-	button { display: inline-block; }
-
 
 	.carousel {
 		width: 100%;
 		margin:	0 auto;
 		position:relative;
 	}
-	.carousel .wrap {
-		display: flex;
-	}
 
 	.carousel li {
 		padding: 2px;
-		margin: 0 !important;
+		margin: 0 !important;		/* override showcase li styles */
 		max-height: 600px;
 		overflow: hidden;
-		flex: 1 0 100%;
 	}
 
 	.carousel h3 {
@@ -29,6 +22,64 @@
 	.carousel img {
 		width:100%;
 		height:auto;
+	}
+
+	/* -------------------------------------
+		SAMPLE NAVIGATION STYLES
+	------------------------------------- */
+
+	.demo-nav {
+		font-size: 0.5em;
+		/*position: static;*/
+		width: 100%;
+	}
+
+	.demo-nav ul {
+		display: flex;
+		justify-content: space-between;
+		padding: 1em;
+		width: 40%;
+		max-width: 200px;
+		min-width: 100px;
+	    margin: 0 auto;
+	}
+
+	.demo-nav li {
+		cursor: pointer;
+		color: grey;
+		list-style: none !important;
+		margin: 0;
+		width: 1em;
+		height: 1em;
+		border-radius: 50%;
+		background: #ddd;
+	}
+
+	.demo-nav li.active {
+		background:#ec008c;
+	}
+
+
+	.demo-nav .prev,
+	.demo-nav .next {
+		position: absolute;
+		top: 0;
+		/*width: 10%;*/
+		/*height: calc(100% - 3em);*/
+		/*background-color: rgba(0,0,0,0.3);*/
+		/*opacity: 0;*/
+		/*transition: opacity 0.3s;*/
+		/*color: #fff;*/
+		/*text-align: center;*/
+		font-size: 5em;
+	}
+
+	.demo-nav .prev { left: 0; }
+	.demo-nav .next { right: 0; }
+
+	.demo-nav .next.disabled,
+	.demo-nav .prev.disabled {
+		opacity: 0.2;
 	}
 
 	.clip {
@@ -83,7 +134,7 @@
 	}
 
 	#billion li {
-		flex-basis: 100%;
+		/*flex-basis: 100%;*/
 	}
 
 	#billion nav .prev { left: 1em; }
