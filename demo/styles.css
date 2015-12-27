@@ -5,13 +5,6 @@
 		position:relative;
 	}
 
-	.carousel li {
-		padding: 2px;
-		margin: 0 !important;		/* override showcase li styles */
-		max-height: 600px;
-		overflow: hidden;
-	}
-
 	.carousel h3 {
 		position: absolute;
 		color: #fff;
@@ -24,6 +17,14 @@
 		height:auto;
 	}
 
+	.carousel .wrap > li {
+		padding: 2px;
+		margin: 0 !important;		/* override showcase li styles */
+		max-height: 600px;
+		overflow: hidden;
+	}
+
+
 	/* -------------------------------------
 		SAMPLE NAVIGATION STYLES
 	------------------------------------- */
@@ -32,23 +33,25 @@
 		font-size: 0.5em;
 		/*position: static;*/
 		width: 100%;
+		text-align: center;
 	}
 
 	.demo-nav ul {
-		display: flex;
-		justify-content: space-between;
+		/*display: flex;*/
+		/*justify-content: space-between;*/
 		padding: 1em;
-		width: 40%;
-		max-width: 200px;
-		min-width: 100px;
-	    margin: 0 auto;
+		/*width: 40%;*/
+		/*max-width: 200px;*/
+		/*min-width: 100px;*/
+	    /*margin: 0 auto;*/
 	}
 
 	.demo-nav li {
+		display: inline-block;
 		cursor: pointer;
 		color: grey;
 		list-style: none !important;
-		margin: 0;
+		margin: 1em;
 		width: 1em;
 		height: 1em;
 		border-radius: 50%;
@@ -128,9 +131,7 @@
 
 	/* BILLION */
 	#billion {
-		/*width: 50%;
-		padding: 0 100px;*/
-		min-width: 400px;
+		max-width: 360px;
 	}
 
 	#billion li {
