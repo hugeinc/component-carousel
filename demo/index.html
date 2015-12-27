@@ -13,6 +13,7 @@
 
 	<!-- demo stuffs -->
 	<link rel="stylesheet" href="showcase-styles.css">
+	<script src="prism.js"></script>
 	<script src="https://cdn.rawgit.com/apathetic/stickynav/master/dist/stickynav.min.js"></script>
 	<script>
 		window.addEventListener('DOMContentLoaded', function() {
@@ -180,9 +181,6 @@
 
 					<nav class="demo-nav">
 						<a href="" class="prev"> ‹ </a>
-						<ul>
-							<li></li><li></li><li></li><li></li><li></li><li></li><li></li>
-						</ul>
 						<a href="" class="next"> › </a>
 					</nav>
 				</div>
@@ -212,18 +210,18 @@
 			<div class="container">
 				<h2>Code</h2>
 
-				{% highlight javascript %}
+					<pre><code class="language-javascript">
 
-				var container = document.querySelector('#carousel');
-				var carousel = new Carousel(container, {
-					infinite: true,
-					onSlide: function() { ... }
-				});
+	var container = document.querySelector('#carousel');
+	var carousel = new Carousel(container, {
+		infinite: true,
+		onSlide: function() { ... }
+	});
 
-				container.querySelector('.prev').addEventListener('click', carousel.prev);
-				container.querySelector('.next').addEventListener('click', carousel.next);
+	container.querySelector('.prev').addEventListener('click', carousel.prev);
+	container.querySelector('.next').addEventListener('click', carousel.next);
 
-				{% endhighlight %}
+				</code></pre>
 			</div>
 		</section>
 
@@ -237,7 +235,7 @@
 					<table class="table table-bordered table-striped">
 						<thead>
 							<tr>
-								<th style="width:100px;">Name</th>
+								<th style="width:100px;">name</th>
 								<th style="width:50px;">type</th>
 								<th style="width:50px;">default</th>
 								<th>description</th>
@@ -288,14 +286,35 @@
 
 				<h3>Methods</h3>
 
-				<h5>Next Slide</h5>
-				{% highlight javascript %}carousel.next(){% endhighlight %}
+				<div class="table-responsive">
+					<table class="table table-bordered table-striped">
+						<thead>
+							<tr>
+								<th style="width:100px;">name</th>
+								<th style="width:50px;">method</th>
+								<th>description</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Next Slide</td>
+								<td>carousel.next()</td>
+								<td>Advance carousel to the next slide</td>
+							</tr>
+							<tr>
+								<td>Previous Slide</td>
+								<td>carousel.prev()</td>
+								<td>Advance carousel to the previous slide</td>
+							</tr>
+							<tr>
+								<td>Go To Slide</td>
+								<td>carousel.to(i)</td>
+								<td>Advance carousel to the <em>i<sup>th</sup></em> slide</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 
-				<h5>Previous Slide</h5>
-				{% highlight javascript %}carousel.prev(){% endhighlight %}
-
-				<h5>Go To Slide</h5>
-				{% highlight javascript %}carousel.to(i){% endhighlight %}
 			</div>
 		</section>
 	</main>
@@ -320,9 +339,10 @@
 
 
 		function updateNav(i) {
-			var bullets = this.handle.querySelectorAll('.bullets li');
-			var next = this.handle.querySelector('.next');
-			var prev = this.handle.querySelector('.prev');
+
+			var bullets = this.handle.querySelectorAll('.demo-nav li');
+			var next = this.handle.querySelector('.demo-nav .next');
+			var prev = this.handle.querySelector('.demo-nav .prev');
 
 			if (!this.options.infinite) {
 				if (prev) {
@@ -397,9 +417,9 @@
 		var skip = 3;
 		var container3 = document.querySelector('#seven');
 		var carousel3 = new Carousel(container3, {
-			infinite: true,
-			display: 5,
-			offscreen: skip
+			'infinite': true,
+			'display': 5,
+			'offscreen': skip
 		});
 
 		container3.querySelector('.prev').addEventListener('click', function(e){

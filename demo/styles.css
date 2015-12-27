@@ -31,19 +31,12 @@
 
 	.demo-nav {
 		font-size: 0.5em;
-		/*position: static;*/
 		width: 100%;
 		text-align: center;
 	}
 
 	.demo-nav ul {
-		/*display: flex;*/
-		/*justify-content: space-between;*/
 		padding: 1em;
-		/*width: 40%;*/
-		/*max-width: 200px;*/
-		/*min-width: 100px;*/
-	    /*margin: 0 auto;*/
 	}
 
 	.demo-nav li {
@@ -51,7 +44,7 @@
 		cursor: pointer;
 		color: grey;
 		list-style: none !important;
-		margin: 1em;
+		margin: 1em !important;
 		width: 1em;
 		height: 1em;
 		border-radius: 50%;
@@ -67,14 +60,8 @@
 	.demo-nav .next {
 		position: absolute;
 		top: 0;
-		/*width: 10%;*/
-		/*height: calc(100% - 3em);*/
-		/*background-color: rgba(0,0,0,0.3);*/
-		/*opacity: 0;*/
-		/*transition: opacity 0.3s;*/
-		/*color: #fff;*/
-		/*text-align: center;*/
 		font-size: 5em;
+		z-index: 100;
 	}
 
 	.demo-nav .prev { left: 0; }
