@@ -178,8 +178,11 @@
 						</ul>
 					</div>
 
-					<nav>
+					<nav class="demo-nav">
 						<a href="" class="prev"> ‹ </a>
+						<ul>
+							<li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+						</ul>
 						<a href="" class="next"> › </a>
 					</nav>
 				</div>
@@ -401,12 +404,12 @@
 
 		container3.querySelector('.prev').addEventListener('click', function(e){
 			e.preventDefault();
-			carousel3.go(carousel3.current + skip);
+			carousel3.go(carousel3.current - skip);
 		});
 
 		container3.querySelector('.next').addEventListener('click', function(e){
 			e.preventDefault();
-			carousel3.go(carousel3.current - skip);
+			carousel3.go(carousel3.current + skip);
 		});
 
 
