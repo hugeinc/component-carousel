@@ -13,11 +13,9 @@ You can swipe to drag a slide yet still use CSS to control how the slide transit
 using the exposed API. The carousel works on both desktop and mobile, and weighs in at less than 2 KB(!)
 
 ## Getting Started
-Download the [production version][min] or the [development version][max]. Or the [jquery version][jquery].
+Checkout the [Github repo][github].
 
-[min]: https://github.com/apathetic/flexicarousel-3/blob/master/dist/flexicarousel.min.js
-[max]: https://github.com/apathetic/flexicarousel-3/blob/master/dist/flexicarousel.js
-[jquery]: https://github.com/apathetic/flexicarousel-3/blob/master/dist/jquery.flexicarousel.min.js
+[github]: https://github.com/apathetic/flexicarousel
 
 Include the relevant scripts in your web page, and then:
 
@@ -26,11 +24,13 @@ Include the relevant scripts in your web page, and then:
 
 	// availble options
 	var options = {
+		onSlide: someFunc,			// the function to execute when sliding
 		activeClass: 'active',
 		slideWrap: 'ul',			// for binding touch events
 		slides: 'li',				// the slide
 		infinite: true,				// infinite scrolling or not
 		display: 1,					// if infinite, the # of slides to "view ahead" ie. position offscreen
+		offscreen: 0,				// the # of slides to "view ahead" ie. position offscreen
 		disableDragging: false
 	};
 
@@ -39,10 +39,6 @@ Include the relevant scripts in your web page, and then:
 
 </script>
 ```
-
-### Notes
-
-The carousel uses transitionEnd (or the browser-prefixed variant) to determine when to update after sliding. If the carousel seems to not  be working -- and you've messed with the default CSS -- double-check that you're using the _transition_ property correctly in the .animate class.
 
 ## API
 
