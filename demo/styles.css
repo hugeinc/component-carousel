@@ -15,10 +15,11 @@
 	.carousel img {
 		width:100%;
 		height:auto;
+		margin: 2px;
 	}
 
 	.carousel .wrap > li {
-		padding: 2px;
+		/*padding: 2px;*/
 		max-height: 600px;
 		overflow: hidden;
 	}
