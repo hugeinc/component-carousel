@@ -34,6 +34,13 @@
 	}
 
 	/* TEN */
+	#ten img {
+		opacity: 0.5;
+	}
+	#ten .active img {
+		opacity: 1;
+	}
+
 	@media(min-width:480px) {
 		#ten .wrap > li {
 			-webkit-flex-basis: 100%;
@@ -46,10 +53,16 @@
 		#ten .wrap > li {
 			flex-basis: 50%;
 		}
+		#ten .active + li img {
+			opacity: 1;
+		}
 	}
 	@media(min-width:1120px) {
 		#ten .wrap li {
 			flex-basis: 33.3333%;
+		}
+		#ten .active + li + li img {
+			opacity: 1;
 		}
 	}
 
