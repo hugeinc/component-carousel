@@ -12,7 +12,7 @@
 	<script src="../src/flexicarousel.js"></script>
 
 	<!-- demo stuffs -->
-	<link rel="stylesheet" href="showcase-styles.css">
+	<link rel="stylesheet" href="https://rawgit.com/apathetic/showcase/harp/www/css/styles.css">
 	<script src="prism.js"></script>
 	<script src="https://cdn.rawgit.com/apathetic/stickynav/master/dist/stickynav.min.js"></script>
 	<script>
@@ -210,18 +210,17 @@
 			<div class="container">
 				<h2>Code</h2>
 
-					<pre><code class="language-javascript">
+				<pre><code class="language-javascript">
+var container = document.querySelector('#carousel');
+var carousel = new Carousel(container, {
+	infinite: true,
+	onSlide: function() { ... }
+});
 
-	var container = document.querySelector('#carousel');
-	var carousel = new Carousel(container, {
-		infinite: true,
-		onSlide: function() { ... }
-	});
-
-	container.querySelector('.prev').addEventListener('click', carousel.prev);
-	container.querySelector('.next').addEventListener('click', carousel.next);
-
+container.querySelector('.prev').addEventListener('click', carousel.prev);
+container.querySelector('.next').addEventListener('click', carousel.next);
 				</code></pre>
+
 			</div>
 		</section>
 
