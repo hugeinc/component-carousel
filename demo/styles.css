@@ -15,7 +15,7 @@
 	.carousel img {
 		width:100%;
 		height:auto;
-		margin: 2px;
+		border: 2px solid #fff;
 	}
 
 	.carousel .wrap > li {
