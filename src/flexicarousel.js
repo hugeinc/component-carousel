@@ -88,15 +88,15 @@ Carousel.prototype = {
 		// set up Events
 		if ( ! this.options.disableDragging) {
 			if ( this.isTouch ) {
-				this.slideWrap.addEventListener('touchstart', this._dragStart.bind(this));
-				this.slideWrap.addEventListener('touchmove', this._drag.bind(this));
-				this.slideWrap.addEventListener('touchend', this._dragEnd.bind(this));
-				this.slideWrap.addEventListener('touchcancel', this._dragEnd.bind(this));
+				this.handle.addEventListener('touchstart', this._dragStart.bind(this));
+				this.handle.addEventListener('touchmove', this._drag.bind(this));
+				this.handle.addEventListener('touchend', this._dragEnd.bind(this));
+				this.handle.addEventListener('touchcancel', this._dragEnd.bind(this));
 			} else {
-				this.slideWrap.addEventListener('mousedown', this._dragStart.bind(this));
-				this.slideWrap.addEventListener('mousemove', this._drag.bind(this));
-				this.slideWrap.addEventListener('mouseup', this._dragEnd.bind(this));
-				this.slideWrap.addEventListener('mouseleave', this._dragEnd.bind(this));
+				this.handle.addEventListener('mousedown', this._dragStart.bind(this));
+				this.handle.addEventListener('mousemove', this._drag.bind(this));
+				this.handle.addEventListener('mouseup', this._dragEnd.bind(this));
+				this.handle.addEventListener('mouseleave', this._dragEnd.bind(this));
 			}
 		}
 
