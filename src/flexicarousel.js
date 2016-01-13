@@ -141,7 +141,7 @@ Carousel.prototype = {
 
 		if ( this.sliding ) { return; }
 
-		this.width = this.slides[0].offsetWidth;								// check every time
+		this.width = this.slides[0].getBoundingClientRect().width;				// check every time. This is preferrable to .offsetWidth as we get a fractional width
 		this.offset = this.cloned * this.width;
 
 		if ( to < 0 || to >= this.numSlides ) {									// position the carousel if infinite and at end of bounds
