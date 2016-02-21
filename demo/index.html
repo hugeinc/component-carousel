@@ -9,7 +9,7 @@
 
 	<link rel="stylesheet" href="styles.css">
 	<link rel="stylesheet" href="../src/flexicarousel.css">
-	<script src="../src/flexicarousel.js"></script>
+	<script src="../dist/flexicarousel.min.js"></script>
 
 	<!-- demo stuffs -->
 	<link rel="stylesheet" href="https://rawgit.com/apathetic/showcase/harp/www/css/styles.css">
@@ -321,11 +321,11 @@ container.querySelector('.next').addEventListener('click', carousel.next);
 	<script>
 
 		/**
-		 * Removes whitespace nodes. Useful to normalize inline-block layouts (IE)
+		 * Removes whitespace nodes. Useful to normalize inline-block layouts (<= IE9)
 		 * @param  {DOMElement} handle the element to remove whitespace nodes from
 		 * @return {void}
 		 */
-		function removeEmptyNodes (handle) {
+		function removeEmptyNodes(handle) {
 			var spaces = _.filter(handle.childNodes,
 				function(el) {
 					return (el.nodeType === 3 && !/\S/.test(el.nodeValue));
@@ -368,8 +368,7 @@ container.querySelector('.next').addEventListener('click', carousel.next);
 		var bullets = container.querySelectorAll('.bullets li');
 		var carousel = new Carousel(container, {
 			'onSlide': updateNav,
-			'display': 4,
-			'offscreen': 2
+			'display': 5					// there are 3 showing, but we allow for 2 to be "hanging" off the end
 		});
 
 		container.querySelector('.prev').addEventListener('click', function(e){
@@ -417,8 +416,7 @@ container.querySelector('.next').addEventListener('click', carousel.next);
 		var container3 = document.querySelector('#seven');
 		var carousel3 = new Carousel(container3, {
 			'infinite': true,
-			'display': 5,
-			'offscreen': skip
+			'display': 5
 		});
 
 		container3.querySelector('.prev').addEventListener('click', function(e){

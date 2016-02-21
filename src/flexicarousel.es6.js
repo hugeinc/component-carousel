@@ -1,77 +1,80 @@
+"use strict"
 /*
  * carousel ten billion
- * https://github.com/apathetic/flexicarousel-3
+ * https://github.com/apathetic/flexicarousel
  *
- * Copyright (c) 2013 Wes Hatch
+ * Copyright (c) 2013, 2016 Wes Hatch
  * Licensed under the MIT license.
  *
  */
 
 
-var Carousel = function(container, options){
+export default class Carousel {
 
-	this.handle = container;
+	constructor(container, options={}) {
 
-	// default options
-	// --------------------
-	this.defaults = {
-		activeClass: 'active',
-		slideWrap: 'ul',			// for binding touch events
-		slides: 'li',				// the slide
-		infinite: true,				// infinite scrolling or not
-		display: 1,					// the minimum # of slides to display at a time
-		offscreen: 0,				// the # of slides to "view ahead" ie. position offscreen
-		disableDragging: false
-	};
+		this.handle = container;
 
-	// state vars
-	// --------------------
-	this.current = 0;
-	this.slides = [];
-	this.sliding = false;
-	this.cloned = 0;
+		// default options
+		// --------------------
+		this.options = {
+			activeClass: 'active',
+			slideWrap: 'ul',			// for binding touch events
+			slides: 'li',				// the slide
+			infinite: true,				// infinite scrolling or not
+			display: 1,					// the minimum # of slides to display at a time. If you want to have slides
+										// "hanging" off outside the currently viewable ones, they'd be included here.
+			disableDragging: false
+		};
 
-	// touch vars
-	// --------------------
-	this.dragging = false;
-	this.dragThreshold = 50;
-	this.deltaX = 0;
+		// state vars
+		// --------------------
+		this.current = 0;
+		this.slides = [];
+		this.sliding = false;
+		this.cloned = 0;
 
-	// feature detection
-	// --------------------
-	this.isTouch = 'ontouchend' in document;
-	var style = document.body.style;
-	var tests = {
-		 'transform':'transitionend',
-		 'OTransform': 'oTransitionEnd',
-		 'MozTransform': 'transitionend',
-		 'webkitTransform': 'webkitTransitionEnd'
-	};
-	// note: we don't test "ms" prefix, (as that gives us IE9 which doesn't support transforms3d anyway. IE10 test will work with "transform")
-	for (var x in tests) {
-		if ( style[x] !== undefined) {
-			this.transform = x;
-			this.transitionEnd = tests[x];
-			break;
+		// touch vars
+		// --------------------
+		this.dragging = false;
+		this.dragThreshold = 50;
+		this.deltaX = 0;
+
+		// feature detection
+		// --------------------
+		this.isTouch = 'ontouchend' in document;
+		var style = document.body.style;
+		var tests = {
+			 'transform':'transitionend',
+			 'OTransform': 'oTransitionEnd',
+			 'MozTransform': 'transitionend',
+			 'webkitTransform': 'webkitTransitionEnd'
+		};
+		// note: we don't test "ms" prefix, (as that gives us IE9 which doesn't support transforms3d anyway. IE10 will work with "transform")
+		for (var x in tests) {
+			if ( style[x] !== undefined) {
+				this.transform = x;
+				this.transitionEnd = tests[x];
+				break;
+			}
 		}
+
+		// set up options
+		// --------------------
+		Object.assign(this.options, options);
+
+		// engage engines
+		// --------------------
+		this.init();
+
 	}
-
-	// engage engines
-	// --------------------
-	this.init(options);
-};
-
-Carousel.prototype = {
 
 	/**
 	 * Initialize the carousel and set some defaults
 	 * @param  {object} options List of key: value options
 	 * @return {void}
 	 */
-	init: function(options){
-
-		// set up options
-		this.options = this._extend( this.defaults, options );
+	init() {
 
 		// find carousel elements
 		if ( !(this.slideWrap	= this.handle.querySelector(this.options.slideWrap)) ) { return; }		// note: assignment
@@ -81,12 +84,12 @@ Carousel.prototype = {
 
 		// check if we have sufficient slides to make a carousel
 		if ( this.numSlides < this.options.display ) { this.sliding = true; return; }		// this.sliding deactivates carousel. I will better-ify this one day. Maybe "this.active" ?
-		if ( this.options.infinite ) { this._cloneSlides(this.options.display); }
+		if ( this.options.infinite ) { this._cloneSlides(); }
 
 		this.go(0);
 
 		// set up Events
-		if ( ! this.options.disableDragging) {
+		if (!this.options.disableDragging) {
 			if ( this.isTouch ) {
 				this.handle.addEventListener('touchstart', this._dragStart.bind(this));
 				this.handle.addEventListener('touchmove', this._drag.bind(this));
@@ -104,38 +107,38 @@ Carousel.prototype = {
 		window.addEventListener('orientationchange', this._updateView.bind(this));
 
 		return this;
-	},
+	}
 
 	/**
 	 * Go to the next slide
 	 * @return {void}
 	 */
-	next: function() {
+	next() {
 		if (this.options.infinite || this.current !== this.numSlides-1) {
 			this.go(this.current + 1);
 		} else {
 			this.go(this.numSlides-1);
 		}
-	},
+	}
 
 	/**
 	 * Go to the previous slide
 	 * @return {void}
 	 */
-	prev: function() {
+	prev() {
 		if (this.options.infinite || this.current !== 0) {
 			this.go(this.current - 1);
 		} else {
 			this.go(0);		// allow the slide to "snap" back if dragging and not infinite
 		}
-	},
+	}
 
 	/**
 	 * Go to a particular slide. Prime the "to" slide by positioning it, and then calling _slide() if needed
 	 * @param  {int} to		the slide to go to
 	 * @return {void}
 	 */
-	go: function(to) {
+	go(to) {
 		// var options = this.options,
 		// 	slides = this.slides;
 
@@ -143,6 +146,7 @@ Carousel.prototype = {
 
 		this.width = this.slides[0].getBoundingClientRect().width;				// check every time. This is preferrable to .offsetWidth as we get a fractional width
 		this.offset = this.cloned * this.width;
+		// this.offset = this.options.display * this.width;
 
 		if ( to < 0 || to >= this.numSlides ) {									// position the carousel if infinite and at end of bounds
 			var temp = (to < 0) ? this.current+this.numSlides : this.current-this.numSlides;
@@ -161,10 +165,10 @@ Carousel.prototype = {
 		this._removeClass( this.slides[this.current], this.options.activeClass );
 		this._addClass( this.slides[to], this.options.activeClass );
 		this.current = to;
-	},
+	}
 
 
-	// ------------------------------------- "mobile" starts here ------------------------------------- //
+	// ------------------------------------- Drag Events ------------------------------------- //
 
 
 	/**
@@ -172,7 +176,7 @@ Carousel.prototype = {
 	 * @param  {event} e Touch event
 	 * @return {void}
 	 */
-	_dragStart: function(e) {
+	_dragStart(e) {
 		var touches;
 
 		if (this.sliding) {
@@ -191,14 +195,14 @@ Carousel.prototype = {
 		this.deltaY = 0;	// reset for the case when user does 0,0 touch
 
 		if (e.target.tagName === 'IMG' || e.target.tagName === 'A') { e.target.draggable = false; }
-	},
+	}
 
 	/**
 	 * Update slides positions according to user's touch
 	 * @param  {event} e Touch event
 	 * @return {void}
 	 */
-	_drag: function(e) {
+	_drag(e) {
 		var abs = Math.abs,		// helper fn
 			touches;
 
@@ -224,14 +228,14 @@ Carousel.prototype = {
 		} else if ((abs(this.deltaY) > abs(this.deltaX) && abs(this.deltaY) > 10)) {
 			this.cancel = true;
 		}
-	},
+	}
 
 	/**
 	 * Drag end, calculate slides' new positions
 	 * @param  {event} e Touch event
 	 * @return {void}
 	 */
-	_dragEnd: function() {
+	_dragEnd() {
 		if (!this.dragging || this.cancel) {
 			return;
 		}
@@ -251,7 +255,7 @@ Carousel.prototype = {
 		}
 
 		this.deltaX = 0;
-	},
+	}
 
 
 	// ------------------------------------- carousel engine ------------------------------------- //
@@ -263,7 +267,7 @@ Carousel.prototype = {
 	 * @param  {[type]} offset [description]
 	 * @return {[type]}        [description]
 	 */
-	_slide: function(offset, animate) {
+	_slide(offset, animate) {
 		offset -= this.offset;
 
 		if (animate) {
@@ -272,7 +276,7 @@ Carousel.prototype = {
 
 			var delay = 400;
 			var self = this;
-			setTimeout(function(){
+			setTimeout(() => {
 				self.sliding = false;
 				self._removeClass(self.slideWrap, 'animate');
 			}, delay);
@@ -285,7 +289,7 @@ Carousel.prototype = {
 		else {
 			this.slideWrap.style.left = offset+'px';
 		}
-	},
+	}
 
 
 	// ------------------------------------- "helper" functions ------------------------------------- //
@@ -296,55 +300,52 @@ Carousel.prototype = {
 	 * @param  {int} val Slide's position
 	 * @return {int} the index modulo the # of slides
 	 */
-	_loop: function(val) {
+	_loop(val) {
 		return (this.numSlides + (val % this.numSlides)) % this.numSlides;
-	},
+	}
 
 	/**
 	 * Update the slides' position on a resize. This is throttled at 300ms
 	 * @return {void}
 	 */
-	_updateView: function() {
+	_updateView() {
 		var self = this;
 		clearTimeout(this.timer);
-		this.timer = setTimeout(function(){ self.go(self.current); }, 300);
-	},
+		this.timer = setTimeout(() => { self.go(self.current); }, 300);
+	}
 
 	/**
 	 * Duplicate the first and last N slides so that infinite scrolling can work.
 	 * Depends on how many slides are visible at a time, and any outlying slides as well
 	 * @return {void}
 	 */
-	_cloneSlides: function() {
-		var beg, end,
-			duplicate,
-			i;
+	_cloneSlides() {
+		var duplicate;
+		var toDuplicate = this.options.display,
+			fromEnd = Math.max(this.numSlides - toDuplicate, 0),
+			fromBeg = Math.min(toDuplicate, this.numSlides);
 
-		end = this.options.display + this.options.offscreen - 1;
-		end = (end > this.numSlides) ? this.numSlides : end;
-		beg = this.numSlides - this.options.offscreen - 1;
-
-		// beginning
-		for (i = this.numSlides; i > beg; i--) {
+		// take "toDuplicate" slides from the end and add to the beginning
+		for (let i = this.numSlides; i > fromEnd; i--) {
 			duplicate = this.slides[i-1].cloneNode(true);						// cloneNode --> true is deep cloning
 			duplicate.removeAttribute('id');
 			duplicate.setAttribute('aria-hidden', 'true');
-			this._addClass( duplicate, 'clone');
-			this.slideWrap.insertBefore(duplicate, this.slideWrap.firstChild);	// add duplicate to beg'n of slides
+			this._addClass(duplicate, 'clone');
+			this.slideWrap.insertBefore(duplicate, this.slideWrap.firstChild);	// "prependChild"
 			this.cloned++;
 		}
 
-		// end
-		for (i = 0; i < end; i++) {
+		// take "toDuplicate" slides from the beginning and add to the end
+		for (let i = 0; i < fromBeg; i++) {
 			duplicate = this.slides[i].cloneNode(true);
 			duplicate.removeAttribute('id');
 			duplicate.setAttribute('aria-hidden', 'true');
-			this._addClass( duplicate, 'clone');
+			this._addClass(duplicate, 'clone');
 			this.slideWrap.appendChild(duplicate);
 		}
 
-		// this.slideWrap.style.marginLeft = (-offscreen)+'00%';					// use marginLeft (not left) so IE8/9 etc can use left to slide
-	},
+		// this.slideWrap.style.marginLeft = (-toDuplicate)+'00%';					// use marginLeft (not left) so IE8/9 etc can use left to slide
+	}
 
 	/**
 	 * Helper function to add a class to an element
@@ -352,10 +353,10 @@ Carousel.prototype = {
 	 * @param  {string} name Class name
 	 * @return {void}
 	 */
-	_addClass: function(el, name) {
+	_addClass(el, name) {
 		if (el.classList) { el.classList.add(name); }
 		else {el.className += ' ' + name; }
-	},
+	}
 
 	/**
 	 * Helper function to remove a class from an element
@@ -363,27 +364,9 @@ Carousel.prototype = {
 	 * @param  {string} name Class name
 	 * @return {void}
 	 */
-	_removeClass: function(el, name) {
+	_removeClass(el, name) {
 		if (el.classList) { el.classList.remove(name); }
 		else { el.className = el.className.replace(new RegExp('(^|\\b)' + name.split(' ').join('|') + '(\\b|$)', 'gi'), ' '); }
-	},
-
-	/**
-	 * Helper function. Simple way to merge objects
-	 * @param  {object} obj A list of objects to extend
-	 * @return {object}     The extended object
-	 */
-	_extend: function(obj) {
-		var args = Array.prototype.slice.call(arguments, 1);
-		for (var i = 0; i < args.length; i++) {
-			var source = args[i];
-			if (source) {
-				for (var prop in source) {
-					obj[prop] = source[prop];
-				}
-			}
-		}
-		return obj;
 	}
 
 };
