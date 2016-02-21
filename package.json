@@ -1,6 +1,6 @@
 {
   "name": "flexicarousel",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "A carousel that'll use CSS to dynamically adapt its width. Uses transforms for its transitions and is touch-enabled",
   "directories": {
     "test": "test"

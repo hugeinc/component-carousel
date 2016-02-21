@@ -29,8 +29,7 @@ There is an ES6 module you may consume however you wish. Alternatively, you can 
 		slideWrap: 'ul',
 		slides: 'li',
 		infinite: true,
-		display: 1,					// the minimum # of slides to display at a time. If you want to have slides
-									// "hanging" off outside the currently viewable ones, they'd be included here.
+		display: 1,
 		disableDragging: false
 	};
 
@@ -76,6 +75,10 @@ There is an ES6 module you may consume however you wish. Alternatively, you can 
 Please see the _test / demo_ directory
 
 ## Release History
+
+### 0.3
+* cleaning up cloning logic
+* further optimizations
 
 ### 0.2
 * bug fixes, mostly
