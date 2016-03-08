@@ -43,15 +43,15 @@ var KARMACONF = {
 	]
 };
 
-gulp.task('dist_old', function() {
-	return gulp.src(PATHS.js)
-		.pipe(babel({presets: ['es2015']}))
-		.pipe(jshint(JSHINTRC))
-		.pipe(uglify())
-		// .pipe(rename({ extname: '.min.js' }))
-		.pipe(rename('flexicarousel.min.js'))
-		.pipe(gulp.dest('./dist'));
-});
+// gulp.task('dist_old', function() {
+// 	return gulp.src(PATHS.js)
+// 		.pipe(babel({presets: ['es2015']}))
+// 		.pipe(jshint(JSHINTRC))
+// 		.pipe(uglify())
+// 		// .pipe(rename({ extname: '.min.js' }))
+// 		.pipe(rename('flexicarousel.min.js'))
+// 		.pipe(gulp.dest('./dist'));
+// });
 
 gulp.task('dist', function() {
 	var bundler = browserify('src/shim.js', { debug: true }).transform(babel);
@@ -63,19 +63,6 @@ gulp.task('dist', function() {
 		.pipe(uglify())
 		.pipe(gulp.dest('./dist'));
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 gulp.task('lint', function() {
 	return gulp.src(PATHS.js)

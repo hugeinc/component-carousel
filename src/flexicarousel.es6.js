@@ -91,15 +91,15 @@ export default class Carousel {
 		// set up Events
 		if (!this.options.disableDragging) {
 			if ( this.isTouch ) {
-				this.handle.addEventListener('touchstart', this._dragStart.bind(this));
-				this.handle.addEventListener('touchmove', this._drag.bind(this));
-				this.handle.addEventListener('touchend', this._dragEnd.bind(this));
-				this.handle.addEventListener('touchcancel', this._dragEnd.bind(this));
+				this.handle.addEventListener('touchstart', (e) => this._dragStart(e));
+				this.handle.addEventListener('touchmove', (e) => this._drag(e));
+				this.handle.addEventListener('touchend', (e) => this._dragEnd(e));
+				this.handle.addEventListener('touchcancel', (e) => this._dragEnd(e));
 			} else {
-				this.handle.addEventListener('mousedown', this._dragStart.bind(this));
-				this.handle.addEventListener('mousemove', this._drag.bind(this));
-				this.handle.addEventListener('mouseup', this._dragEnd.bind(this));
-				this.handle.addEventListener('mouseleave', this._dragEnd.bind(this));
+				this.handle.addEventListener('mousedown', (e) => this._dragStart(e));
+				this.handle.addEventListener('mousemove', (e) => this._drag(e));
+				this.handle.addEventListener('mouseup', (e) => this._dragEnd(e));
+				this.handle.addEventListener('mouseleave', (e) => this._dragEnd(e));
 			}
 		}
 
@@ -309,9 +309,8 @@ export default class Carousel {
 	 * @return {void}
 	 */
 	_updateView() {
-		var self = this;
 		clearTimeout(this.timer);
-		this.timer = setTimeout(() => { self.go(self.current); }, 300);
+		this.timer = setTimeout(() => { this.go(this.current); }, 300);
 	}
 
 	/**
