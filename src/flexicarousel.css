@@ -30,6 +30,11 @@
 			-ms-flexbox-wrap: nowrap;
 			   -moz-box-wrap: nowrap;
 			       flex-wrap: nowrap;
+
+      -webkit-user-select: none;
+         -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none;
 		}
 
 		.carousel .wrap > li {
