@@ -188,7 +188,6 @@ export default class Carousel {
 
 		this.dragThresholdMet = false;
 		this.dragging = true;
-		this.cancel = false;
 		this.startClientX = touches ? touches[0].pageX : e.clientX;
 		this.startClientY = touches ? touches[0].pageY : e.clientY;
 		this.deltaX = 0;	// reset for the case when user does 0,0 touch
@@ -203,10 +202,9 @@ export default class Carousel {
 	 * @return {void}
 	 */
 	_drag(e) {
-		var abs = Math.abs,		// helper fn
-			touches;
+		let touches;
 
-		if (!this.dragging || this.cancel) {
+		if (!this.dragging) {
 			return;
 		}
 
@@ -215,18 +213,13 @@ export default class Carousel {
 		this.deltaX = (touches ? touches[0].pageX : e.clientX) - this.startClientX;
 		this.deltaY = (touches ? touches[0].pageY : e.clientY) - this.startClientY;
 
+    // drag slide along with cursor
+		this._slide( -(this.current * this.width - this.deltaX ) );
+
 		// determine if we should do slide, or cancel and let the event pass through to the page
-		if (this.dragThresholdMet || (abs(this.deltaX) > abs(this.deltaY) && abs(this.deltaX) > 10)) {		// 10 from empirical testing
-
-			e.preventDefault();
-			e.stopPropagation();
-			e.stopImmediatePropagation();
-
+		// 10 from empirical testing
+		if (this.dragThresholdMet || Math.abs(this.deltaX) > 10) {
 			this.dragThresholdMet = true;
-			this._slide( -(this.current * this.width - this.deltaX ) );
-
-		} else if ((abs(this.deltaY) > abs(this.deltaX) && abs(this.deltaY) > 10)) {
-			this.cancel = true;
 		}
 	}
 
@@ -235,9 +228,15 @@ export default class Carousel {
 	 * @param  {event} e Touch event
 	 * @return {void}
 	 */
-	_dragEnd() {
-		if (!this.dragging || this.cancel) {
+	_dragEnd(e) {
+		if (!this.dragging) {
 			return;
+		}
+
+		if (this.dragThresholdMet) {
+			e.preventDefault();
+			e.stopPropagation();
+			e.stopImmediatePropagation();
 		}
 
 		this.dragging = false;
