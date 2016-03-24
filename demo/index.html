@@ -18,7 +18,7 @@
 	<script src="https://cdn.rawgit.com/apathetic/stickynav/master/dist/stickynav.min.js"></script>
 	<script>
 		window.addEventListener('DOMContentLoaded', function() {
-			stickyNav.init({ nav: '#sticky' });
+			new stickyNav({ nav: '#sticky' });
 		});
 	</script>
 	<!-- end demo stuffs -->
@@ -68,6 +68,36 @@
 		<section data-nav="Demo" id="demo">
 			<div class="container">
 				<h2>Demo</h2>
+
+				<h3>Simple demo</h3>
+				<div class="carousel clip" id="fah">
+					<ul class="wrap">
+						<li>
+							<h3>1</h3>
+							<img src="/demo/images/cow1.jpg">
+						</li>
+						<li>
+							<h3>2</h3>
+							<img src="/demo/images/cow2.jpg">
+						</li>
+						<li>
+							<h3>3</h3>
+							<img src="/demo/images/cow3.jpg">
+						</li>
+					</ul>
+
+					<nav class="demo-nav">
+						<a href="" class="prev"><span>⟨</span></a>
+						<ul>
+							<li></li><li></li><li></li>
+						</ul>
+						<a href="" class="next"><span>⟩</span></a>
+					</nav>
+				</div>
+
+
+				<hr />
+
 
 				<h3>Infinite, overflowing</h3>
 				<div class="carousel" id="ten">
@@ -362,22 +392,23 @@ container.querySelector('.next').addEventListener('click', carousel.next);
 		}
 
 
+
+
 		// ===================================================================
 
 
-		var container = document.querySelector('#ten');
-		var bullets = container.querySelectorAll('.bullets li');
-		var carousel = new Carousel(container, {
-			'onSlide': updateNav,
-			'display': 5					// there are 3 showing, but we allow for 2 to be "hanging" off the end
+		var fah = document.querySelector('#fah');
+		var bullets = fah.querySelectorAll('.bullets li');
+		var carousel = new Carousel(fah, {
+			'onSlide': updateNav
 		});
 
-		container.querySelector('.prev').addEventListener('click', function(e){
+		fah.querySelector('.prev').addEventListener('click', function(e){
 			e.preventDefault();
 			carousel.prev();
 		});
 
-		container.querySelector('.next').addEventListener('click', function(e){
+		fah.querySelector('.next').addEventListener('click', function(e){
 			e.preventDefault();
 			carousel.next();
 		});
@@ -393,18 +424,48 @@ container.querySelector('.next').addEventListener('click', carousel.next);
 
 		// ===================================================================
 
-		var container2 = document.querySelector('#billion');
-		var carousel2 = new Carousel(container2, {
+
+
+		var ten = document.querySelector('#ten');
+		var bullets = ten.querySelectorAll('.bullets li');
+		var carousel1 = new Carousel(ten, {
+			'onSlide': updateNav,
+			'display': 5					// there are 3 showing, but we allow for 2 to be "hanging" off the end
+		});
+
+		ten.querySelector('.prev').addEventListener('click', function(e){
+			e.preventDefault();
+			carousel1.prev();
+		});
+
+		ten.querySelector('.next').addEventListener('click', function(e){
+			e.preventDefault();
+			carousel1.next();
+		});
+
+		Array.prototype.forEach.call(bullets, function(bullet, index){
+			bullet.addEventListener('click', function(e) {
+				e.preventDefault();
+				carousel1.go(index);
+			});
+		});
+
+
+
+		// ===================================================================
+
+		var billion = document.querySelector('#billion');
+		var carousel2 = new Carousel(billion, {
 			'infinite': false,
 			'onSlide': updateNav
 		});
 
-		container2.querySelector('.prev').addEventListener('click', function(e){
+		billion.querySelector('.prev').addEventListener('click', function(e){
 			e.preventDefault();
 			carousel2.prev();
 		});
 
-		container2.querySelector('.next').addEventListener('click', function(e){
+		billion.querySelector('.next').addEventListener('click', function(e){
 			e.preventDefault();
 			carousel2.next();
 		});
@@ -414,18 +475,18 @@ container.querySelector('.next').addEventListener('click', carousel.next);
 		// ===================================================================
 
 		var skip = 3;
-		var container3 = document.querySelector('#seven');
-		var carousel3 = new Carousel(container3, {
+		var seven = document.querySelector('#seven');
+		var carousel3 = new Carousel(seven, {
 			'infinite': true,
 			'display': 5
 		});
 
-		container3.querySelector('.prev').addEventListener('click', function(e){
+		seven.querySelector('.prev').addEventListener('click', function(e){
 			e.preventDefault();
 			carousel3.go(carousel3.current - skip);
 		});
 
-		container3.querySelector('.next').addEventListener('click', function(e){
+		seven.querySelector('.next').addEventListener('click', function(e){
 			e.preventDefault();
 			carousel3.go(carousel3.current + skip);
 		});
