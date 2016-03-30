@@ -76,6 +76,10 @@ Please see the _test / demo_ directory
 
 ## Release History
 
+### 0.4
+* better dragging response
+* fixed click bug when dragging
+
 ### 0.3
 * cleaning up cloning logic
 * further optimizations
