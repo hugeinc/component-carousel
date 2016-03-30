@@ -37,7 +37,7 @@ export default class Carousel {
 		// touch vars
 		// --------------------
 		this.dragging = false;
-		this.dragThreshold = 50;
+		this.dragThreshold = 10;
 		this.deltaX = 0;
 
 		// feature detection
@@ -100,6 +100,9 @@ export default class Carousel {
 				this.handle.addEventListener('mousemove', (e) => this._drag(e));
 				this.handle.addEventListener('mouseup', (e) => this._dragEnd(e));
 				this.handle.addEventListener('mouseleave', (e) => this._dragEnd(e));
+				this.$el.addEventListener('click', (e) => {
+					if (this.dragThresholdMet) { e.preventDefault(); }
+				});
 			}
 		}
 
@@ -217,10 +220,7 @@ export default class Carousel {
 		this._slide( -(this.current * this.width - this.deltaX ) );
 
 		// determine if we should do slide, or cancel and let the event pass through to the page
-		// 10 from empirical testing
-		if (this.dragThresholdMet || Math.abs(this.deltaX) > 10) {
-			this.dragThresholdMet = true;
-		}
+		this.dragThresholdMet = this.dragThresholdMet || Math.abs(this.deltaX) > this.dragThreshold;
 	}
 
 	/**
