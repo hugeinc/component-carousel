@@ -100,7 +100,7 @@ export default class Carousel {
 				this.handle.addEventListener('mousemove', (e) => this._drag(e));
 				this.handle.addEventListener('mouseup', (e) => this._dragEnd(e));
 				this.handle.addEventListener('mouseleave', (e) => this._dragEnd(e));
-				this.$el.addEventListener('click', (e) => {
+				this.handle.addEventListener('click', (e) => {
 					if (this.dragThresholdMet) { e.preventDefault(); }
 				});
 			}
