@@ -19,8 +19,7 @@ Checkout the [Github repo][github].
 
 There is an ES6 module you may consume however you wish. Alternatively, you can also include the relevant scripts in your web page, and then:
 
-```html
-<script>
+```javascript
 
 	// availble options
 	var options = {
@@ -36,7 +35,6 @@ There is an ES6 module you may consume however you wish. Alternatively, you can 
 	var container = document.querySelector('.carousel');
 	var carousel = new Carousel(container, options);
 
-</script>
 ```
 
 
@@ -60,6 +58,16 @@ There is an ES6 module you may consume however you wish. Alternatively, you can 
 | prev() | Previous Slide: move carousel to the previous slide |
 | to(i)	 | Go To Slide: advance carousel to the ith slide |
 
+
+## Demo
+
+After cloning the repo:
+```
+npm i
+gulp
+```
+
+A server will spin up at ```http://localhost:8003```, where can play with Flexicarousel.
 
 ## Support
 * IE8+
