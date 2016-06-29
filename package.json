@@ -5,6 +5,7 @@
   "directories": {
     "test": "test"
   },
+  "main": "index.js",
   "scripts": {
     "build": "npm run build:fe && npm run build:cjs",
     "build:fe": "browserify src/shim.js -t babelify --outfile dist/flexicarousel.min.js",
