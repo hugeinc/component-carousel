@@ -1,1 +1,1 @@
-module.exports = require('./dist/flexicarousel');
+module.exports = require('./dist/cjs');
