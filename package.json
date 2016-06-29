@@ -7,7 +7,6 @@
   },
   "main": "index.js",
   "scripts": {
-    "postinstall": "npm run build",
     "build": "npm run build:fe && npm run build:cjs",
     "build:fe": "browserify src/shim.js -t babelify --outfile dist/flexicarousel.min.js",
     "build:cjs": "babel src/flexicarousel.es6.js --out-file dist/flexicarousel.js"
