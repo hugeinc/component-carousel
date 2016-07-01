@@ -170,6 +170,30 @@ export default class Carousel {
 		this.current = to;
 	}
 
+	// ------------------------------------- Event Listeners ------------------------------------- //
+
+	_createHandleBindings() {
+
+		return {
+			'touchstart': this._dragStart.bind(this),
+			'touchmove': this._drag.bind(this),
+			'touchend': this._dragEnd.bind(this),
+			'touchcancel': this._dragEnd.bind(this),
+			'mousedown': this._dragStart.bind(this),
+			'mousemove': this._drag.bind(this),
+			'mouseup': this._dragEnd.bind(this),
+			'mouseleave': this._dragEnd.bind(this),
+			'click': this._checkDragThreshold.bind(this)
+		};
+
+	}
+
+	_createWindowBindings() {
+		return {
+			'resize': this._updateView.bind(this),
+			'orientationchange': this._updateView.bind(this)
+		};
+	}
 
 	// ------------------------------------- Drag Events ------------------------------------- //
 
