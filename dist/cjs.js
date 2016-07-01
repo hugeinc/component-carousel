@@ -87,7 +87,9 @@ var Carousel = function () {
 	_createClass(Carousel, [{
 		key: 'init',
 		value: function init() {
-			var _this = this;
+
+			this._handleBindings = this._createHandleBindings();
+			this._windowBindings = this._createWindowBindings();
 
 			// find carousel elements
 			if (!(this.slideWrap = this.handle.querySelector(this.options.slideWrap))) {
@@ -112,41 +114,41 @@ var Carousel = function () {
 			// set up Events
 			if (!this.options.disableDragging) {
 				if (this.isTouch) {
-					this.handle.addEventListener('touchstart', function (e) {
-						return _this._dragStart(e);
-					});
-					this.handle.addEventListener('touchmove', function (e) {
-						return _this._drag(e);
-					});
-					this.handle.addEventListener('touchend', function (e) {
-						return _this._dragEnd(e);
-					});
-					this.handle.addEventListener('touchcancel', function (e) {
-						return _this._dragEnd(e);
-					});
+					this.handle.addEventListener('touchstart', this._handleBindings['touchstart']);
+					this.handle.addEventListener('touchmove', this._handleBindings['touchmove']);
+					this.handle.addEventListener('touchend', this._handleBindings['touchend']);
+					this.handle.addEventListener('touchcancel', this._handleBindings['touchcancel']);
 				} else {
-					this.handle.addEventListener('mousedown', function (e) {
-						return _this._dragStart(e);
-					});
-					this.handle.addEventListener('mousemove', function (e) {
-						return _this._drag(e);
-					});
-					this.handle.addEventListener('mouseup', function (e) {
-						return _this._dragEnd(e);
-					});
-					this.handle.addEventListener('mouseleave', function (e) {
-						return _this._dragEnd(e);
-					});
-					this.handle.addEventListener('click', function (e) {
-						if (_this.dragThresholdMet) {
-							e.preventDefault();
-						}
-					});
+					this.handle.addEventListener('mousedown', this._handleBindings['mousedown']);
+					this.handle.addEventListener('mousemove', this._handleBindings['mousemove']);
+					this.handle.addEventListener('mouseup', this._handleBindings['mouseup']);
+					this.handle.addEventListener('mouseleave', this._handleBindings['mouseleave']);
+					this.handle.addEventListener('click', this._handleBindings['click']);
 				}
 			}
 
-			window.addEventListener('resize', this._updateView.bind(this));
-			window.addEventListener('orientationchange', this._updateView.bind(this));
+			window.addEventListener('resize', this._windowBindings['resize']);
+			window.addEventListener('orientationchange', this._windowBindings['orientationchange']);
+
+			return this;
+		}
+
+		/**
+   * Removes all event bindings.
+   * @returns {Carousel}
+   * */
+
+	}, {
+		key: 'destroy',
+		value: function destroy() {
+
+			for (var event in this._windowBindings) {
+				window.removeEventListener(event, this._windowBindings[event]);
+			}
+
+			for (var _event in this._handleBindings) {
+				this.handle.removeEventListener(_event, this._handleBindings[_event]);
+			}
 
 			return this;
 		}
@@ -223,7 +225,42 @@ var Carousel = function () {
 			this.current = to;
 		}
 
+		// ------------------------------------- Event Listeners ------------------------------------- //
+
+	}, {
+		key: '_createHandleBindings',
+		value: function _createHandleBindings() {
+
+			return {
+				'touchstart': this._dragStart.bind(this),
+				'touchmove': this._drag.bind(this),
+				'touchend': this._dragEnd.bind(this),
+				'touchcancel': this._dragEnd.bind(this),
+				'mousedown': this._dragStart.bind(this),
+				'mousemove': this._drag.bind(this),
+				'mouseup': this._dragEnd.bind(this),
+				'mouseleave': this._dragEnd.bind(this),
+				'click': this._checkDragThreshold.bind(this)
+			};
+		}
+	}, {
+		key: '_createWindowBindings',
+		value: function _createWindowBindings() {
+			return {
+				'resize': this._updateView.bind(this),
+				'orientationchange': this._updateView.bind(this)
+			};
+		}
+
 		// ------------------------------------- Drag Events ------------------------------------- //
+
+	}, {
+		key: '_checkDragThreshold',
+		value: function _checkDragThreshold(e) {
+			if (this.dragThresholdMet) {
+				e.preventDefault();
+			}
+		}
 
 		/**
    * Start dragging (via touch)
@@ -371,11 +408,11 @@ var Carousel = function () {
 	}, {
 		key: '_updateView',
 		value: function _updateView() {
-			var _this2 = this;
+			var _this = this;
 
 			clearTimeout(this.timer);
 			this.timer = setTimeout(function () {
-				_this2.go(_this2.current);
+				_this.go(_this.current);
 			}, 300);
 		}
 
