@@ -76,6 +76,9 @@ export default class Carousel {
 	 */
 	init() {
 
+		this._handleBindings = this._createHandleBindings();
+		this._windowBindings = this._createWindowBindings();
+
 		// find carousel elements
 		if ( !(this.slideWrap	= this.handle.querySelector(this.options.slideWrap)) ) { return; }		// note: assignment
 		if ( !(this.slides		= this.slideWrap.querySelectorAll(this.options.slides)) ) { return; }	// note: assignment
@@ -91,23 +94,38 @@ export default class Carousel {
 		// set up Events
 		if (!this.options.disableDragging) {
 			if ( this.isTouch ) {
-				this.handle.addEventListener('touchstart', (e) => this._dragStart(e));
-				this.handle.addEventListener('touchmove', (e) => this._drag(e));
-				this.handle.addEventListener('touchend', (e) => this._dragEnd(e));
-				this.handle.addEventListener('touchcancel', (e) => this._dragEnd(e));
+				this.handle.addEventListener('touchstart', this._handleBindings['touchstart']);
+				this.handle.addEventListener('touchmove', this._handleBindings['touchmove']);
+				this.handle.addEventListener('touchend', this._handleBindings['touchend']);
+				this.handle.addEventListener('touchcancel', this._handleBindings['touchcancel']);
 			} else {
-				this.handle.addEventListener('mousedown', (e) => this._dragStart(e));
-				this.handle.addEventListener('mousemove', (e) => this._drag(e));
-				this.handle.addEventListener('mouseup', (e) => this._dragEnd(e));
-				this.handle.addEventListener('mouseleave', (e) => this._dragEnd(e));
-				this.handle.addEventListener('click', (e) => {
-					if (this.dragThresholdMet) { e.preventDefault(); }
-				});
+				this.handle.addEventListener('mousedown', this._handleBindings['mousedown']);
+				this.handle.addEventListener('mousemove', this._handleBindings['mousemove']);
+				this.handle.addEventListener('mouseup', this._handleBindings['mouseup']);
+				this.handle.addEventListener('mouseleave', this._handleBindings['mouseleave']);
+				this.handle.addEventListener('click', this._handleBindings['click']);
 			}
 		}
 
-		window.addEventListener('resize', this._updateView.bind(this));
-		window.addEventListener('orientationchange', this._updateView.bind(this));
+		window.addEventListener('resize', this._windowBindings['resize']);
+		window.addEventListener('orientationchange', this._windowBindings['orientationchange']);
+
+		return this;
+	}
+
+	/**
+	 * Removes all event bindings.
+	 * @returns {Carousel}
+	 * */
+	destroy() {
+
+		for (let event in this._windowBindings) {
+			window.removeEventListener(event, this._windowBindings[event]);
+		}
+
+		for (let event in this._handleBindings) {
+			this.handle.removeEventListener(event, this._handleBindings[event]);
+		}
 
 		return this;
 	}
