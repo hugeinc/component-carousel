@@ -1,4 +1,3 @@
-"use strict"
 /*
  * carousel ten billion
  * https://github.com/apathetic/flexicarousel
@@ -7,7 +6,6 @@
  * Licensed under the MIT license.
  *
  */
-
 
 export default class Carousel {
 
@@ -75,10 +73,6 @@ export default class Carousel {
 	 * @return {void}
 	 */
 	init() {
-
-		this._handleBindings = this._createHandleBindings();
-		this._windowBindings = this._createWindowBindings();
-
 		// find carousel elements
 		if ( !(this.slideWrap	= this.handle.querySelector(this.options.slideWrap)) ) { return; }		// note: assignment
 		if ( !(this.slides		= this.slideWrap.querySelectorAll(this.options.slides)) ) { return; }	// note: assignment
@@ -92,23 +86,25 @@ export default class Carousel {
 		this.go(0);
 
 		// set up Events
+		this._bindings = this._createBindings();
+
 		if (!this.options.disableDragging) {
 			if ( this.isTouch ) {
-				this.handle.addEventListener('touchstart', this._handleBindings['touchstart']);
-				this.handle.addEventListener('touchmove', this._handleBindings['touchmove']);
-				this.handle.addEventListener('touchend', this._handleBindings['touchend']);
-				this.handle.addEventListener('touchcancel', this._handleBindings['touchcancel']);
+				this.handle.addEventListener('touchstart', this._bindings['touchstart']);
+				this.handle.addEventListener('touchmove', this._bindings['touchmove']);
+				this.handle.addEventListener('touchend', this._bindings['touchend']);
+				this.handle.addEventListener('touchcancel', this._bindings['touchcancel']);
 			} else {
-				this.handle.addEventListener('mousedown', this._handleBindings['mousedown']);
-				this.handle.addEventListener('mousemove', this._handleBindings['mousemove']);
-				this.handle.addEventListener('mouseup', this._handleBindings['mouseup']);
-				this.handle.addEventListener('mouseleave', this._handleBindings['mouseleave']);
-				this.handle.addEventListener('click', this._handleBindings['click']);
+				this.handle.addEventListener('mousedown', this._bindings['mousedown']);
+				this.handle.addEventListener('mousemove', this._bindings['mousemove']);
+				this.handle.addEventListener('mouseup', this._bindings['mouseup']);
+				this.handle.addEventListener('mouseleave', this._bindings['mouseleave']);
+				this.handle.addEventListener('click', this._bindings['click']);
 			}
 		}
 
-		window.addEventListener('resize', this._windowBindings['resize']);
-		window.addEventListener('orientationchange', this._windowBindings['orientationchange']);
+		window.addEventListener('resize', this._bindings['resize']);
+		window.addEventListener('orientationchange', this._bindings['orientationchange']);
 
 		return this;
 	}
@@ -118,16 +114,12 @@ export default class Carousel {
 	 * @returns {Carousel}
 	 * */
 	destroy() {
-
-		for (let event in this._windowBindings) {
-			window.removeEventListener(event, this._windowBindings[event]);
+		for (let event in this._bindings) {
+			this.handle.removeEventListener(event, this._bindings[event]);
 		}
 
-		for (let event in this._handleBindings) {
-			this.handle.removeEventListener(event, this._handleBindings[event]);
-		}
-
-		return this;
+		// remove classes ...
+		// remove clones ...
 	}
 
 	/**
@@ -190,9 +182,13 @@ export default class Carousel {
 
 	// ------------------------------------- Event Listeners ------------------------------------- //
 
-	_createHandleBindings() {
-
+	/**
+	 * Create references to all bound Events so that the may be removed on destroy()
+	 * @return {void}
+	 */
+	_createBindings() {
 		return {
+			// handle
 			'touchstart': this._dragStart.bind(this),
 			'touchmove': this._drag.bind(this),
 			'touchend': this._dragEnd.bind(this),
@@ -201,13 +197,9 @@ export default class Carousel {
 			'mousemove': this._drag.bind(this),
 			'mouseup': this._dragEnd.bind(this),
 			'mouseleave': this._dragEnd.bind(this),
-			'click': this._checkDragThreshold.bind(this)
-		};
+			'click': this._checkDragThreshold.bind(this),
 
-	}
-
-	_createWindowBindings() {
-		return {
+			// window
 			'resize': this._updateView.bind(this),
 			'orientationchange': this._updateView.bind(this)
 		};
