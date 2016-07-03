@@ -113,7 +113,10 @@ export default class Carousel {
 			this.handle.removeEventListener(event, this._bindings[event]);
 		}
 
+		this._bindings = null;
+		this.options = this.slides = this.slideWrap = this.handle = null;
 		this.active = false;
+
 		// remove classes ...
 		// remove clones ...
 	}
