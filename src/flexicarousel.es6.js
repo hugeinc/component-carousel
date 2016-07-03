@@ -17,12 +17,12 @@ export default class Carousel {
 		// --------------------
 		this.options = {
 			activeClass: 'active',
-			slideWrap: 'ul',			// for binding touch events
-			slides: 'li',				// the slide
-			infinite: true,				// infinite scrolling or not
-			display: 1,					// the minimum # of slides to display at a time. If you want to have slides
-										// "hanging" off outside the currently viewable ones, they'd be included here.
-			disableDragging: false
+			slideWrap: 'ul',				// for binding touch events
+			slides: 'li',						// the slides
+			infinite: true,					// infinite scrolling or not
+			display: 1,							// the minimum # of slides to display at a time. If you want to have slides...
+															// "hanging" off outside the currently viewable ones, they'd be included here.
+			disableDragging: false	// only use API to navigate
 		};
 
 		// state vars
@@ -31,6 +31,7 @@ export default class Carousel {
 		this.slides = [];
 		this.sliding = false;
 		this.cloned = 0;
+		this.active = true;
 
 		// touch vars
 		// --------------------
@@ -59,12 +60,11 @@ export default class Carousel {
 
 		// set up options
 		// --------------------
-		Object.assign(this.options, options);
+		this.options = Object.assign(this.options, options);
 
 		// engage engines
 		// --------------------
 		this.init();
-
 	}
 
 	/**
@@ -74,14 +74,12 @@ export default class Carousel {
 	 */
 	init() {
 		// find carousel elements
-		if ( !(this.slideWrap	= this.handle.querySelector(this.options.slideWrap)) ) { return; }		// note: assignment
-		if ( !(this.slides		= this.slideWrap.querySelectorAll(this.options.slides)) ) { return; }	// note: assignment
-
+		this.slideWrap = this.handle.querySelector(this.options.slideWrap);
+		this.slides = this.slideWrap.querySelectorAll(this.options.slides);
 		this.numSlides = this.slides.length;
 
-		// check if we have sufficient slides to make a carousel
-		if ( this.numSlides < this.options.display ) { this.sliding = true; return; }		// this.sliding deactivates carousel. I will better-ify this one day. Maybe "this.active" ?
-		if ( this.options.infinite ) { this._cloneSlides(); }
+		if (!this.slideWrap || !this.slides || this.numSlides < this.options.display) { return this.active = false; }
+		if (this.options.infinite) { this._cloneSlides(); }
 
 		this.go(0);
 
@@ -89,17 +87,14 @@ export default class Carousel {
 		this._bindings = this._createBindings();
 
 		if (!this.options.disableDragging) {
-			if ( this.isTouch ) {
-				this.handle.addEventListener('touchstart', this._bindings['touchstart']);
-				this.handle.addEventListener('touchmove', this._bindings['touchmove']);
-				this.handle.addEventListener('touchend', this._bindings['touchend']);
-				this.handle.addEventListener('touchcancel', this._bindings['touchcancel']);
+			if (this.isTouch) {
+				['touchstart', 'touchmove', 'touchend', 'touchcancel'].map((event) => {
+					this.handle.addEventListener(event, this._bindings[event]);
+				});
 			} else {
-				this.handle.addEventListener('mousedown', this._bindings['mousedown']);
-				this.handle.addEventListener('mousemove', this._bindings['mousemove']);
-				this.handle.addEventListener('mouseup', this._bindings['mouseup']);
-				this.handle.addEventListener('mouseleave', this._bindings['mouseleave']);
-				this.handle.addEventListener('click', this._bindings['click']);
+				['mousedown', 'mousemove', 'mouseup', 'mouseleave', 'click'].map((event) => {
+					this.handle.addEventListener(event, this._bindings[event]);
+				});
 			}
 		}
 
@@ -118,6 +113,7 @@ export default class Carousel {
 			this.handle.removeEventListener(event, this._bindings[event]);
 		}
 
+		this.active = false;
 		// remove classes ...
 		// remove clones ...
 	}
@@ -152,18 +148,18 @@ export default class Carousel {
 	 * @return {void}
 	 */
 	go(to) {
-		// var options = this.options,
-		// 	slides = this.slides;
+		// let opts = this.options;
+		// let slides = this.slides;
 
-		if ( this.sliding ) { return; }
+		if (this.sliding || !this.active) { return; }
 
 		this.width = this.slides[0].getBoundingClientRect().width;				// check every time. This is preferrable to .offsetWidth as we get a fractional width
 		this.offset = this.cloned * this.width;
 		// this.offset = this.options.display * this.width;
 
-		if ( to < 0 || to >= this.numSlides ) {									// position the carousel if infinite and at end of bounds
-			var temp = (to < 0) ? this.current+this.numSlides : this.current-this.numSlides;
-			this._slide( -(temp * this.width - this.deltaX ) );
+		if (to < 0 || to >= this.numSlides) {									// position the carousel if infinite and at end of bounds
+			let temp = (to < 0) ? this.current+this.numSlides : this.current-this.numSlides;
+			this._slide( -(temp * this.width - this.deltaX) );
 
 			/* jshint ignore:start */
 			this.slideWrap.offsetHeight;										// force a repaint to actually position "to" slide. *Important*
@@ -175,8 +171,8 @@ export default class Carousel {
 
 		if (this.options.onSlide) { this.options.onSlide.call(this, to, this.current); }	// note: doesn't check if it's a function
 
-		this._removeClass( this.slides[this.current], this.options.activeClass );
-		this._addClass( this.slides[to], this.options.activeClass );
+		this._removeClass(this.slides[this.current], this.options.activeClass);
+		this._addClass(this.slides[to], this.options.activeClass);
 		this.current = to;
 	}
 

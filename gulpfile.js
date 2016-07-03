@@ -34,8 +34,8 @@ var JSHINTRC = {
 };
 
 var KARMACONF = {
-	singleRun: true,
-	browsers: ['PhantomJS'],
+	singleRun: false,
+	browsers: ['Chrome'],
 	frameworks: ['browserify', 'jasmine'],
 	browserify: {
 		debug: true,
