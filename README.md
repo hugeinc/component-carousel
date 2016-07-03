@@ -57,7 +57,7 @@ There is an ES6 module you may consume however you wish. Alternatively, you can 
 | next() | Next Slide: advances carousel to the next slide |
 | prev() | Previous Slide: move carousel to the previous slide |
 | to(i)	 | Go To Slide: advance carousel to the ith slide |
-
+| destroy() | Destroy: destroys carousel and removes all eventListeners |
 
 ## Demo
 
