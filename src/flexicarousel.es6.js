@@ -81,7 +81,7 @@ export default class Carousel {
 		if (!this.slideWrap || !this.slides || this.numSlides < this.options.display) { return this.active = false; }
 		if (this.options.infinite) { this._cloneSlides(); }
 
-		this.go(0);
+		this.go(0);			// this adds our slide classes
 
 		// set up Events
 		this._bindings = this._createBindings();
@@ -182,8 +182,8 @@ export default class Carousel {
 	// ------------------------------------- Event Listeners ------------------------------------- //
 
 	/**
-	 * Create references to all bound Events so that the may be removed on destroy()
-	 * @return {void}
+	 * Create references to all bound Events so that they may be removed upon destroy()
+	 * @return {Object} containing references to each event and its bound function
 	 */
 	_createBindings() {
 		return {
@@ -243,7 +243,7 @@ export default class Carousel {
 	 * @return {void}
 	 */
 	_drag(e) {
-		let touches;
+		var touches;
 
 		if (!this.dragging) {
 			return;
@@ -357,11 +357,11 @@ export default class Carousel {
 	 */
 	_cloneSlides() {
 		var duplicate;
-		var toDuplicate = this.options.display,
-			fromEnd = Math.max(this.numSlides - toDuplicate, 0),
-			fromBeg = Math.min(toDuplicate, this.numSlides);
+		var display = this.options.display;
+		var fromEnd = Math.max(this.numSlides - display, 0);
+		var fromBeg = Math.min(display, this.numSlides);
 
-		// take "toDuplicate" slides from the end and add to the beginning
+		// take "display" slides from the end and add to the beginning
 		for (let i = this.numSlides; i > fromEnd; i--) {
 			duplicate = this.slides[i-1].cloneNode(true);						// cloneNode --> true is deep cloning
 			duplicate.removeAttribute('id');
@@ -371,7 +371,7 @@ export default class Carousel {
 			this.cloned++;
 		}
 
-		// take "toDuplicate" slides from the beginning and add to the end
+		// take "display" slides from the beginning and add to the end
 		for (let i = 0; i < fromBeg; i++) {
 			duplicate = this.slides[i].cloneNode(true);
 			duplicate.removeAttribute('id');
@@ -380,7 +380,7 @@ export default class Carousel {
 			this.slideWrap.appendChild(duplicate);
 		}
 
-		// this.slideWrap.style.marginLeft = (-toDuplicate)+'00%';					// use marginLeft (not left) so IE8/9 etc can use left to slide
+		// this.slideWrap.style.marginLeft = (-display)+'00%';					// use marginLeft (not left) so IE8/9 etc can use left to slide
 	}
 
 	/**
