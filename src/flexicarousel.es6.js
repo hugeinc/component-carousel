@@ -305,19 +305,19 @@ export default class Carousel {
 	 * @return {[type]}        [description]
 	 */
 	_slide(offset, animate) {
+		var delay = 400;
+		// var self = this;
+
 		offset -= this.offset;
 
 		if (animate) {
 			this.sliding = true;
 			this._addClass(this.slideWrap, 'animate');
 
-			var delay = 400;
-			var self = this;
 			setTimeout(() => {
-				self.sliding = false;
-				self._removeClass(self.slideWrap, 'animate');
+				this.sliding = false;
+				this._removeClass(this.slideWrap, 'animate');
 			}, delay);
-
 		}
 
 		if (this.transform) {
