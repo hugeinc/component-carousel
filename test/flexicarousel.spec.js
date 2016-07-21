@@ -1,100 +1,128 @@
 import Carousel from '../src/flexicarousel.es6.js';
+import test from 'tape';
 
-describe('flexicarousel - ', function() {
 
-  // MOCKS
+
+const setup = (opts={}) => {
+  // const fixtures = {};
+  // // Insert your fixture code here.
+  // // Make sure you're creating fresh objects each
+  // // time setup() is called.
+  // return fixtures;
+
+  var carousel;
   var container = document.createElement('div');
   var wrap = document.createElement('ul');
+
   [1,2,3].map((i) => {
     wrap.appendChild( document.createElement('li') );
   });
   container.appendChild(wrap);
-  var carousel;
 
-  // E
-  describe('exporting:', function() {
+  return carousel = new Carousel(container, opts);
+};
 
-    it('should export to the window object', function() {
-      // expect(...
-    // expect(foo.setBar).toHaveBeenCalledWith(123);
+const teardown = (carousel) => {
+  carousel.destroy();
+};
 
-    });
 
-    it('should export as a common module', function() {
 
-    });
+test('Setup and teardown:', function(t) {
 
+  t.test('initializes correctly', function(assert) {
+    const carousel = setup();
+
+    assert(carousel).toExist();
+
+    teardown(carousel);
+    assert.end();
   });
 
-
-  //
-  describe('setup and teardown:', function() {
-
-    beforeEach(function() {
-      carousel = new Carousel(container, {
-        activeClass: 'current',
-        display: 4,
-        infinite: false
-      });
+  t.test('accepts the correct options', function(assert) {
+    const fixture = setup({
+      activeClass: 'current',
+      display: 4,
+      infinite: false
     });
 
-    it('initializes correctly', function() {
-      // expect(carousel).toExist();
-      // console.log(carousel);
-    });
+    assert(carousel.options.activeClass).toBe('current');
+    assert(carousel.options.display).toBe(4);
+    assert(carousel.options.infinite).toBe(false);
 
-    it('accepts the correct options', function() {
-      expect(carousel.options.activeClass).toBe('current');
-      expect(carousel.options.display).toBe(4);
-      expect(carousel.options.infinite).toBe(false);
-    });
-
-    it('destroys cleanly, removing all references and events', function() {
-      // spyOn(carousel.destroy, 'destroy').and.callThrough();
-      // expect(carousel.destroy).toHaveBeenCalled();
-
-      carousel.destroy();
-
-      // some check for carousel
-    });
-
+    teardown(fixture);
+    assert.end();
   });
 
+  t.test('destroys cleanly, removing all references and events', function(assert) {
+    const carousel = setup();
+    // spyOn(carousel.destroy, 'destroy').and.callThrough();
+    // assert(carousel.destroy).toHaveBeenCalled();
 
-  //
-  describe('navigation:', function() {
+    // teardown(carousel);
+    carousel.destroy();
 
-    beforeEach(function() {
-      carousel = new Carousel(container);
-    });
+    // some check for carousel
 
-    it('jumps to slide 2 when go(2) is called', function() {
-      carousel.go(2);
-      expect(carousel.current).toBe(2);
-    });
-
-    it('goes to the next slide when next() is called', function() {
-      carousel.next();
-      expect(carousel.current).toBe(1);   // because 0 is first
-    });
-
-    it('goes to the previous slide when prev() is called', function() {
-      carousel.go(2);
-      carousel.prev();
-      expect(carousel.current).toBe(1);
-    });
-
-    it('when we are at the last slide in an infinite carousel, goes to the first slide when next() is called', function() {
-      carousel.go(2);
-      carousel.next();
-      expect(carousel.current).toBe(0);
-    });
-
-    it('when we are at the first slide in an infinite carousel, goes to the last slide when prev() is called', function() {
-      carousel.prev();
-      expect(carousel.current).toBe(2);
-    });
-
+    assert.end();
   });
 
 });
+
+
+test('Navigation:', function(t) {
+
+  t.test('jumps to slide 2 when go(2) is called', function(assert) {
+    const carousel = setup();
+
+    carousel.go(2);
+    assert(carousel.current).isEqual(2);
+
+    teardown(carousel);
+    assert.end();
+  });
+
+  t.test('goes to the next slide when next() is called', function(assert) {
+    const carousel = setup();
+
+    carousel.next();
+    assert(carousel.current).isEqual(1);   // because 0 is first
+
+    teardown(carousel);
+    assert.end();
+  });
+
+  t.test('goes to the previous slide when prev() is called', function(assert) {
+    const carousel = setup();
+
+    carousel.go(2);
+    carousel.prev();
+    assert(carousel.current).isEqual(1);
+
+    teardown(carousel);
+    assert.end();
+  });
+
+  t.test('when we are at the last slide in an infinite carousel, goes to the first slide when next() is called', function(assert) {
+    const carousel = setup();
+
+    carousel.go(2);
+    carousel.next();
+    assert(carousel.current).isEqual(0);
+
+    teardown(carousel);
+    assert.end();
+  });
+
+  t.test('when we are at the first slide in an infinite carousel, goes to the last slide when prev() is called', function(assert) {
+    const carousel = setup();
+
+    carousel.prev();
+    assert(carousel.current).isEqual(2);
+
+    teardown(carousel);
+    assert.end();
+  });
+
+});
+
