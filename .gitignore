@@ -2,8 +2,6 @@
 .DS_Store
 /node_modules
 npm-debug.log
-demo/showcase-styles.css
 .idea/
-dist/flexicarousel.js
 *sublime*
 

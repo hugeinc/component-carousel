@@ -4,7 +4,9 @@
   "license": "MIT",
   "version": "0.5.0",
   "description": "A micro, responsive, touch-enabled carousel.",
-  "main": "index.js",
+  "main": "./dist/flexicarousel.cjs.js",
+  "browser": "./dist/flexicarousel.browser.js",
+  "jsnext:main": "./src/flexicarousel.es6.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/apathetic/flexicarousel.git"
@@ -14,22 +16,23 @@
   ],
   "scripts": {
     "start": "http-server ./ -p 8080 -d",
-    "clean": "rm dist/*.js",
-    "build": "npm run build:js && npm run build:cjs",
-    "build:js": "browserify src/shim.js -t babelify | uglifyjs > dist/flexicarousel.min.js",
-    "build:cjs": "babel src/flexicarousel.es6.js > dist/flexicarousel.cjs.js",
+    "clean": "rm dist/*.js*",
+    "build": "npm run clean && node build.js",
     "lint": "eslint source/js/*.js",
     "test": "tape -r babel-register test/*.js"
   },
   "devDependencies": {
     "babel": "^6.5.2",
-    "babel-cli": "^6.10.1",
-    "babel-core": "^6.5.2",
-    "babel-preset-es2015": "^6.5.0",
-    "babelify": "^7.2.0",
-    "browserify": "^13.0.0",
+    "babel-cli": "^6.11.4",
+    "babel-core": "^6.11.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-es2015-rollup": "^1.1.1",
+    "babel-preset-stage-1": "^6.5.0",
     "eslint": "^3.1.1",
     "http-server": "^0.9.0",
+    "rollup": "^0.34.1",
+    "rollup-plugin-babel": "^2.6.1",
+    "rollup-plugin-uglify": "^1.0.1",
     "tape": "^4.6.0",
     "uglify-js": "^2.7.0"
   }

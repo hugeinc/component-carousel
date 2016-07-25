@@ -7,6 +7,11 @@
  *
  */
 
+// var default = class Carousel {
+// ...
+// module.exports = default;
+
+
 export default class Carousel {
 
 	constructor(container, options={}) {
