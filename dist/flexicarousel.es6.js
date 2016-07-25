@@ -1,5 +1,3 @@
-'use strict';
-
 /*
  * carousel ten billion
  * https://github.com/apathetic/flexicarousel
@@ -430,5 +428,5 @@ class Carousel {
 
 };
 
-module.exports = Carousel;
-//# sourceMappingURL=flexicarousel.cjs.js.map
+export default Carousel;
+//# sourceMappingURL=flexicarousel.es6.js.map
