@@ -2,7 +2,7 @@
   "name": "@apatheticwes/flexicarousel",
   "author": "wes hatch",
   "license": "MIT",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "A micro, responsive, touch-enabled carousel.",
   "main": "./dist/flexicarousel.cjs.js",
   "browser": "./dist/flexicarousel.browser.js",
