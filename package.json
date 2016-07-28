@@ -4,9 +4,9 @@
   "license": "MIT",
   "version": "0.6.0",
   "description": "A micro, responsive, touch-enabled carousel.",
-  "main": "./dist/flexicarousel.cjs.js",
-  "browser": "./dist/flexicarousel.browser.js",
-  "jsnext:main": "./src/flexicarousel.es6.js",
+  "main":        "./dist/carousel.cjs.js",
+  "jsnext:main": "./dist/carousel.es6.js",
+  "#browser":    "./dist/carousel.browser.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/apathetic/flexicarousel.git"

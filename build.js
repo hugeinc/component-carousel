@@ -32,7 +32,7 @@ const bundles = [
   {
     format: 'iife', ext: '.min.js', plugins: [uglify()],
     babelPresets: ['es2015-rollup', 'stage-1'], babelPlugins: [],
-    moduleName: 'flexicarousel', minify: true
+    moduleName: 'Carousel', minify: true
   }
 ];
 
@@ -44,7 +44,7 @@ let promise = Promise.resolve();
 // Compile source code into a distributable format with Babel and Rollup
 for (const config of bundles) {
   promise = promise.then(() => rollup.rollup({
-    entry: 'src/flexicarousel.js',
+    entry: 'src/carousel.js',
     // external: Object.keys(pkg.dependencies),
     plugins: [
       babel({
@@ -55,7 +55,8 @@ for (const config of bundles) {
       })
     ].concat(config.plugins),
   }).then(bundle => bundle.write({
-    dest: `dist/${config.moduleName || 'flexicarousel'}${config.ext}`,
+    // dest: `dist/${config.moduleName || 'carousel'}${config.ext}`,
+    dest: `dist/carousel${config.ext}`,
     format: config.format,
     sourceMap: !config.minify,
     moduleName: config.moduleName,

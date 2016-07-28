@@ -1,18 +1,15 @@
 'use strict';
 
-/*
- * carousel ten billion
- * https://github.com/apathetic/flexicarousel
- *
- * Copyright (c) 2013, 2016 Wes Hatch
- * Licensed under the MIT license.
- *
+/**
+ * Feature detection: CSS transforms
+ * @type {Boolean}
  */
 
-// var default = class Carousel {
-// ...
-// module.exports = default;
-
+let transform = ['transform', 'webkitTransform', 'MozTransform', 'OTransform', 'msTransform'].find(t => {
+  // return (document.body.style[t] !== undefined);   // if DOM is not yet ready, let's do:
+  var dummy = document.createElement('div');
+  return dummy.style[t] !== undefined;
+});
 
 class Carousel {
 
@@ -51,21 +48,21 @@ class Carousel {
 		// feature detection
 		// --------------------
 		this.isTouch = 'ontouchend' in document;
-		var style = document.body.style;
-		var tests = {
-			'transform': 'transitionend',
-			'OTransform': 'oTransitionEnd',
-			'MozTransform': 'transitionend',
-			'webkitTransform': 'webkitTransitionEnd'
-		};
-		// note: we don't test "ms" prefix, (as that gives us IE9 which doesn't support transforms3d anyway. IE10 will work with "transform")
-		for (var x in tests) {
-			if (style[x] !== undefined) {
-				this.transform = x;
-				this.transitionEnd = tests[x];
-				break;
-			}
-		}
+		// var style = document.body.style;
+		// var tests = {
+		// 	 'transform':'transitionend',
+		// 	 'OTransform': 'oTransitionEnd',
+		// 	 'MozTransform': 'transitionend',
+		// 	 'webkitTransform': 'webkitTransitionEnd'
+		// };
+		// // note: we don't test "ms" prefix, (as that gives us IE9 which doesn't support transforms3d anyway. IE10 will work with "transform")
+		// for (var x in tests) {
+		// 	if ( style[x] !== undefined) {
+		// 		this.transform = x;
+		// 		this.transitionEnd = tests[x];
+		// 		break;
+		// 	}
+		// }
 
 		// set up options
 		// --------------------
@@ -337,8 +334,8 @@ class Carousel {
 			}, delay);
 		}
 
-		if (this.transform) {
-			this.slideWrap.style[this.transform] = 'translate3d(' + offset + 'px, 0, 0)';
+		if (transform) {
+			this.slideWrap.style[transform] = 'translate3d(' + offset + 'px, 0, 0)';
 		} else {
 			this.slideWrap.style.left = offset + 'px';
 		}
@@ -431,4 +428,4 @@ class Carousel {
 };
 
 module.exports = Carousel;
-//# sourceMappingURL=flexicarousel.cjs.js.map
+//# sourceMappingURL=carousel.cjs.js.map
