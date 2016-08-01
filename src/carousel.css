@@ -46,7 +46,7 @@
 	display:inline-block;	/* fallback */
 	vertical-align: top;	/* fallback */
 	position:relative;		/* fallback */
-	width:100%;				/* fallback */
+	width:100%;						/* fallback */
 
 	cursor: move;
 
@@ -105,4 +105,5 @@
 		border-color: #aaa;
 		background: #aaa;
 	}
+
 	/* */
