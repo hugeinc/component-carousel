@@ -8,8 +8,9 @@ const uglify = require('rollup-plugin-uglify');
 
 const bundles = [
   {
-    format: 'cjs', ext: '.browser.js', plugins: [],
-    babelPresets: ['es2015-rollup', 'stage-1'], babelPlugins: []
+    format: 'umd', ext: '.browser.js', plugins: [],
+    babelPresets: ['es2015-rollup', 'stage-1'], babelPlugins: [],
+    moduleName: 'Carousel'
   },
 
   {

@@ -80,7 +80,7 @@ export default class Carousel {
 		this.slides = this.slideWrap.querySelectorAll(this.options.slides);
 		this.numSlides = this.slides.length;
 
-		if (!this.slideWrap || !this.slides || this.numSlides < this.options.display) { return this.active = false; }
+		if (!this.slideWrap || !this.slides || this.numSlides < this.options.display) { console.log('Carousel: insufficient # slides'); return this.active = false; }
 		if (this.options.infinite) { this._cloneSlides(); }
 
 		this.go(0);			// this adds our slide classes
