@@ -1,107 +1,179 @@
 
-	.carousel {
-		width: 100%;
-		margin:	0 auto;
-		position:relative;
+.carousel {
+	width: 100%;
+	margin:	0 auto;
+	position:relative;
+}
+
+.carousel h3 {
+	position: absolute;
+	color: #fff;
+	padding: 0.5em;
+	z-index: 1;
+}
+
+.carousel img {
+	width:100%;
+	height:auto;
+	border: 2px solid #fff;
+}
+
+.carousel .wrap > li {
+	/*padding: 2px;*/
+	max-height: 600px;
+	overflow: hidden;
+}
+
+
+/* -------------------------------------
+	SAMPLE CAROUSEL STYLES
+------------------------------------- */
+
+.clip {
+	overflow: hidden;
+}
+
+/* TEN */
+#ten img {
+	opacity: 0.5;
+}
+#ten .active img {
+	opacity: 1;
+}
+
+@media(min-width:480px) {
+	#ten .wrap > li {
+		-webkit-flex-basis: 100%;
+		   -moz-flex-basis: 100%;
+				  -ms-flex: 1 0 100%;
+				flex-basis: 100%;
 	}
-
-	.carousel h3 {
-		position: absolute;
-		color: #fff;
-		padding: 0.5em;
-		z-index: 1;
+}
+@media(min-width:800px) {
+	#ten .wrap > li {
+		flex-basis: 50%;
 	}
-
-	.carousel img {
-		width:100%;
-		height:auto;
-		border: 2px solid #fff;
-	}
-
-	.carousel .wrap > li {
-		/*padding: 2px;*/
-		max-height: 600px;
-		overflow: hidden;
-	}
-
-
-	/* -------------------------------------
-		SAMPLE NAVIGATION STYLES
-	------------------------------------- */
-
-	.clip {
-		overflow: hidden;
-	}
-
-	/* TEN */
-	#ten img {
-		opacity: 0.5;
-	}
-	#ten .active img {
+	#ten .active + li img {
 		opacity: 1;
 	}
-
-	@media(min-width:480px) {
-		#ten .wrap > li {
-			-webkit-flex-basis: 100%;
-			   -moz-flex-basis: 100%;
-					  -ms-flex: 1 0 100%;
-					flex-basis: 100%;
-		}
+}
+@media(min-width:1120px) {
+	#ten .wrap li {
+		flex-basis: 33.3333%;
 	}
-	@media(min-width:800px) {
-		#ten .wrap > li {
-			flex-basis: 50%;
-		}
-		#ten .active + li img {
-			opacity: 1;
-		}
+	#ten .active + li + li img {
+		opacity: 1;
 	}
-	@media(min-width:1120px) {
-		#ten .wrap li {
-			flex-basis: 33.3333%;
-		}
-		#ten .active + li + li img {
-			opacity: 1;
-		}
-	}
+}
 
 
 
-	/* BILLION */
-	#billion {
-		max-width: 540px;
-	}
-	#billion .wrap {
-		width: 66.666%;
-	    margin: 0px auto;
-	}
+/* BILLION */
+#billion {
+	max-width: 540px;
+}
+#billion .wrap {
+	width: 66.666%;
+    margin: 0px auto;
+}
 
-	#billion nav .prev {
-		left: 16.666%;
-		margin-left: -1em;
-	}
-	#billion nav .next {
-		right: 16.666%;
-		margin-right: -1em;
-	}
+/*#billion nav .prev {
+	left: 16.666%;
+	margin-left: -1em;
+}
+#billion nav .next {
+	right: 16.666%;
+	margin-right: -1em;
+}*/
 
 
 
 
-	/* SEVEN */
-	@media screen and (min-width:480px) {
-		#seven .wrap > li {
-			flex-basis: calc(1/3 * 100%);		/* 33.3333%; */
-		}
+/* SEVEN */
+@media screen and (min-width:480px) {
+	#seven .wrap > li {
+		flex-basis: calc(1/3 * 100%);		/* 33.3333%; */
 	}
-	@media screen and (min-width:800px) {
-		#seven .wrap > li {
-			flex-basis: 25%;
-		}
+}
+@media screen and (min-width:800px) {
+	#seven .wrap > li {
+		flex-basis: 25%;
 	}
-	@media screen and (min-width:1120px) {
-		#seven .wrap > li {
-			flex-basis: 20%;
-		}
+}
+@media screen and (min-width:1120px) {
+	#seven .wrap > li {
+		flex-basis: 20%;
 	}
+}
+
+
+/* -------------------------------------
+	SAMPLE NAVIGATION STYLES
+------------------------------------- */
+
+/* */
+.demo-nav {
+  font-size: 0.5em;
+  width: 100%;
+  text-align: center;
+  position: static;
+  }
+
+  .demo-nav ul {
+    height: 3em;
+  }
+
+  .demo-nav li {
+    display: inline-block;
+    cursor: pointer;
+    color: grey;
+    list-style: none !important;
+    width: 1em;
+    height: 1em;
+    margin: 1em;
+    border-radius: 50%;
+    background: #ddd;
+    }
+
+    .demo-nav li.active {
+      background: #ec008c;
+    }
+  }
+
+  .demo-nav .prev,
+  .demo-nav .next {
+    height: calc(100% - 3em);
+    width: 10%;
+    top: 0;
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.5s;
+    }
+
+    .demo-nav .prev span.
+    .demo-nav .next span {
+      position: absolute;
+      top: 50%;
+      color: #fff;
+      font-size: 54px;
+      width: 100%;
+      height: 2em;
+      margin-top: -1em;
+      line-height: 2em;
+      display: block;
+    }
+
+    .demo-nav .prev .disabled,
+    .demo-nav .next .disabled {
+      opacity: 0.2;
+    }
+
+    .carousel:hover .demo-nav .prev,
+    .carousel:hover .demo-nav .next {
+      opacity: 1;
+    }
+
+  .demo-nav .prev { left: 0; }
+  .demo-nav .next { right: 0; }
+
+/* */
