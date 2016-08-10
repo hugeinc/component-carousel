@@ -13,9 +13,9 @@
 	<script src="../dist/carousel.min.js"></script>
 
 	<!-- demo stuffs -->
-	<link rel="stylesheet" href="https://rawgit.com/apathetic/showcase/showcase/gh-pages/css/styles.css">
+	<link rel="stylesheet" href="https://apathetic.github.io/showcase/assets/css/main.min.css">
+	<script src="https://rawgit.com/apathetic/stickynav/master/dist/stickyNav.js"></script>
 	<script src="prism.js"></script>
-	<script src="https://cdn.rawgit.com/apathetic/stickynav/master/dist/stickyNav.js"></script>
 	<script>
 		window.addEventListener('DOMContentLoaded', function() {
 			new stickyNav({ nav: '#sticky' });
@@ -26,7 +26,7 @@
 </head>
 <body>
 
-	<header>
+	<header class="condensed align-center">
 		<h1>Carousel.</h1>
 	</header>
 
@@ -86,12 +86,12 @@
 						</li>
 					</ul>
 
-					<nav class="demo-nav">
-						<a href="" class="prev"><span>⟨</span></a>
+					<nav class="carousel__nav">
+						<button class="prev">⟨</button>
 						<ul>
 							<li></li><li></li><li></li>
 						</ul>
-						<a href="" class="next"><span>⟩</span></a>
+						<button class="next">⟩</button>
 					</nav>
 				</div>
 
@@ -132,12 +132,12 @@
 						</li>
 					</ul>
 
-					<nav class="demo-nav">
-						<a href="" class="prev"><span>⟨</span></a>
+					<nav class="carousel__nav">
+						<button class="prev">⟨</button>
 						<ul>
 							<li></li><li></li><li></li><li></li><li></li><li></li><li></li>
 						</ul>
-						<a href="" class="next"><span>⟩</span></a>
+						<button class="next">⟩</button>
 					</nav>
 				</div>
 
@@ -162,12 +162,12 @@
 						</li>
 					</ul>
 
-					<nav class="demo-nav">
-						<a href="" class="prev"><span>⟨</span></a>
+					<nav class="carousel__nav">
+						<button class="prev">⟨</button>
 						<ul>
 							<li></li><li></li><li></li>
 						</ul>
-						<a href="" class="next"><span>⟩</span></a>
+						<button class="next">⟩</button>
 					</nav>
 				</div>
 
@@ -210,9 +210,9 @@
 						</ul>
 					</div>
 
-					<nav class="demo-nav">
-						<a href="" class="prev"><span>⟨</span></a>
-						<a href="" class="next"><span>⟩</span></a>
+					<nav class="carousel__nav">
+						<button class="prev">⟨</button>
+						<button class="next">⟩</button>
 					</nav>
 				</div>
 
@@ -375,9 +375,9 @@ container.querySelector('.next').addEventListener('click', carousel.next);
 
 		function updateNav(i) {
 
-			var bullets = this.handle.querySelectorAll('.demo-nav li');
-			var next = this.handle.querySelector('.demo-nav .next');
-			var prev = this.handle.querySelector('.demo-nav .prev');
+			var bullets = this.handle.querySelectorAll('.carousel__nav li');
+			var next = this.handle.querySelector('.carousel__nav .next');
+			var prev = this.handle.querySelector('.carousel__nav .prev');
 
 			if (!this.options.infinite) {
 				if (prev) {
