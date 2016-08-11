@@ -85,7 +85,7 @@ class Carousel {
 		this.numSlides = this.slides.length;
 
 		if (!this.slideWrap || !this.slides || this.numSlides < this.options.display) {
-			return this.active = false;
+			console.log('Carousel: insufficient # slides');return this.active = false;
 		}
 		if (this.options.infinite) {
 			this._cloneSlides();

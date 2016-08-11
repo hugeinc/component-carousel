@@ -9,9 +9,9 @@
 	 * @type {Boolean}
 	 */
 
+	var dummy = document.createElement('div');
 	var transform = ['transform', 'webkitTransform', 'MozTransform', 'OTransform', 'msTransform'].find(function (t) {
 	  // return (document.body.style[t] !== undefined);   // if DOM is not yet ready, let's do:
-	  var dummy = document.createElement('div');
 	  return dummy.style[t] !== undefined;
 	});
 
@@ -119,7 +119,7 @@
 				this.numSlides = this.slides.length;
 
 				if (!this.slideWrap || !this.slides || this.numSlides < this.options.display) {
-					return this.active = false;
+					console.log('Carousel: insufficient # slides');return this.active = false;
 				}
 				if (this.options.infinite) {
 					this._cloneSlides();

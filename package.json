@@ -6,7 +6,7 @@
   "description": "A micro, responsive, touch-enabled carousel.",
   "main":        "./dist/carousel.cjs.js",
   "jsnext:main": "./dist/carousel.es6.js",
-  "#browser":    "./dist/carousel.browser.js",
+  "browser":    "./dist/carousel.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/apathetic/flexicarousel.git"
