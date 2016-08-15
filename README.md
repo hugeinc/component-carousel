@@ -63,14 +63,14 @@ npm i
 npm start
 ```
 
-A server will spin up at ```http://localhost:8003```, where can may play with the various examples.
+A server will spin up at ```http://localhost:8080```, where you may play with the various examples.
 
 ## Support
 * IE8+
 * Safari / Chrome
 * Firefox
 * iOS
-* Android
+* Android 4.0+
 
 ## Known Issues
 
