@@ -1,4 +1,4 @@
-# Flexicarousel
+# Carousel
 
 A carousel that'll use CSS to dynamically adapt its width. Uses transforms for its transitions and is also touch-enabled.
 
@@ -13,10 +13,6 @@ You can swipe to drag a slide yet still use CSS to control how the slide transit
 using the exposed API. The carousel works on both desktop and mobile, and weighs in at less than 2 KB(!)
 
 ## Getting Started
-Checkout the [Github repo][github].
-
-[github]: https://github.com/apathetic/flexicarousel
-
 There is an ES6 module you may consume however you wish. Alternatively, you can also include the relevant scripts in your web page, and then:
 
 ```javascript
@@ -64,10 +60,10 @@ There is an ES6 module you may consume however you wish. Alternatively, you can 
 After cloning the repo:
 ```
 npm i
-gulp
+npm start
 ```
 
-A server will spin up at ```http://localhost:8003```, where can play with Flexicarousel.
+A server will spin up at ```http://localhost:8003```, where can may play with the various examples.
 
 ## Support
 * IE8+
