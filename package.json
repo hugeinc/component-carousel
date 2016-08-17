@@ -1,5 +1,5 @@
 {
-  "name": "@apatheticwes/flexicarousel",
+  "name": "@hugeinc/carousel",
   "author": "wes hatch",
   "license": "MIT",
   "version": "0.6.0",
@@ -9,7 +9,7 @@
   "jsnext:main": "./dist/carousel.es6.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/apathetic/flexicarousel.git"
+    "url": "git@github.com:hugeinc/component-carousel.git"
   },
   "keywords": [
     "carousel"
