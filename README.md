@@ -17,43 +17,42 @@ There is an ES6 module you may consume however you wish. Alternatively, you can 
 
 ```javascript
 
-	// availble options
-	var options = {
-		onSlide: someFunction,
-		activeClass: 'active',
-		slideWrap: 'ul',
-		slides: 'li',
-		infinite: true,
-		display: 1,
-		disableDragging: false
-	};
+  // availble options
+  var options = {
+    onSlide: someFunction,
+    activeClass: 'active',
+    slideWrap: 'ul',
+    slides: 'li',
+    infinite: true,
+    display: 1,
+    disableDragging: false
+  };
 
-	var container = document.querySelector('.carousel');
-	var carousel = new Carousel(container, options);
+  var container = document.querySelector('.carousel');
+  var carousel = new Carousel(container, options);
 
 ```
 
-
 ## Options
 
-| name			| type		| default	| description |
-| ------------- | --------- | --------- | ----------- |
-| onSlide		| function	| undefined	| A function to execute on slide. It is passed _to_ and _from_ indices. |
-| activeClass 	| string	| active	| Class to use on the active slide. |
-| slideWrap		| string	| .wrap		| The selector to use when searching for the slides' container. This is used only to bind touch events to, on mobile. |
-| slides		| string	| li		| The selector to use when searching for slides within the slideWrap container. |
-| infinite		| boolean	| true		| Enable an infinitely scrolling carousel or not |
-| display		| integer	| 1			| the maximum # of slides to display at a time. If you want to have prev/next slides visible outside those currently displayed, they'd be included here. |
-| disableDragging |	boolean	| false		| if you'd like to disable the touch UI for whatever reason |
+| name            | type     | default   | description |
+| --------------- | -------- | --------- | ----------- |
+| onSlide         | function | undefined | A function to execute on slide. It is passed _to_ and _from_ indices. |
+| activeClass     | string   | active    | Class to use on the active slide. |
+| slideWrap       | string   | .wrap     | The selector to use when searching for the slides' container. This is used only to bind touch events to, on mobile. |
+| slides          | string   | li        | The selector to use when searching for slides within the slideWrap container. |
+| infinite        | boolean  | true      | Enable an infinitely scrolling carousel or not |
+| display         | integer  | 1         | the maximum # of slides to display at a time. If you want to have prev/next slides visible outside those currently displayed, they'd be included here. |
+| disableDragging | boolean  | false     | if you'd like to disable the touch UI for whatever reason |
 
 ## Methods
 
-| method | description |
-| ------ | ----------- |
-| next() | Next Slide: advances carousel to the next slide |
-| prev() | Previous Slide: move carousel to the previous slide |
-| to(i)	 | Go To Slide: advance carousel to the ith slide |
-| destroy() | Destroy: destroys carousel and removes all eventListeners |
+| method    | description |
+| --------- | ----------- |
+| next()    | Advances carousel to the next slide |
+| prev()    | Move carousel to the previous slide |
+| to(i)     | Advance carousel to the ith slide |
+| destroy() | Destroy carousel and remove all EventListeners |
 
 ## Demo
 
