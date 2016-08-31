@@ -7,7 +7,7 @@
  *
  */
 
-import transform from './transform';
+// import transform from './transform';
 
 export default class Carousel {
 
@@ -44,21 +44,9 @@ export default class Carousel {
 		// feature detection
 		// --------------------
 		this.isTouch = 'ontouchend' in document;
-		// var style = document.body.style;
-		// var tests = {
-		// 	 'transform':'transitionend',
-		// 	 'OTransform': 'oTransitionEnd',
-		// 	 'MozTransform': 'transitionend',
-		// 	 'webkitTransform': 'webkitTransitionEnd'
-		// };
-		// // note: we don't test "ms" prefix, (as that gives us IE9 which doesn't support transforms3d anyway. IE10 will work with "transform")
-		// for (var x in tests) {
-		// 	if ( style[x] !== undefined) {
-		// 		this.transform = x;
-		// 		this.transitionEnd = tests[x];
-		// 		break;
-		// 	}
-		// }
+		this.transform = ['transform', 'webkitTransform', 'MozTransform', 'OTransform', 'msTransform'].find((t) => {
+		  return (document.body.style[t] !== undefined);
+		});
 
 		// set up options
 		// --------------------
@@ -322,8 +310,8 @@ export default class Carousel {
 			}, delay);
 		}
 
-		if (transform) {
-			this.slideWrap.style[transform] = 'translate3d(' + offset + 'px, 0, 0)';
+		if (this.transform) {
+			this.slideWrap.style[this.transform] = 'translate3d(' + offset + 'px, 0, 0)';
 		}
 		else {
 			this.slideWrap.style.left = offset+'px';

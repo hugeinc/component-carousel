@@ -8,7 +8,7 @@ export default {
   ],
   targets: [
     { dest: 'dist/carousel.cjs.js', format: 'cjs' },
-    { dest: 'dist/carousel.es6.js', format: 'es6' },
+    { dest: 'dist/carousel.es6.js', format: 'es' },
     { dest: 'dist/carousel.js', format: 'iife' }
   ]
 };

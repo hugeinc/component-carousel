@@ -1,13 +1,13 @@
-/**
- * Feature detection: CSS transforms
- * @type {Boolean}
+/*
+ * carousel ten billion
+ * https://github.com/apathetic/flexicarousel
+ *
+ * Copyright (c) 2013, 2016 Wes Hatch
+ * Licensed under the MIT license.
+ *
  */
 
-var dummy = document.createElement('div');
-var transform = ['transform', 'webkitTransform', 'MozTransform', 'OTransform', 'msTransform'].find(function (t) {
-  // return (document.body.style[t] !== undefined);   // if DOM is not yet ready, let's do:
-  return (dummy.style[t] !== undefined);
-});
+// import transform from './transform';
 
 var Carousel = function Carousel(container, options) {
 	if ( options === void 0 ) options={};
@@ -44,21 +44,9 @@ var Carousel = function Carousel(container, options) {
 	// feature detection
 	// --------------------
 	this.isTouch = 'ontouchend' in document;
-	// var style = document.body.style;
-	// var tests = {
-	// 	 'transform':'transitionend',
-	// 	 'OTransform': 'oTransitionEnd',
-	// 	 'MozTransform': 'transitionend',
-	// 	 'webkitTransform': 'webkitTransitionEnd'
-	// };
-	// // note: we don't test "ms" prefix, (as that gives us IE9 which doesn't support transforms3d anyway. IE10 will work with "transform")
-	// for (var x in tests) {
-	// if ( style[x] !== undefined) {
-	// 	this.transform = x;
-	// 	this.transitionEnd = tests[x];
-	// 	break;
-	// }
-	// }
+	this.transform = ['transform', 'webkitTransform', 'MozTransform', 'OTransform', 'msTransform'].find(function (t) {
+		  return (document.body.style[t] !== undefined);
+	});
 
 	// set up options
 	// --------------------
@@ -328,8 +316,8 @@ Carousel.prototype._slide = function _slide (offset, animate) {
 		}, delay);
 	}
 
-	if (transform) {
-		this.slideWrap.style[transform] = 'translate3d(' + offset + 'px, 0, 0)';
+	if (this.transform) {
+		this.slideWrap.style[this.transform] = 'translate3d(' + offset + 'px, 0, 0)';
 	}
 	else {
 		this.slideWrap.style.left = offset+'px';
