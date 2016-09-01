@@ -10,6 +10,7 @@
 // import transform from './transform';
 
 var Carousel = function Carousel(container, options) {
+	var this$1 = this;
 	if ( options === void 0 ) options={};
 
 
@@ -44,8 +45,12 @@ var Carousel = function Carousel(container, options) {
 	// feature detection
 	// --------------------
 	this.isTouch = 'ontouchend' in document;
-	this.transform = ['transform', 'webkitTransform', 'MozTransform', 'OTransform', 'msTransform'].find(function (t) {
-		  return (document.body.style[t] !== undefined);
+	// this.transform = ['transform', 'webkitTransform', 'MozTransform', 'OTransform', 'msTransform'].find((t) => {
+	//   return document.body.style[t] !== undefined;
+	// }); // IE Boooo
+
+	['transform', 'webkitTransform', 'MozTransform', 'OTransform', 'msTransform'].forEach(function (t) {
+		if(document.body.style[t] !== undefined) { this$1.transform = t; }
 	});
 
 	// set up options

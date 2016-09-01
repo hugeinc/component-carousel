@@ -44,8 +44,12 @@ export default class Carousel {
 		// feature detection
 		// --------------------
 		this.isTouch = 'ontouchend' in document;
-		this.transform = ['transform', 'webkitTransform', 'MozTransform', 'OTransform', 'msTransform'].find((t) => {
-		  return (document.body.style[t] !== undefined);
+		// this.transform = ['transform', 'webkitTransform', 'MozTransform', 'OTransform', 'msTransform'].find((t) => {
+		//   return document.body.style[t] !== undefined;
+		// }); // IE Boooo
+
+		['transform', 'webkitTransform', 'MozTransform', 'OTransform', 'msTransform'].forEach((t) => {
+			if (document.body.style[t] !== undefined) { this.transform = t; }
 		});
 
 		// set up options
