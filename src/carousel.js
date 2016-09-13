@@ -237,18 +237,37 @@ export default class Carousel {
 	 * @return {void}
 	 */
 	_drag(e) {
-		var touches;
+		var touches,
+			currentSlide,
+			slidesLength,
+			isSwippingRightFirstSlide,
+			isSwippingLeftLastSlide;
 
 		if (!this.dragging) {
 			return;
 		}
 
+		currentSlide = this.current + 1;
+		slidesLength = this.numSlides;
 		e = e.originalEvent || e;
 		touches = e.touches !== undefined ? e.touches : false;
 		this.deltaX = (touches ? touches[0].pageX : e.clientX) - this.startClientX;
 		this.deltaY = (touches ? touches[0].pageY : e.clientY) - this.startClientY;
 
-    // drag slide along with cursor
+		// Block slide dragging for first and last slides
+		// preventing to show an empty space before first and after last slides.
+		if (!this.infinite) {
+			// FIRST slide and swipping to RIGHT
+			isSwippingRightFirstSlide = currentSlide === 1 && this.deltaX > 0;
+			// LAST slide and swipping to LEFT
+			isSwippingLeftLastSlide = currentSlide === slidesLength && this.deltaX < 0;
+
+			if (isSwippingRightFirstSlide || isSwippingLeftLastSlide) {
+				return false;
+			}
+		}
+
+		// drag slide along with cursor
 		this._slide( -(this.current * this.width - this.deltaX ) );
 
 		// determine if we should do slide, or cancel and let the event pass through to the page
