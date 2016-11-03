@@ -2,7 +2,7 @@
 .carousel {
 	width: 100%;
 	margin:	0 auto;
-	position:relative;
+	position: relative;
 }
 
 .carousel h3 {
@@ -13,8 +13,8 @@
 }
 
 .carousel img {
-	width:100%;
-	height:auto;
+	width: 100%;
+	height: auto;
 	border: 2px solid #fff;
 }
 
@@ -34,12 +34,9 @@
 }
 
 /* TEN */
-/*#ten img {
-	opacity: 0.5;
+#ten .wrap li {
+	margin: 0 1em;
 }
-#ten .active img {
-	opacity: 1;
-}*/
 
 @media(min-width:480px) {
 	#ten .wrap > li {
@@ -53,17 +50,12 @@
 	#ten .wrap > li {
 		flex-basis: 50%;
 	}
-	/*#ten .active + li img {
-		opacity: 1;
-	}*/
 }
+
 @media(min-width:1120px) {
 	#ten .wrap li {
 		flex-basis: 33.3333%;
 	}
-	/*#ten .active + li + li img {
-		opacity: 1;
-	}*/
 }
 
 
@@ -76,16 +68,6 @@
 	width: 66.666%;
     margin: 0px auto;
 }
-
-/*#billion nav .prev {
-	left: 16.666%;
-	margin-left: -1em;
-}
-#billion nav .next {
-	right: 16.666%;
-	margin-right: -1em;
-}*/
-
 
 
 

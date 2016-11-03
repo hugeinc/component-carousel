@@ -22,6 +22,7 @@ var Carousel = (function () {
 		// default options
 		// --------------------
 		this.options = {
+			animateClass: 'animate',
 			activeClass: 'active',
 			slideWrap: 'ul',			// for binding touch events
 			slides: 'li',					// the slides
@@ -53,7 +54,7 @@ var Carousel = (function () {
 		// }); // IE Boooo
 
 		['transform', 'webkitTransform', 'MozTransform', 'OTransform', 'msTransform'].forEach(function (t) {
-			if(document.body.style[t] !== undefined) { this$1.transform = t; }
+			if (document.body.style[t] !== undefined) { this$1.transform = t; }
 		});
 
 		// set up options
@@ -81,10 +82,8 @@ var Carousel = (function () {
 		if (!this.slideWrap || !this.slides || this.numSlides < this.options.display) { console.log('Carousel: insufficient # slides'); return this.active = false; }
 		if (this.options.infinite) { this._cloneSlides(); }
 
-		this.go(0);		// this adds our slide classes
-
-		// set up Events
-		this._bindings = this._createBindings();
+		this._updateView();
+		this._bindings = this._createBindings();// set up Events
 
 		if (!this.options.disableDragging) {
 			if (this.isTouch) {
@@ -153,31 +152,23 @@ var Carousel = (function () {
 		 * @return {void}
 		 */
 	Carousel.prototype.go = function go (to) {
-		// let opts = this.options;
-		// let slides = this.slides;
+		var opts = this.options;
 
 		if (this.sliding || !this.active) { return; }
 
-		this.width = this.slides[0].getBoundingClientRect().width;			// check every time. This is preferrable to .offsetWidth as we get a fractional width
-		this.offset = this.cloned * this.width;
-		// this.offset = this.options.display * this.width;
-
 		if (to < 0 || to >= this.numSlides) {								// position the carousel if infinite and at end of bounds
-			var temp = (to < 0) ? this.current+this.numSlides : this.current-this.numSlides;
+			var temp = (to < 0) ? this.current + this.numSlides : this.current - this.numSlides;
 			this._slide( -(temp * this.width - this.deltaX) );
-
-			/* jshint ignore:start */
 			this.slideWrap.offsetHeight;									// force a repaint to actually position "to" slide. *Important*
-			/* jshint ignore:end */
 		}
 
 		to = this._loop(to);
 		this._slide( -(to * this.width), true );
 
-		if (this.options.onSlide) { this.options.onSlide.call(this, to, this.current); }// note: doesn't check if it's a function
+		if (opts.onSlide) { opts.onSlide.call(this, to, this.current); }// note: doesn't check if it's a function
 
-		this._removeClass(this.slides[this.current], this.options.activeClass);
-		this._addClass(this.slides[to], this.options.activeClass);
+		this._removeClass(this.slides[this.current], opts.activeClass);
+		this._addClass(this.slides[to], opts.activeClass);
 		this.current = to;
 	};
 
@@ -310,17 +301,16 @@ var Carousel = (function () {
 			var this$1 = this;
 
 		var delay = 400;
-		// var self = this;
 
 		offset -= this.offset;
 
 		if (animate) {
 			this.sliding = true;
-			this._addClass(this.slideWrap, 'animate');
+			this._addClass(this.slideWrap, this.options.animateClass);
 
 			setTimeout(function () {
 				this$1.sliding = false;
-				this$1._removeClass(this$1.slideWrap, 'animate');
+				this$1._removeClass(this$1.slideWrap, this$1.options.animateClass);
 			}, delay);
 		}
 
@@ -353,7 +343,19 @@ var Carousel = (function () {
 			var this$1 = this;
 
 		clearTimeout(this.timer);
-		this.timer = setTimeout(function () { this$1.go(this$1.current); }, 300);
+		this.timer = setTimeout(function () {
+
+			// this.width = this.slides[0].getBoundingClientRect().width;
+			// this.offset = this.cloned * this.width;
+
+			var s = this$1.slides[0];
+			this$1.width = s.getBoundingClientRect().width +
+										parseFloat(window.getComputedStyle(s)['margin-left']) +
+										parseFloat(window.getComputedStyle(s)['margin-right']);
+
+			this$1.offset = this$1.cloned * this$1.width + parseFloat(window.getComputedStyle(s)['margin-left']);
+			this$1.go(this$1.current);
+		}, 300);
 	};
 
 	/**
@@ -387,8 +389,6 @@ var Carousel = (function () {
 			this$1._addClass(duplicate, 'clone');
 			this$1.slideWrap.appendChild(duplicate);
 		}
-
-		// this.slideWrap.style.marginLeft = (-display)+'00%';				// use marginLeft (not left) so IE8/9 etc can use left to slide
 	};
 
 	/**
