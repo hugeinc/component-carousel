@@ -344,15 +344,15 @@ Carousel.prototype._updateView = function _updateView () {
 	clearTimeout(this.timer);
 	this.timer = setTimeout(function () {
 
-		// this.width = this.slides[0].getBoundingClientRect().width;
-		// this.offset = this.cloned * this.width;
+		this$1.width = this$1.slides[0].getBoundingClientRect().width;
+		this$1.offset = this$1.cloned * this$1.width;
+		// const s = this.slides[0];
+		// this.width = s.getBoundingClientRect().width +
+		// 						parseFloat(window.getComputedStyle(s)['margin-left']) +
+		// 						parseFloat(window.getComputedStyle(s)['margin-right']);
+		//
+		// this.offset = this.cloned * this.width + parseFloat(window.getComputedStyle(s)['margin-left']);
 
-		var s = this$1.slides[0];
-		this$1.width = s.getBoundingClientRect().width +
-									parseFloat(window.getComputedStyle(s)['margin-left']) +
-									parseFloat(window.getComputedStyle(s)['margin-right']);
-
-		this$1.offset = this$1.cloned * this$1.width + parseFloat(window.getComputedStyle(s)['margin-left']);
 		this$1.go(this$1.current);
 	}, 300);
 };

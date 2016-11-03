@@ -333,15 +333,15 @@ export default class Carousel {
 		clearTimeout(this.timer);
 		this.timer = setTimeout(() => {
 
-			// this.width = this.slides[0].getBoundingClientRect().width;
-			// this.offset = this.cloned * this.width;
+			this.width = this.slides[0].getBoundingClientRect().width;
+			this.offset = this.cloned * this.width;
+			// const s = this.slides[0];
+			// this.width = s.getBoundingClientRect().width +
+			// 							parseFloat(window.getComputedStyle(s)['margin-left']) +
+			// 							parseFloat(window.getComputedStyle(s)['margin-right']);
+			//
+			// this.offset = this.cloned * this.width + parseFloat(window.getComputedStyle(s)['margin-left']);
 
-			const s = this.slides[0];
-			this.width = s.getBoundingClientRect().width +
-										parseFloat(window.getComputedStyle(s)['margin-left']) +
-										parseFloat(window.getComputedStyle(s)['margin-right']);
-
-			this.offset = this.cloned * this.width + parseFloat(window.getComputedStyle(s)['margin-left']);
 			this.go(this.current);
 		}, 300);
 	}

@@ -34,9 +34,15 @@
 }
 
 /* TEN */
-#ten .wrap li {
-	margin: 0 1em;
+#ten .wrap {
+	width: calc(100% + 20px);
+  margin: -10px;
 }
+
+#ten .wrap li {
+	padding: 10px;
+}
+
 
 @media(min-width:480px) {
 	#ten .wrap > li {
