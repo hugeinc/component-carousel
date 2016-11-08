@@ -43,17 +43,14 @@ var Carousel = (function () {
 		// touch vars
 		// --------------------
 		this.dragging = false;
-		this.dragThreshold = 10;
+		this.dragThreshold = 50;
 		this.deltaX = 0;
 
 		// feature detection
 		// --------------------
 		this.isTouch = 'ontouchend' in document;
-		// this.transform = ['transform', 'webkitTransform', 'MozTransform', 'OTransform', 'msTransform'].find((t) => {
-		//   return document.body.style[t] !== undefined;
-		// }); // IE Boooo
 
-		['transform', 'webkitTransform', 'MozTransform', 'OTransform', 'msTransform'].forEach(function (t) {
+		['transform', 'webkitTransform', 'MozTransform', 'OTransform', 'msTransform'].forEach(function (t) { 	// Array.find(...
 			if (document.body.style[t] !== undefined) { this$1.transform = t; }
 		});
 
@@ -251,7 +248,7 @@ var Carousel = (function () {
 		this._slide( -(this.current * this.width - this.deltaX ) );
 
 		// determine if we should do slide, or cancel and let the event pass through to the page
-		this.dragThresholdMet = this.dragThresholdMet || Math.abs(this.deltaX) > this.dragThreshold;
+		this.dragThresholdMet = Math.abs(this.deltaX) > this.dragThreshold;
 	};
 
 	/**
@@ -342,20 +339,17 @@ var Carousel = (function () {
 	Carousel.prototype._updateView = function _updateView () {
 			var this$1 = this;
 
-		clearTimeout(this.timer);
-		this.timer = setTimeout(function () {
-
-			this$1.width = this$1.slides[0].getBoundingClientRect().width;
-			this$1.offset = this$1.cloned * this$1.width;
-			// const s = this.slides[0];
-			// this.width = s.getBoundingClientRect().width +
-			// 						parseFloat(window.getComputedStyle(s)['margin-left']) +
-			// 						parseFloat(window.getComputedStyle(s)['margin-right']);
-			//
-			// this.offset = this.cloned * this.width + parseFloat(window.getComputedStyle(s)['margin-left']);
-
-			this$1.go(this$1.current);
-		}, 300);
+		// Check if the resize was _horizontal_ -- on touch devices, changing scroll
+		// direction will cause the browser tab bar to appear, which triggers a resize
+		if (window.innerWidth !== this._viewport) {
+			this._viewport = window.innerWidth;
+			clearTimeout(this.timer);
+			this.timer = setTimeout(function () {
+				this$1.width = this$1.slides[0].getBoundingClientRect().width;
+				this$1.offset = this$1.cloned * this$1.width;
+				this$1.go(this$1.current);
+			}, 300);
+		}
 	};
 
 	/**
