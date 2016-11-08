@@ -2,7 +2,7 @@
   "name": "@hugeinc/carousel",
   "author": "wes hatch",
   "license": "MIT",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "description": "A micro, responsive, touch-enabled carousel.",
   "main": "./dist/carousel.cjs.js",
   "browser": "./dist/carousel.js",
