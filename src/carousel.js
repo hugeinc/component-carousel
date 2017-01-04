@@ -25,7 +25,8 @@ export default class Carousel {
       infinite: true,         // infinite scrolling or not
       display: 1,             // the minimum # of slides to display at a time. If you want to have slides
                               // "hanging" off outside the currently viewable ones, they'd be included here.
-      disableDragging: false  // only use API to navigate
+      disableDragging: false, // only use API to navigate
+      initialIndex: 0         // slide index where the carousel should start
     };
 
     // state vars
@@ -72,6 +73,13 @@ export default class Carousel {
 
     if (!this.slideWrap || !this.slides || this.numSlides < this.options.display) { console.log('Carousel: insufficient # slides'); return this.active = false; }
     if (this.options.infinite) { this._cloneSlides(); }
+
+    if (this.options.initialIndex) {
+      this.current = this.options.initialIndex;
+      this._getDimensions();
+      this._slide( -(this.current * this.width), false );
+      this.go(this.options.initialIndex);
+    }
 
     this._updateView();
     this._bindings = this._createBindings();  // set up Events
@@ -322,6 +330,11 @@ export default class Carousel {
     return (this.numSlides + (val % this.numSlides)) % this.numSlides;
   }
 
+  _getDimensions() {
+    this.width = this.slides[0].getBoundingClientRect().width;
+    this.offset = this.cloned * this.width;
+  }
+
   /**
    * Update the slides' position on a resize. This is throttled at 300ms
    * @return {void}
@@ -333,8 +346,7 @@ export default class Carousel {
       this._viewport = window.innerWidth;
       clearTimeout(this.timer);
       this.timer = setTimeout(() => {
-        this.width = this.slides[0].getBoundingClientRect().width;
-        this.offset = this.cloned * this.width;
+        this._getDimensions();
         this.go(this.current);
       }, 300);
     }

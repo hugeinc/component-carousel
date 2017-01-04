@@ -25,7 +25,8 @@ There is an ES6 module you may consume however you wish. Alternatively, you can 
     slides: 'li',
     infinite: true,
     display: 1,
-    disableDragging: false
+    disableDragging: false,
+    initialIndex: 0
   };
 
   var container = document.querySelector('.carousel');
@@ -44,6 +45,7 @@ There is an ES6 module you may consume however you wish. Alternatively, you can 
 | infinite        | boolean  | true      | Enable an infinitely scrolling carousel or not |
 | display         | integer  | 1         | the maximum # of slides to display at a time. If you want to have prev/next slides visible outside those currently displayed, they'd be included here. |
 | disableDragging | boolean  | false     | if you'd like to disable the touch UI for whatever reason |
+| initialIndex | integer  | 0     | which slide it's going to start |
 
 ## Methods
 
