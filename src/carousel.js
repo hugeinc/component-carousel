@@ -74,14 +74,8 @@ export default class Carousel {
     if (!this.slideWrap || !this.slides || this.numSlides < this.options.display) { console.log('Carousel: insufficient # slides'); return this.active = false; }
     if (this.options.infinite) { this._cloneSlides(); }
 
-    if (this.options.initialIndex) {
-      this.current = this.options.initialIndex;
-      this._getDimensions();
-      this._slide( -(this.current * this.width), false );
-      this.go(this.options.initialIndex);
-    }
-
-    this._updateView();
+    this.current = this.options.initialIndex;
+    this._updateView(0);
     this._bindings = this._createBindings();  // set up Events
 
     if (!this.options.disableDragging) {
@@ -148,7 +142,7 @@ export default class Carousel {
    * @param  {int} to    the slide to go to
    * @return {void}
    */
-  go(to) {
+  go(to = 0, animate = true) {
     const opts = this.options;
 
     if (this.sliding || !this.active) { return; }
@@ -160,7 +154,7 @@ export default class Carousel {
     }
 
     to = this._loop(to);
-    this._slide( -(to * this.width), true );
+    this._slide( -(to * this.width), animate );
 
     if (opts.onSlide) { opts.onSlide.call(this, to, this.current); }  // note: doesn't check if it's a function
 
@@ -339,16 +333,21 @@ export default class Carousel {
    * Update the slides' position on a resize. This is throttled at 300ms
    * @return {void}
    */
-  _updateView() {
+  _updateView(delay = 300) {
     // Check if the resize was _horizontal_ -- on touch devices, changing scroll
     // direction will cause the browser tab bar to appear, which triggers a resize
     if (window.innerWidth !== this._viewport) {
       this._viewport = window.innerWidth;
       clearTimeout(this.timer);
-      this.timer = setTimeout(() => {
-        this._getDimensions();
-        this.go(this.current);
-      }, 300);
+      if (delay) {
+        this.timer = setTimeout(() => {
+          this._getDimensions();
+          this.go(this.current, true);
+        }, delay);
+      } else {
+          this._getDimensions();
+          this.go(this.current, false);
+      }
     }
   }
 
