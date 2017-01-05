@@ -77,13 +77,7 @@ Carousel.prototype.init = function init () {
   if (!this.slideWrap || !this.slides || this.numSlides < this.options.display) { console.log('Carousel: insufficient # slides'); return this.active = false; }
   if (this.options.infinite) { this._cloneSlides(); }
 
-  // if (this.options.initialIndex) {
   this.current = this.options.initialIndex;
-  // this._getDimensions();
-  // this._slide( -(this.current * this.width), false );
-  // this.go(this.options.initialIndex);
-  // }
-
   this._updateView(0);
   this._bindings = this._createBindings();// set up Events
 
@@ -154,7 +148,6 @@ Carousel.prototype.prev = function prev () {
  * @return {void}
  */
 Carousel.prototype.go = function go (to, animate) {
-    if ( to === void 0 ) to = 0;
     if ( animate === void 0 ) animate = true;
 
   var opts = this.options;
@@ -340,11 +333,6 @@ Carousel.prototype._loop = function _loop (val) {
   return (this.numSlides + (val % this.numSlides)) % this.numSlides;
 };
 
-Carousel.prototype._getDimensions = function _getDimensions () {
-  this.width = this.slides[0].getBoundingClientRect().width;
-  this.offset = this.cloned * this.width;
-};
-
 /**
  * Update the slides' position on a resize. This is throttled at 300ms
  * @return {void}
@@ -358,15 +346,11 @@ Carousel.prototype._updateView = function _updateView (delay) {
   if (window.innerWidth !== this._viewport) {
     this._viewport = window.innerWidth;
     clearTimeout(this.timer);
-    if (delay) {
-      this.timer = setTimeout(function () {
-        this$1._getDimensions();
-        this$1.go(this$1.current, true);
-      }, delay);
-    } else {
-        this._getDimensions();
-        this.go(this.current, false);
-    }
+    this.timer = setTimeout(function () {
+      this$1.width = this$1.slides[0].getBoundingClientRect().width;
+      this$1.offset = this$1.cloned * this$1.width;
+      this$1.go(this$1.current, !!delay);
+    }, delay);
   }
 };
 
