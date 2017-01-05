@@ -76,13 +76,14 @@ var Carousel = (function () {
     this.slideWrap = this.handle.querySelector(this.options.slideWrap);
     this.slides = this.slideWrap.querySelectorAll(this.options.slides);
     this.numSlides = this.slides.length;
+    this.current = this.options.initialIndex;
 
     if (!this.slideWrap || !this.slides || this.numSlides < this.options.display) { console.log('Carousel: insufficient # slides'); return this.active = false; }
     if (this.options.infinite) { this._cloneSlides(); }
 
-    this.current = this.options.initialIndex;
-    this._updateView(0);
-    this._bindings = this._createBindings();// set up Events
+    this._createBindings();// set up Events
+    this._getDimensions();
+    this.go(this.current, false);
 
     if (!this.options.disableDragging) {
       if (this.isTouch) {
@@ -180,7 +181,7 @@ var Carousel = (function () {
    * @return {Object} containing references to each event and its bound function
    */
   Carousel.prototype._createBindings = function _createBindings () {
-    return {
+    this._bindings = {
       // handle
       'touchstart': this._dragStart.bind(this),
       'touchmove': this._drag.bind(this),
@@ -337,12 +338,20 @@ var Carousel = (function () {
   };
 
   /**
+   * Set the Carousel's width and determine the slide offset.
+   * @return {void}
+   */
+  Carousel.prototype._getDimensions = function _getDimensions () {
+    this.width = this.slides[0].getBoundingClientRect().width;
+    this.offset = this.cloned * this.width;
+  };
+
+  /**
    * Update the slides' position on a resize. This is throttled at 300ms
    * @return {void}
    */
-  Carousel.prototype._updateView = function _updateView (delay) {
+  Carousel.prototype._updateView = function _updateView () {
       var this$1 = this;
-      if ( delay === void 0 ) delay = 300;
 
     // Check if the resize was _horizontal_ -- on touch devices, changing scroll
     // direction will cause the browser tab bar to appear, which triggers a resize
@@ -350,10 +359,9 @@ var Carousel = (function () {
       this._viewport = window.innerWidth;
       clearTimeout(this.timer);
       this.timer = setTimeout(function () {
-        this$1.width = this$1.slides[0].getBoundingClientRect().width;
-        this$1.offset = this$1.cloned * this$1.width;
-        this$1.go(this$1.current, !!delay);
-      }, delay);
+        this$1._getDimensions();
+        this$1.go(this$1.current);
+      }, 300);
     }
   };
 

@@ -70,13 +70,14 @@ export default class Carousel {
     this.slideWrap = this.handle.querySelector(this.options.slideWrap);
     this.slides = this.slideWrap.querySelectorAll(this.options.slides);
     this.numSlides = this.slides.length;
+    this.current = this.options.initialIndex;
 
     if (!this.slideWrap || !this.slides || this.numSlides < this.options.display) { console.log('Carousel: insufficient # slides'); return this.active = false; }
     if (this.options.infinite) { this._cloneSlides(); }
 
-    this.current = this.options.initialIndex;
-    this._updateView(0);
-    this._bindings = this._createBindings();  // set up Events
+    this._createBindings();  // set up Events
+    this._getDimensions();
+    this.go(this.current, false);
 
     if (!this.options.disableDragging) {
       if (this.isTouch) {
@@ -170,7 +171,7 @@ export default class Carousel {
    * @return {Object} containing references to each event and its bound function
    */
   _createBindings() {
-    return {
+    this._bindings = {
       // handle
       'touchstart': this._dragStart.bind(this),
       'touchmove': this._drag.bind(this),
@@ -325,20 +326,28 @@ export default class Carousel {
   }
 
   /**
+   * Set the Carousel's width and determine the slide offset.
+   * @return {void}
+   */
+  _getDimensions() {
+    this.width = this.slides[0].getBoundingClientRect().width;
+    this.offset = this.cloned * this.width;
+  }
+
+  /**
    * Update the slides' position on a resize. This is throttled at 300ms
    * @return {void}
    */
-  _updateView(delay = 300) {
+  _updateView() {
     // Check if the resize was _horizontal_ -- on touch devices, changing scroll
     // direction will cause the browser tab bar to appear, which triggers a resize
     if (window.innerWidth !== this._viewport) {
       this._viewport = window.innerWidth;
       clearTimeout(this.timer);
       this.timer = setTimeout(() => {
-        this.width = this.slides[0].getBoundingClientRect().width;
-        this.offset = this.cloned * this.width;
-        this.go(this.current, !!delay);
-      }, delay);
+        this._getDimensions();
+        this.go(this.current);
+      }, 300);
     }
   }
 
