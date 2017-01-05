@@ -142,7 +142,7 @@ export default class Carousel {
    * @param  {int} to    the slide to go to
    * @return {void}
    */
-  go(to = 0, animate = true) {
+  go(to, animate = true) {
     const opts = this.options;
 
     if (this.sliding || !this.active) { return; }
@@ -324,11 +324,6 @@ export default class Carousel {
     return (this.numSlides + (val % this.numSlides)) % this.numSlides;
   }
 
-  _getDimensions() {
-    this.width = this.slides[0].getBoundingClientRect().width;
-    this.offset = this.cloned * this.width;
-  }
-
   /**
    * Update the slides' position on a resize. This is throttled at 300ms
    * @return {void}
@@ -339,15 +334,11 @@ export default class Carousel {
     if (window.innerWidth !== this._viewport) {
       this._viewport = window.innerWidth;
       clearTimeout(this.timer);
-      if (delay) {
-        this.timer = setTimeout(() => {
-          this._getDimensions();
-          this.go(this.current, true);
-        }, delay);
-      } else {
-          this._getDimensions();
-          this.go(this.current, false);
-      }
+      this.timer = setTimeout(() => {
+        this.width = this.slides[0].getBoundingClientRect().width;
+        this.offset = this.cloned * this.width;
+        this.go(this.current, !!delay);
+      }, delay);
     }
   }
 

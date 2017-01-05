@@ -397,7 +397,8 @@ container.querySelector('.next').addEventListener('click', carousel.next);
 		var fah = document.querySelector('#fah');
 		var bullets = fah.querySelectorAll('.bullets li');
 		var carousel = new Carousel(fah, {
-			'onSlide': updateNav
+			'onSlide': updateNav,
+      'initialIndex': 1
 		});
 
 		fah.querySelector('.prev').addEventListener('click', function(e){
