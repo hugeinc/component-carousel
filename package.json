@@ -7,6 +7,7 @@
   "main": "./dist/carousel.cjs.js",
   "browser": "./dist/carousel.js",
   "jsnext:main": "./dist/carousel.es6.js",
+  "module": "./dist/carousel.es6.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:hugeinc/component-carousel.git"
