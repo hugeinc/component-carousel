@@ -1,4 +1,4 @@
-import Carousel from '../src/flexicarousel.es6.js';
+import Carousel from '../src/carousel.js';
 import test from 'tape';
 
 

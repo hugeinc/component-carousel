@@ -81,6 +81,9 @@ Please see the _test / demo_ directory
 
 ## Release History
 
+### 0.6
+* updated some css
+
 ### 0.5
 * added destroy()
 * added some tests
