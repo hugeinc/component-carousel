@@ -15,9 +15,19 @@ using the exposed API. The carousel works on both desktop and mobile, and weighs
 ## Getting Started
 There is an ES6 module you may consume however you wish. Alternatively, you can also include the relevant scripts in your web page, and then:
 
-```javascript
+```html
+<!-- sample carousel markup -->
+<div class="carousel">
+  <ul class="wrap">   <!-- slideWrap -->
+    <li>slide 1</li>  <!-- slide -->
+    <li>slide 2</li>
+    <li>slide 3</li>
+  </ul>
+</div>
+```
 
-  // availble options
+```javascript
+  // available options
   var options = {
     onSlide: someFunction,
     activeClass: 'active',
@@ -64,7 +74,7 @@ npm i
 npm start
 ```
 
-A server will spin up at ```http://localhost:8080```, where you may play with the various examples.
+A server will spin up at ```http://localhost:8080```, where you may play with the various examples. See the "demo" directory.
 
 ## Support
 * IE8+
@@ -72,12 +82,6 @@ A server will spin up at ```http://localhost:8080```, where you may play with th
 * Firefox
 * iOS
 * Android 4.0+
-
-## Known Issues
-
-## Examples
-
-Please see the _test / demo_ directory
 
 ## Release History
 
