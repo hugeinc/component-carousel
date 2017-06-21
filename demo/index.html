@@ -395,7 +395,7 @@ container.querySelector('.next').addEventListener('click', carousel.next);
 
 
 		var fah = document.querySelector('#fah');
-		var bullets = fah.querySelectorAll('.bullets li');
+		var bullets = fah.querySelectorAll('.carousel__nav li');
 		var carousel = new Carousel(fah, {
 			'onSlide': updateNav,
       'initialIndex': 1
@@ -425,7 +425,7 @@ container.querySelector('.next').addEventListener('click', carousel.next);
 
 
 		var ten = document.querySelector('#ten');
-		var bullets = ten.querySelectorAll('.bullets li');
+		var bullets = ten.querySelectorAll('.carousel__nav li');
 		var carousel1 = new Carousel(ten, {
 			'onSlide': updateNav,
 			'display': 5					// there are 3 showing, but we allow for 2 to be "hanging" off the end
@@ -453,6 +453,7 @@ container.querySelector('.next').addEventListener('click', carousel.next);
 		// ===================================================================
 
 		var billion = document.querySelector('#billion');
+		var bullets = billion.querySelectorAll('.carousel__nav li');
 		var carousel2 = new Carousel(billion, {
 			'infinite': false,
 			'onSlide': updateNav
@@ -466,6 +467,13 @@ container.querySelector('.next').addEventListener('click', carousel.next);
 		billion.querySelector('.next').addEventListener('click', function(e){
 			e.preventDefault();
 			carousel2.next();
+		});
+
+		Array.prototype.forEach.call(bullets, function(bullet, index){
+			bullet.addEventListener('click', function(e) {
+				e.preventDefault();
+				carousel2.go(index);
+			});
 		});
 
 
