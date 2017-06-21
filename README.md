@@ -15,9 +15,19 @@ using the exposed API. The carousel works on both desktop and mobile, and weighs
 ## Getting Started
 There is an ES6 module you may consume however you wish. Alternatively, you can also include the relevant scripts in your web page, and then:
 
-```javascript
+```html
+<!-- sample carousel markup -->
+<div class="carousel">
+  <ul class="wrap">   <!-- slideWrap -->
+    <li>slide 1</li>  <!-- slide -->
+    <li>slide 2</li>
+    <li>slide 3</li>
+  </ul>
+</div>
+```
 
-  // availble options
+```javascript
+  // available options
   var options = {
     onSlide: someFunction,
     activeClass: 'active',
