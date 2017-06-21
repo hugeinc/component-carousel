@@ -1,39 +1,33 @@
-
-.carousel {
-	width: 100%;
-	margin:	0 auto;
-	position: relative;
-}
-
-.carousel h3 {
-	position: absolute;
-	color: #fff;
-	padding: 0.5em;
-	z-index: 1;
-}
-
-.carousel img {
-	width: 100%;
-	height: auto;
-	border: 2px solid #fff;
-  display: block;
-}
-
-.carousel .wrap > li {
-	/*padding: 2px;*/
-	max-height: 600px;
-	overflow: hidden;
-}
-
-
 /* -------------------------------------
 	SAMPLE CAROUSEL STYLES
 ------------------------------------- */
-
-.clip {
-	overflow: hidden;
+.carousel nav .prev,
+.carousel nav .next {
+	display: block;
+	position: absolute;
+	top: 50%;
+	width: 2em;
+	height: 2em;
+	line-height: 1em;
+	font-size: 2em;
+	border-radius: 50%;
+	text-decoration: none;
+	color: white;
+	background-color: purple;
 }
 
+.carousel nav .next {
+	right: -1em;
+}
+
+.carousel nav .prev {
+	left: -1em;
+}
+
+.carousel nav .next.disabled,
+.carousel nav .prev.disabled {
+	opacity: 0.2;
+}
 /* TEN */
 #ten .wrap {
 	width: calc(100% + 20px);
@@ -65,18 +59,15 @@
 	}
 }
 
-
-
 /* BILLION */
 #billion {
 	max-width: 540px;
+  overflow: hidden;
 }
 #billion .wrap {
 	width: 66.666%;
     margin: 0px auto;
 }
-
-
 
 /* SEVEN */
 @media screen and (min-width:480px) {
