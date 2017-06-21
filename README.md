@@ -74,7 +74,7 @@ npm i
 npm start
 ```
 
-A server will spin up at ```http://localhost:8080```, where you may play with the various examples.
+A server will spin up at ```http://localhost:8080```, where you may play with the various examples. See the "demo" directory.
 
 ## Support
 * IE8+
@@ -82,12 +82,6 @@ A server will spin up at ```http://localhost:8080```, where you may play with th
 * Firefox
 * iOS
 * Android 4.0+
-
-## Known Issues
-
-## Examples
-
-Please see the _test / demo_ directory
 
 ## Release History
 
