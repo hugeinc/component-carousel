@@ -2,7 +2,7 @@
  * flexicarousel
  * https://github.com/apathetic/flexicarousel-2
  *
- * Copyright (c) 2014 Wes Hatch
+ * Copyright (c) 2014, 2017 Wes Hatch
  * Licensed under the MIT license.
  */
 
@@ -10,14 +10,6 @@
 /* -------------------------------------
 	CAROUSEL STYLES
 ------------------------------------- */
-
-.carousel img {
-	pointer-events: none;
-	width: 100%;
-	height: auto;
-	border: 2px solid #fff;
-	display: block;
-}
 
 .carousel .animate {
 	-webkit-transition: all 0.4s ease;
@@ -57,39 +49,3 @@
 	flex: 1 0 100%;
 	padding: 0;
 }
-
-
-/* -------------------------------------
-		SAMPLE NAVIGATION STYLES
-	------------------------------------- */
-
-.carousel nav {
-	width: 100%;
-	text-align: center;
-	font-size: 16px;
-	margin: 1em;
-}
-
-.carousel nav .prev,
-.carousel nav .next {
-	display: block;
-	margin: 0 auto;
-	
-}
-
-
-.carousel nav li {
-	display: inline-block;
-	cursor: pointer;
-	width: 12px;
-	height: 12px;
-	margin: 0.5em;
-	border-radius: 50%;
-	border: 2px solid #999;
-}
-
-.carousel nav li.active {
-	border-color: #aaa;
-	background: #aaa;
-}
-

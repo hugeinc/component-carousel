@@ -1,43 +1,41 @@
 /* -------------------------------------
 	SAMPLE CAROUSEL STYLES
 ------------------------------------- */
-.carousel nav .prev,
-.carousel nav .next {
-	display: block;
-	position: absolute;
-	top: 50%;
-	width: 2em;
-	height: 2em;
-	line-height: 1em;
-	font-size: 2em;
-	border-radius: 50%;
-	text-decoration: none;
-	color: white;
-	background-color: purple;
-}
 
-.carousel nav .next {
-	right: -1em;
-}
-
-.carousel nav .prev {
-	left: -1em;
-}
+/*
+  SEE: https://apathetic.github.io/showcase/assets/css/main.min.css
+       for other demo styles
+ */
 
 .carousel nav .next.disabled,
 .carousel nav .prev.disabled {
 	opacity: 0.2;
 }
+
+.carousel img {
+	pointer-events: none;
+	width: 100%;
+	height: auto;
+	border: 2px solid #fff;
+	display: block;
+}
+
+.carousel h3 {
+	position: absolute;
+	z-index: 10;
+	color: #fff;
+	padding: 1em;
+}
+
+
 /* TEN */
 #ten .wrap {
 	width: calc(100% + 20px);
   margin: -10px;
 }
-
 #ten .wrap li {
 	padding: 10px;
 }
-
 
 @media(min-width:480px) {
 	#ten .wrap > li {
@@ -52,7 +50,6 @@
 		flex-basis: 50%;
 	}
 }
-
 @media(min-width:1120px) {
 	#ten .wrap li {
 		flex-basis: 33.3333%;
@@ -85,75 +82,3 @@
 		flex-basis: 20%;
 	}
 }
-
-
-/* -------------------------------------
-	SAMPLE NAVIGATION STYLES
-------------------------------------- */
-
-/* */
-.demo-nav {
-  font-size: 0.5em;
-  width: 100%;
-  text-align: center;
-  position: static;
-  }
-
-  .demo-nav ul {
-    height: 3em;
-  }
-
-  .demo-nav li {
-    display: inline-block;
-    cursor: pointer;
-    color: grey;
-    list-style: none !important;
-    width: 1em;
-    height: 1em;
-    margin: 1em;
-    border-radius: 50%;
-    background: #ddd;
-    }
-
-    .demo-nav li.active {
-      background: #ec008c;
-    }
-  }
-
-  .demo-nav .prev,
-  .demo-nav .next {
-    height: calc(100% - 3em);
-    width: 10%;
-    top: 0;
-    position: absolute;
-    opacity: 0;
-    transition: opacity 0.5s;
-    }
-
-    .demo-nav .prev span.
-    .demo-nav .next span {
-      position: absolute;
-      top: 50%;
-      color: #fff;
-      font-size: 54px;
-      width: 100%;
-      height: 2em;
-      margin-top: -1em;
-      line-height: 2em;
-      display: block;
-    }
-
-    .demo-nav .prev .disabled,
-    .demo-nav .next .disabled {
-      opacity: 0.2;
-    }
-
-    .carousel:hover .demo-nav .prev,
-    .carousel:hover .demo-nav .next {
-      opacity: 1;
-    }
-
-  .demo-nav .prev { left: 0; }
-  .demo-nav .next { right: 0; }
-
-/* */
