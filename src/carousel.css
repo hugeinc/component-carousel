@@ -27,8 +27,7 @@
 }
 
 .carousel .wrap {
-	white-space: nowrap;
-	/* fallback */
+	white-space: nowrap;	/* fallback */
 	width: 100%;
 	display: -webkit-box;
 	display: -webkit-flex;
@@ -46,15 +45,11 @@
 	padding: 0;
 }
 
-.carousel .wrap>li {
-	display: inline-block;
-	/* fallback */
-	vertical-align: top;
-	/* fallback */
-	position: relative;
-	/* fallback */
-	width: 100%;
-	/* fallback */
+.carousel .wrap > li {
+	display: inline-block;	/* fallback */
+	vertical-align: top;	/* fallback */
+	position: relative;	/* fallback */
+	width: 100%;		/* fallback */
 	cursor: move;
 	-webkit-box-flex: 1 0 100%;
 	-webkit-flex: 1 0 100%;
@@ -98,4 +93,3 @@
 	background: #aaa;
 }
 
-/* */
