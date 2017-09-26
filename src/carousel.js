@@ -106,6 +106,9 @@ export default class Carousel {
       this.handle.removeEventListener(event, this._bindings[event]);
     }
 
+    window.removeEventListener('resize', this._bindings['resize']);
+    window.removeEventListener('orientationchange', this._bindings['orientationchange']);
+
     this._bindings = null;
     this.options = this.slides = this.slideWrap = this.handle = null;
     this.active = false;

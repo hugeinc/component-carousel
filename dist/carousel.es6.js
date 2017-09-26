@@ -111,6 +111,9 @@ Carousel.prototype.destroy = function destroy () {
     this$1.handle.removeEventListener(event, this$1._bindings[event]);
   }
 
+  window.removeEventListener('resize', this._bindings['resize']);
+  window.removeEventListener('orientationchange', this._bindings['orientationchange']);
+
   this._bindings = null;
   this.options = this.slides = this.slideWrap = this.handle = null;
   this.active = false;
