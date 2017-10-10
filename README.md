@@ -68,6 +68,8 @@ There is an ES6 module you may consume however you wish. Alternatively, you can 
 
 ## Demo
 
+[Hugeinc Carousel](http://hugeinc.github.io/showcase/components/carousel)
+
 After cloning the repo:
 ```
 npm i

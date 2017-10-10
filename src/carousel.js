@@ -7,8 +7,6 @@
  *
  */
 
-// import transform from './transform';
-
 export default class Carousel {
 
   constructor(container, options={}) {
@@ -100,7 +98,7 @@ export default class Carousel {
   /**
    * Removes all event bindings.
    * @returns {Carousel}
-   * */
+   */
   destroy() {
     for (let event in this._bindings) {
       this.handle.removeEventListener(event, this._bindings[event]);
