@@ -1,8 +1,8 @@
 {
-  "name": "@hugeinc/carousel",
+  "name": "@apatheticwes/flexicarousel",
   "author": "wes hatch",
   "license": "MIT",
-  "version": "0.8.5",
+  "version": "0.8.6",
   "description": "A micro, responsive, touch-enabled carousel.",
   "main": "./dist/carousel.cjs.js",
   "browser": "./dist/carousel.js",
