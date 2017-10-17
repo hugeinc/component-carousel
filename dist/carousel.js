@@ -24,15 +24,6 @@ SOFTWARE.
 var Carousel = (function () {
 'use strict';
 
-/*
- * carousel ten billion
- * https://github.com/apathetic/flexicarousel
- *
- * Copyright (c) 2013, 2016 Wes Hatch
- * Licensed under the MIT license.
- *
- */
-
 class Carousel {
 
   constructor(container, options={}) {
@@ -184,7 +175,7 @@ class Carousel {
     to = this._loop(to);
     this._slide( -(to * this.width), animate );
 
-    if (opts.onSlide) { opts.onSlide.call(this, to, this.current); }  // note: doesn't check if it's a function
+    if (opts.onSlide && to !== this.current) { opts.onSlide.call(this, to, this.current); }  // note: doesn't check if it's a function
 
     this._removeClass(this.slides[this.current], opts.activeClass);
     this._addClass(this.slides[to], opts.activeClass);
