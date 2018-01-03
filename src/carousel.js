@@ -6,7 +6,6 @@ export default class Carousel {
     this.handle = container;
 
     // default options
-    // --------------------
     this.options = {
       animateClass: 'animate',
       activeClass: 'active',
@@ -20,7 +19,6 @@ export default class Carousel {
     };
 
     // state vars
-    // --------------------
     this.current = 0;
     this.slides = [];
     this.sliding = false;
@@ -28,25 +26,20 @@ export default class Carousel {
     this.active = true;
 
     // touch vars
-    // --------------------
     this.dragging = false;
     this.dragThreshold = 50;
     this.deltaX = 0;
 
     // feature detection
-    // --------------------
     this.isTouch = 'ontouchend' in document;
-
     ['transform', 'webkitTransform', 'MozTransform', 'OTransform', 'msTransform'].forEach((t) => {
       if (document.body.style[t] !== undefined) { this.transform = t; }
     });
 
     // set up options
-    // --------------------
-    this.options = Object.assign(this.options, options);
+    this.options = this._assign(this.options, options);
 
     // engage engines
-    // --------------------
     this.init();
   }
 
@@ -56,7 +49,6 @@ export default class Carousel {
    * @return {void}
    */
   init() {
-    // find carousel elements
     this.slideWrap = this.handle.querySelector(this.options.slideWrap);
     this.slides = this.slideWrap.querySelectorAll(this.options.slides);
     this.numSlides = this.slides.length;
@@ -65,7 +57,7 @@ export default class Carousel {
     if (!this.slideWrap || !this.slides || this.numSlides < this.options.display) { console.log('Carousel: insufficient # slides'); return this.active = false; }
     if (this.options.infinite) { this._cloneSlides(); }
 
-    this._createBindings();  // set up Events
+    this._createBindings();
     this._getDimensions();
     this.go(this.current, false);
 
@@ -161,28 +153,29 @@ export default class Carousel {
 
   /**
    * Create references to all bound Events so that they may be removed upon destroy()
-   * @return {Object} containing references to each event and its bound function
+   * @return {void}
    */
   _createBindings() {
     this._bindings = {
       // handle
-      'touchstart': this._dragStart.bind(this),
-      'touchmove': this._drag.bind(this),
-      'touchend': this._dragEnd.bind(this),
-      'touchcancel': this._dragEnd.bind(this),
-      'mousedown': this._dragStart.bind(this),
-      'mousemove': this._drag.bind(this),
-      'mouseup': this._dragEnd.bind(this),
-      'mouseleave': this._dragEnd.bind(this),
-      'click': this._checkDragThreshold.bind(this),
+      'touchstart': (e) => { this._dragStart(e); },
+      'touchmove': (e) => { this._drag(e); },
+      'touchend': (e) => { this._dragEnd(e); },
+      'touchcancel': (e) => { this._dragEnd(e); },
+      'mousedown': (e) => { this._dragStart(e); },
+      'mousemove': (e) => { this._drag(e); },
+      'mouseup': (e) => { this._dragEnd(e); },
+      'mouseleave': (e) => { this._dragEnd(e); },
+      'click': (e) => { this._checkDragThreshold(e); },
 
       // window
-      'resize': this._updateView.bind(this),
-      'orientationchange': this._updateView.bind(this)
+      'resize': (e) => { this._updateView(e); },
+      'orientationchange': (e) => { this._updateView(e); }
     };
   }
 
   // ------------------------------------- Drag Events ------------------------------------- //
+
 
   _checkDragThreshold(e) {
     if (this.dragThresholdMet) {
@@ -277,10 +270,10 @@ export default class Carousel {
 
 
   /**
-   * Helper function to translate slide in browser
-   * @param  {[type]} el     [description]
-   * @param  {[type]} offset [description]
-   * @return {[type]}        [description]
+   * Applies the slide translation in browser
+   * @param  {number} offset   Where to translate the slide to. 
+   * @param  {boolean} animate Whether to animation the transition or not.
+   * @return {void}
    */
   _slide(offset, animate) {
     var delay = 400;
@@ -332,7 +325,7 @@ export default class Carousel {
    * @return {void}
    */
   _updateView() {
-    // Check if the resize was _horizontal_ -- on touch devices, changing scroll
+    // Check if the resize was horizontal. On touch devices, changing scroll
     // direction will cause the browser tab bar to appear, which triggers a resize
     if (window.innerWidth !== this._viewport) {
       this._viewport = window.innerWidth;
@@ -377,7 +370,7 @@ export default class Carousel {
 
   /**
    * Helper function to add a class to an element
-   * @param  {int} i    Index of the slide to add a class to
+   * @param  {int} i       Index of the slide to add a class to
    * @param  {string} name Class name
    * @return {void}
    */
@@ -388,7 +381,7 @@ export default class Carousel {
 
   /**
    * Helper function to remove a class from an element
-   * @param  {int} i    Index of the slide to remove class from
+   * @param  {int} i       Index of the slide to remove class from
    * @param  {string} name Class name
    * @return {void}
    */
@@ -397,4 +390,16 @@ export default class Carousel {
     else { el.className = el.className.replace(new RegExp('(^|\\b)' + name.split(' ').join('|') + '(\\b|$)', 'gi'), ' '); }
   }
 
+  /**
+   * Shallow Object.assign polyfill
+   * @param {object} dest The object to copy into
+   * @param {object} src  The object to copy from
+   */
+  _assign(dest, src) {
+    Object.keys(src).forEach((key) => {
+      dest[key] = src[key];
+    });
+
+    return dest;
+  }
 };
