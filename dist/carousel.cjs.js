@@ -208,8 +208,7 @@ Carousel.prototype._createBindings = function _createBindings () {
 };
 
 // ------------------------------------- Drag Events ------------------------------------- //
-
-
+  
 Carousel.prototype._checkDragThreshold = function _checkDragThreshold (e) {
   if (this.dragThresholdMet) {
     e.preventDefault();
@@ -436,7 +435,7 @@ Carousel.prototype._removeClass = function _removeClass (el, name) {
  */
 Carousel.prototype._assign = function _assign (dest, src) {
   Object.keys(src).forEach(function (key) {
-    dest[key] = src[key];      
+    dest[key] = src[key];
   });
 
   return dest;

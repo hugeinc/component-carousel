@@ -175,8 +175,7 @@ export default class Carousel {
   }
 
   // ------------------------------------- Drag Events ------------------------------------- //
-
-
+  
   _checkDragThreshold(e) {
     if (this.dragThresholdMet) {
       e.preventDefault();
