@@ -6,7 +6,7 @@ import * as fs from 'fs';
 const license = fs.readFileSync('LICENSE', 'utf8');
 
 
-export default {
+export default [{
   input: 'src/carousel.js',
   output: [
     {
@@ -25,6 +25,19 @@ export default {
     },
   ],
   plugins: [
+    buble()
+  ]
+}, {
+  input: 'src/carousel.js',
+  output: [
+    { 
+      file: 'dist/carousel.min.js', 
+      format: 'iife',
+      name: 'Carousel',
+      banner: '/*!\n' + license + '*/'
+    }
+  ],
+  plugins: [
     buble(),
     uglify({
       output: {
@@ -38,4 +51,4 @@ export default {
       }
     }, minify)
   ]
-};
+}];
