@@ -11,10 +11,10 @@ export default class Carousel {
       activeClass: 'active',
       slideWrap: 'ul',
       slides: 'li',           // the slides
-      infinite: true,         // infinite scrolling or not
+      infinite: true,         // set to true to be able to navigate from last to first slide, and vice versa
       display: 1,             // the minimum # of slides to display at a time. If you want to have slides
                               // "hanging" off outside the currently viewable ones, they'd be included here.
-      disableDragging: false, // only use API to navigate
+      disableDragging: false, // set to true if you'd like to only use the API to navigate
       initialIndex: 0         // slide index where the carousel should start
     };
 
@@ -54,7 +54,10 @@ export default class Carousel {
     this.numSlides = this.slides.length;
     this.current = this.options.initialIndex;
 
-    if (!this.slideWrap || !this.slides || this.numSlides < this.options.display) { console.log('Carousel: insufficient # slides'); return this.active = false; }
+    if (!this.slideWrap || !this.slides || this.numSlides < this.options.display) { 
+      console.log('Carousel: insufficient # slides');
+      return this.active = false;
+    }
     if (this.options.infinite) { this._cloneSlides(); }
 
     this._createBindings();
@@ -84,6 +87,8 @@ export default class Carousel {
    * @returns {Carousel}
    */
   destroy() {
+    if (!this.active) { return; }
+
     for (let event in this._bindings) {
       this.handle.removeEventListener(event, this._bindings[event]);
     }
@@ -285,7 +290,7 @@ export default class Carousel {
 
       setTimeout(() => {
         this.sliding = false;
-        this._removeClass(this.slideWrap, this.options.animateClass);
+        this.active && this._removeClass(this.slideWrap, this.options.animateClass);
       }, delay);
     }
 

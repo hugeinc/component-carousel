@@ -1,6 +1,9 @@
 # Carousel
+[![Build Status](https://img.shields.io/travis/mohayonao/pseudo-audio-param.svg?style=flat-square)](https://travis-ci.org/apathetic/flexicarousel)
+[![NPM Version](https://img.shields.io/npm/v/pseudo-audio-param.svg?style=flat-square)](https://www.npmjs.com/package/@hugeinc/carousel)
+[![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://raw.githubusercontent.com/apathetic/flexicarousel/master/LICENSE)
 
-A carousel that'll use CSS to dynamically adapt its width. Uses transforms for its transitions and is also touch-enabled.
+> A carousel that'll use CSS to dynamically adapt its width. Uses transforms for its transitions and is also touch-enabled.
 
 ## Introduction
 
@@ -10,7 +13,7 @@ The general idea is that this component should maintain a separation of state an
 
 Features a touch-based interface, simple API, and a very-lightweight footprint. It does the basics well, but that's it. No bloat.
 You can swipe to drag a slide yet still use CSS to control how the slide transitions will behave. You can also choose to change slides by
-using the exposed API. The carousel works on both desktop and mobile, and weighs in at less than 2 KB(!)
+using the exposed API. The carousel works on both desktop and mobile, while only weighing in at 2.5 KB!
 
 ## Getting Started
 There is an ES6 module you may consume however you wish. Alternatively, you can also include the relevant scripts in your web page, and then:
@@ -49,13 +52,14 @@ There is an ES6 module you may consume however you wish. Alternatively, you can 
 | name            | type     | default   | description |
 | --------------- | -------- | --------- | ----------- |
 | onSlide         | function | undefined | A function to execute on slide. It is passed _to_ and _from_ indices. |
-| activeClass     | string   | active    | Class to use on the active slide. |
-| slideWrap       | string   | .wrap     | The selector to use when searching for the slides' container. This is used only to bind touch events to, on mobile. |
+| slideWrap       | string   | ul        | The selector to use when searching for the slides' container. This is used only to bind touch events to, on mobile. |
 | slides          | string   | li        | The selector to use when searching for slides within the slideWrap container. |
+| activeClass     | string   | active    | Class to use on the active slide. |
+| animateClass    | string   | animate   | Class to use on the wrapper when animating. |
 | infinite        | boolean  | true      | Enable an infinitely scrolling carousel or not |
 | display         | integer  | 1         | the maximum # of slides to display at a time. If you want to have prev/next slides visible outside those currently displayed, they'd be included here. |
 | disableDragging | boolean  | false     | if you'd like to disable the touch UI for whatever reason |
-| initialIndex | integer  | 0     | which slide it's going to start |
+| initialIndex    | integer  | 0         | which slide it's going to start on |
 
 ## Methods
 
