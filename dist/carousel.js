@@ -84,7 +84,7 @@ Carousel.prototype.init = function init () {
 
   if (!this.slideWrap || !this.slides || this.numSlides < this.options.display) { 
     console.log('Carousel: insufficient # slides');
-    return this.active = false; 
+    return this.active = false;
   }
   if (this.options.infinite) { this._cloneSlides(); }
 
@@ -326,7 +326,7 @@ Carousel.prototype._slide = function _slide (offset, animate) {
 
     setTimeout(function () {
       this$1.sliding = false;
-      this$1._removeClass(this$1.slideWrap, this$1.options.animateClass);
+      this$1.active && this$1._removeClass(this$1.slideWrap, this$1.options.animateClass);
     }, delay);
   }
 

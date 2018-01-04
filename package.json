@@ -1,8 +1,8 @@
 {
-  "name": "@hugeinc/carousel",
+  "name": "@apatheticwes/flexicarousel",
   "author": "wes hatch",
   "license": "MIT",
-  "version": "0.8.6",
+  "version": "0.8.7",
   "description": "A micro, responsive, touch-enabled carousel.",
   "main": "./dist/carousel.cjs.js",
   "browser": "./dist/carousel.js",
@@ -26,8 +26,8 @@
     "build": "npm run clean && npm run lint && rollup -c",
     "lint": "eslint source/js/*.js",
     "test": "tape -r babel-register test/*.js",
-    "prepublish": "npm run clean && npm run lint && npm test",
-    "preversion": "npm run clean && npm run lint && npm test",
+    "prepublish": "npm run build && npm test",
+    "preversion": "npm run build && npm test",
     "travis": "npm run lint && npm test"
   },
   "devDependencies": {
