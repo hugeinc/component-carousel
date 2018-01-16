@@ -1,6 +1,5 @@
 # Carousel
-[![Build Status](https://img.shields.io/travis/mohayonao/pseudo-audio-param.svg?style=flat-square)](https://travis-ci.org/apathetic/flexicarousel)
-[![NPM Version](https://img.shields.io/npm/v/pseudo-audio-param.svg?style=flat-square)](https://www.npmjs.com/package/@hugeinc/carousel)
+[![NPM Version](https://img.shields.io/npm/v/@apatheticwes/flexicarousel.svg?style=flat-square)](https://www.npmjs.com/package/@apatheticwes/flexicarousel)
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://raw.githubusercontent.com/apathetic/flexicarousel/master/LICENSE)
 
 > A carousel that'll use CSS to dynamically adapt its width. Uses transforms for its transitions and is also touch-enabled.
